@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace nadis.Models
 {
@@ -7,21 +8,19 @@ namespace nadis.Models
         public Guid ID { get; set; }
 
         public DateTime RepMO { get; set; }
-        /*
-        [StringLength(21)]
-        public string GID { get; set; }
 
+        [StringLength(21)]
+        public string GID { get; set; }     //code raion
+        [StringLength(10)]
+        public string KIDdiv { get; set; }  //raion a/a 
+
+        [StringLength(4)]
+        public string KIDspc { get; set; } // vid jivotnogo
+
+
+        /*
         [StringLength(13)]
         public string KIDvil { get; set; }
-
-        [StringLength(10)]
-        public string KIDdiv { get; set; }
-
-        [StringLength(4)]
-        public string KIDspc { get; set; }
-
-        [StringLength(4)]
-        public string KIDdis { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime? dtObs { get; set; }
