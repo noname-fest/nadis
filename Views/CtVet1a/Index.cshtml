@@ -1,8 +1,46 @@
-﻿
+﻿@model IEnumerable<nadis.Models.CtVet1a>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Index</h1>
-
+<p>
+    <a asp-action="Create">Создать новый</a>
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.GID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RepMO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KIDdiv)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var tmp in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => tmp.GID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tmp.RepMO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tmp.KIDdiv)
+            </td>
+            <td>
+                <a asp-action="Edit"    asp-route-id="@tmp.ID">Редакт.</a>
+                <a asp-action="Detail"  asp-route-id="@tmp.ID">Просм.</a>
+                <a asp-action="Delete"  asp-route-id="@tmp.ID">Удал.</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

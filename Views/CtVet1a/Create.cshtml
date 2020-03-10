@@ -1,0 +1,19 @@
+﻿@model nadis.Models.CtVet1a
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Создать</h1>
+<h3>ctVet1a</h3>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="GID" class="control-label"></label>
+                <input asp-for="GID" class="form-control" />
+                <span asp-validation-for="GID" class="text-danger"></span>
+            </div>
+        </form>
+    </div>
+</div>

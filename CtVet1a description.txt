@@ -11,3 +11,8 @@ culled		- Забито
 end_pos_units	- Неблагополуч. пунктов
 end_pos_animals	- Больных животных голов
 comments	- Коментарий
+
+
+KID - Generated GID
+dtCH, dtCR - datetime now
+KIDro - id currend user(Район)
