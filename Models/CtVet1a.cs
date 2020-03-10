@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace nadis.Models
 {
@@ -7,6 +6,8 @@ namespace nadis.Models
     {
         public Guid ID { get; set; }
 
+        public DateTime RepMO { get; set; }
+        /*
         [StringLength(21)]
         public string GID { get; set; }
 
@@ -57,7 +58,7 @@ namespace nadis.Models
 
         public bool? isExp { get; set; }
 
-        public int? culled { get; set; }
+        public int? culled { get; set; }  */
 
     }
 }
