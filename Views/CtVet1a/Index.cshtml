@@ -6,7 +6,7 @@
 
 <h1>Index</h1>
 <p>
-    <a asp-action="Create">Создать новый</a>
+    <a asp-action="Create">Создать</a>
 </p>
 <table class="table table-striped">
     <thead>
@@ -19,6 +19,30 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.KIDdiv)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KIDspc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KIDdis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.pos_units)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.positives)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dead)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.end_pos_units)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.end_pos_animals)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.culled)
             </th>
         </tr>
     </thead>
@@ -36,9 +60,33 @@
                 @Html.DisplayFor(modelItem => tmp.KIDdiv)
             </td>
             <td>
-                <a asp-action="Edit"    asp-route-id="@tmp.ID">Редакт.</a>
-                <a asp-action="Detail"  asp-route-id="@tmp.ID">Просм.</a>
-                <a asp-action="Delete"  asp-route-id="@tmp.ID">Удал.</a>
+                @Html.DisplayFor(modelItem => tmp.KIDspc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tmp.KIDdis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tmp.pos_units)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tmp.positives)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tmp.dead)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tmp.end_pos_units)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tmp.end_pos_animals)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tmp.culled)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@tmp.ID">Редакт.</a>
+                <a asp-action="Detail" asp-route-id="@tmp.ID">Просм.</a>
+                <a asp-action="Delete" asp-route-id="@tmp.ID">Удал.</a>
             </td>
         </tr>
         }

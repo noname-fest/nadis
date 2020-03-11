@@ -26,11 +26,18 @@ namespace nadis.Models
                 {
                     CtVet1a tmp = new CtVet1a
                     {
-                        ID = Guid.Parse(dr["ID"].ToString()),
-                        GID = dr["GID"].ToString(),
-                        RepMO = (DateTime)dr["repMO"],
-                        KIDdiv = dr["KIDdiv"].ToString(),
-                        KIDspc = dr["KIDspc"].ToString()
+                        ID              = Guid.Parse(dr["ID"].ToString()),
+                        GID             = dr["GID"].ToString(),
+                        RepMO           = (DateTime)dr["repMO"],
+                        KIDdiv          = dr["KIDdiv"].ToString(),
+                        KIDspc          = dr["KIDspc"].ToString(),
+                        KIDdis          = dr["KIDdis"].ToString(),
+                        pos_units       = (int?)dr["pos_units"],
+                        positives       = (int?)dr["positives"],
+                        dead            = (int?)dr["dead"],
+                        end_pos_units   = (int?)dr["end_pos_units"],
+                        end_pos_animals = (int?)dr["end_pos_animals"],
+                        culled          = (int?)dr["culled"]
                     };
 
                     tmpList.Add(tmp);
