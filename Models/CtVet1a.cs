@@ -7,26 +7,20 @@ namespace nadis.Models
     {
         public Guid ID { get; set; }
 
-        public DateTime RepMO { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MMM yyyy}")]
+        public DateTime RepMO { get; set; } //periud dannix
 
         [StringLength(21)]
-        public string GID { get; set; }     //code raion
+        public string GID { get; set; }     //code ???????
         [StringLength(10)]
         public string KIDdiv { get; set; }  //raion a/a 
 
         [StringLength(4)]
         public string KIDspc { get; set; } // vid jivotnogo
+        
+        [StringLength(4)]
+        public string KIDdis { get; set; } // bolezn
 
-
-        /*
-        [StringLength(13)]
-        public string KIDvil { get; set; }
-
-        [Column(TypeName = "date")]
-        public DateTime? dtObs { get; set; }
-
-        [Column(TypeName = "date")]
-        public DateTime? repMO { get; set; }
 
         public int? pos_units { get; set; }
 
@@ -38,6 +32,13 @@ namespace nadis.Models
 
         public int? end_pos_animals { get; set; }
 
+        public int? culled { get; set; }
+        /*
+        
+        [Column(TypeName = "date")]
+        public DateTime? dtObs { get; set; }
+
+        
         [Column(TypeName = "date")]
         public DateTime? dtExp { get; set; }
 
@@ -57,7 +58,7 @@ namespace nadis.Models
 
         public bool? isExp { get; set; }
 
-        public int? culled { get; set; }  */
+          */
 
     }
 }
