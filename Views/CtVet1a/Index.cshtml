@@ -12,10 +12,12 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.GID)
+                @Html.DisplayNameFor(model => model.ID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RepMO)
+                
+                @Html.DisplayNameFor(model => model.RepMO) 
+                
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.KIDdiv)
@@ -50,9 +52,9 @@
         @foreach(var tmp in Model)
         {
         <tr>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => tmp.GID)
-            </td>
+            </td> *@
             <td>
                 @Html.DisplayFor(modelItem => tmp.RepMO)
             </td>

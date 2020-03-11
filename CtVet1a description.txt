@@ -16,3 +16,8 @@ comments	- Коментарий
 KID - Generated GID
 dtCH, dtCR - datetime now
 KIDro - id currend user(Район)
+
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>

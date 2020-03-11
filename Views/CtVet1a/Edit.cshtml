@@ -1,15 +1,16 @@
 ﻿@model nadis.Models.CtVet1a
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Создать</h1>
+<h1>Редактировать</h1>
 <h3>ctVet1a</h3>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ID"/>
+
             <div class="form-group">
                 <label asp-for="RepMO" class="control-label"></label>
                 <input asp-for="RepMO" class="form-control" />
@@ -61,7 +62,7 @@
                 <span asp-validation-for="culled" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-success" />
+                <input type="submit" value="Create" class="btn btn-success" />
             </div>
         </form>
     </div>
@@ -71,5 +72,5 @@
 </div>
 
 @section Script{
-        @{ await Html.RenderPartialAsync("_ValudationScriptPartial");}
- }
+    @{ await Html.RenderPartialAsync("_ValudationScriptPartial");}
+}

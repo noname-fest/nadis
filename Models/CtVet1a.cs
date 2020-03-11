@@ -10,8 +10,8 @@ namespace nadis.Models
         [DisplayFormat(DataFormatString = "{0:MMM yyyy}")]
         public DateTime RepMO { get; set; } //periud dannix
 
-        [StringLength(21)]
-        public string GID { get; set; }     //code ???????
+        [StringLength(7)]
+        public string KIDro { get; set; }     //code ???????
         [StringLength(10)]
         public string KIDdiv { get; set; }  //raion a/a 
 
