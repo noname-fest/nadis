@@ -8,16 +8,11 @@
 <p>
     <a asp-action="Create">Создать</a>
 </p>
-<table class="table table-striped">
+<table class="table table-striped table-responsive-sm">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ID)
-            </th>
-            <th>
-                
                 @Html.DisplayNameFor(model => model.RepMO) 
-                
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.KIDdiv)
@@ -87,7 +82,7 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@tmp.ID">Редакт.</a>
-                <a asp-action="Detail" asp-route-id="@tmp.ID">Просм.</a>
+                <a asp-action="Details" asp-route-id="@tmp.ID">Просм.</a>
                 <a asp-action="Delete" asp-route-id="@tmp.ID">Удал.</a>
             </td>
         </tr>

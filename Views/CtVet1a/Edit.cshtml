@@ -18,7 +18,24 @@
             </div>
             <div class="form-group">
                 <label asp-for="KIDdiv" class="control-label"></label>
-                <input asp-for="KIDdiv" class="form-control" />
+                <select asp-for="KIDdiv" class="form-control">
+                    @foreach (var tmp in Model.getSPAa())
+                    {
+                        @if (String.Equals(Model.KIDdiv,tmp.KID))
+                        {
+                            <option value=@Html.DisplayFor(modelItem => tmp.KID) selected>
+                                @Html.DisplayFor(modelItem => tmp.name)
+                            </option>
+                        }
+                        else
+                        {
+                            <option value=@Html.DisplayFor(modelItem => tmp.KID)>
+                                @Html.DisplayFor(modelItem => tmp.name)
+                            </option>
+
+                        }
+                    }
+                </select>
                 <span asp-validation-for="KIDdiv" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -62,7 +79,8 @@
                 <span asp-validation-for="culled" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-success" />
+                <input type="hidden" asp-for="ID"/>
+                <input type="submit" value="Edit" class="btn btn-success" />
             </div>
         </form>
     </div>
@@ -70,7 +88,8 @@
 <div>
     <a asp-action="Index">Назад к списку</a>
 </div>
-
-@section Script{
-    @{ await Html.RenderPartialAsync("_ValudationScriptPartial");}
-}
+@*
+    @section Script{
+        @{ await Html.RenderPartialAsync("_ValudationScriptPartial");}
+    }
+*@

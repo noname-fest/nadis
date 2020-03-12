@@ -12,7 +12,7 @@ namespace nadis.Controllers
         public IActionResult Index()
         {
             _ = new List<CtVet1a>();
-            List<CtVet1a> vet1aList = vet1aDAL.GetAllCtVet1a("RD04235", "01/12/2019").ToList();
+            List<CtVet1a> vet1aList = vet1aDAL.GetAllCtVet1a("RD02205", "01/12/2019").ToList();
             return View(vet1aList);
         }
         [HttpGet]
@@ -32,8 +32,7 @@ namespace nadis.Controllers
             return View(tmpVet);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+       
         public IActionResult Edit(Guid id)
         {
             if (id == null)
@@ -63,7 +62,7 @@ namespace nadis.Controllers
             }
             return View(vet1aDAL);
         }
-
+        [HttpGet]
         public IActionResult Details(Guid id)
         {
             if (id == null)

@@ -9,7 +9,7 @@ namespace nadis.Models
     public class CtVet1aDAL
     {
         //readonly string connectionString = "Data Source=.\\SQLEXPRESS;Initial Catalog=nadis;Integrated Security=True";
-        public IEnumerable<CtVet1a> GetAllCtVet1a(string KIDro, string repMO)
+         public IEnumerable<CtVet1a> GetAllCtVet1a(string KIDro, string repMO)
         {
 
             var appSettingsJson = AppSettingJSON.GetAppSettings();
@@ -31,7 +31,7 @@ namespace nadis.Models
                     CtVet1a tmp = new CtVet1a
                     {
                         ID              = Guid.Parse(dr["ID"].ToString()),
-                        KIDro             = dr["GID"].ToString(),
+                        KIDro           = dr["KIDro"].ToString(),
                         RepMO           = (DateTime)dr["repMO"],
                         KIDdiv          = dr["KIDdiv"].ToString(),
                         KIDspc          = dr["KIDspc"].ToString(),
@@ -61,9 +61,9 @@ namespace nadis.Models
             {
                 CommandType = CommandType.StoredProcedure
             };
-            cmd.Parameters.AddWithValue("@ID", tmp.ID);
-            cmd.Parameters.AddWithValue("@KIDro", tmp.KIDdis);
-            cmd.Parameters.AddWithValue("@KIDvdiv", tmp.KIDdiv);
+            SqlParameter sqlParameter = cmd.Parameters.AddWithValue("@KIDro", /*tmp.KIDro*/"RD02205");
+            cmd.Parameters.AddWithValue("@repMO", tmp.RepMO);
+            cmd.Parameters.AddWithValue("@KIDdiv", tmp.KIDdiv);
             cmd.Parameters.AddWithValue("@KIDspc", tmp.KIDspc);
             cmd.Parameters.AddWithValue("@KIDdis", tmp.KIDdis);
             cmd.Parameters.AddWithValue("@pos_units", tmp.pos_units);
@@ -73,10 +73,10 @@ namespace nadis.Models
             cmd.Parameters.AddWithValue("@end_pos_animals", tmp.end_pos_animals);
             cmd.Parameters.AddWithValue("@culled", tmp.culled);
 
-
             _conn.Open();
             cmd.ExecuteNonQuery();
             _conn.Close();
+
         }
 
         public void UpdateCtVet1a(CtVet1a tmp)
@@ -90,7 +90,7 @@ namespace nadis.Models
                 CommandType = CommandType.StoredProcedure
             };
             cmd.Parameters.AddWithValue("@ID", tmp.ID);
-            cmd.Parameters.AddWithValue("@KIDro", tmp.KIDdis);
+            cmd.Parameters.AddWithValue("@KIDro", tmp.KIDro);
             cmd.Parameters.AddWithValue("@KIDvdiv", tmp.KIDdiv);
             cmd.Parameters.AddWithValue("@KIDspc", tmp.KIDspc);
             cmd.Parameters.AddWithValue("@KIDdis", tmp.KIDdis);

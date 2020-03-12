@@ -1,10 +1,45 @@
-﻿using System;
+﻿using nadis.tools;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace nadis.Models
 {
     public class CtVet1a
     {
+        private static List<SPAa> SPAa { get; set; } =  new List<SPAa>();
+        public List<SPAa> getSPAa() { return SPAa; }
+        public CtVet1a()
+        {
+            if(!(SPAa.Count>0)) 
+            {
+                var appSettingsJson = AppSettingJSON.GetAppSettings();
+                var connectionString = appSettingsJson["DefaultConnection"];
+                using (SqlConnection _conn = new SqlConnection(connectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("sp_Get_SPAa", _conn)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    cmd.Parameters.AddWithValue("@idL", "02-205");
+                    _conn.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        SPAa tmp = new SPAa();
+                        {
+                            tmp.KID = dr["KID"].ToString();
+                            tmp.name = dr["Socunit"].ToString();
+                        }
+                        SPAa.Add(tmp);
+                    }
+                    _conn.Close();
+                }
+            } 
+        }
+
         public Guid ID { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:MMM yyyy}")]
@@ -12,13 +47,13 @@ namespace nadis.Models
 
         [StringLength(7)]
         public string KIDro { get; set; }     //code ???????
-        [StringLength(10)]
+        //[StringLength(10)]
         public string KIDdiv { get; set; }  //raion a/a 
 
-        [StringLength(4)]
+        //[StringLength(4)]
         public string KIDspc { get; set; } // vid jivotnogo
         
-        [StringLength(4)]
+        //[StringLength(4)]
         public string KIDdis { get; set; } // bolezn
 
 
@@ -33,32 +68,33 @@ namespace nadis.Models
         public int? end_pos_animals { get; set; }
 
         public int? culled { get; set; }
-        /*
-        
-        [Column(TypeName = "date")]
-        public DateTime? dtObs { get; set; }
+        //public static List<SPAa> Aa { get; set; } = { list; }
+    /*
 
-        
-        [Column(TypeName = "date")]
-        public DateTime? dtExp { get; set; }
+    [Column(TypeName = "date")]
+    public DateTime? dtObs { get; set; }
 
-        [Column(TypeName = "date")]
-        public DateTime? dtCR { get; set; }
 
-        [StringLength(10)]
-        public string byCR { get; set; }
+    [Column(TypeName = "date")]
+    public DateTime? dtExp { get; set; }
 
-        [StringLength(10)]
-        public string byCH { get; set; }
+    [Column(TypeName = "date")]
+    public DateTime? dtCR { get; set; }
 
-        public DateTime? dtCH { get; set; }
+    [StringLength(10)]
+    public string byCR { get; set; }
 
-        [StringLength(7)]
-        public string KIDro { get; set; }
+    [StringLength(10)]
+    public string byCH { get; set; }
 
-        public bool? isExp { get; set; }
+    public DateTime? dtCH { get; set; }
 
-          */
+    [StringLength(7)]
+    public string KIDro { get; set; }
 
-    }
+    public bool? isExp { get; set; }
+
+      */
+
+}
 }
