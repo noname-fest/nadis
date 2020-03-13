@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using nadis.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using nadis.Models.sp;
+using System.Data.SqlClient;
+using nadis.tools;
+using System.Data;
 
 namespace nadis.Controllers
 {
@@ -32,7 +37,7 @@ namespace nadis.Controllers
             return View(tmpVet);
         }
 
-       
+        [HttpGet]
         public IActionResult Edit(Guid id)
         {
             if (id == null)
@@ -44,6 +49,43 @@ namespace nadis.Controllers
             {
                 return NotFound();
             }
+            List<sp_values> tmpList = new List<sp_values>();
+            int year = tmpVet1a.RepMO.Year;
+            for (int i = 1; i < 13; i++)
+            {
+                sp_values tmp_sp = new sp_values();
+                tmp_sp.KID  = new DateTime(year,i,1).ToString();
+                tmp_sp.name = new DateTime(year, i, 1).ToString("MMM yyyy");
+                tmpList.Add(tmp_sp);
+            }
+            ViewBag.RepMoList = new SelectList(tmpList, "KID", "name");//,tmpVet1a.RepMO.ToString());
+
+
+            List<sp_values> tmpList2 = new List<sp_values>();
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+            using (SqlConnection _conn = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("sp_Get_SPAa", _conn)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                cmd.Parameters.AddWithValue("@idL", "02-205");
+                _conn.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    sp_values tmp = new sp_values();
+                    {
+                        tmp.KID = dr["KID"].ToString();
+                        tmp.name = dr["Socunit"].ToString().Trim();
+                    }
+                    tmpList2.Add(tmp);
+                }
+                _conn.Close();
+            }
+            ViewBag.KIDdivList = new SelectList(tmpList2, "KID", "name");//,tmpVet1a.idKIDdiv);
+
 
             return View(tmpVet1a);
         }
@@ -61,7 +103,8 @@ namespace nadis.Controllers
                 vet1aDAL.UpdateCtVet1a(objCtVet1a);
                 return RedirectToAction("Index");
             }
-            ViewBag
+            //ViewBag
+            //ViewBag.sp_aa = objCtVet1a.getSPAa();
             return View(vet1aDAL);
         }
         [HttpGet]

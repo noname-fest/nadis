@@ -11,33 +11,40 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ID" />
+            <input type="hidden" asp-for="KIDro" />
+            <input type="hidden" asp-for="idKIDdis" />
             <div class="form-group">
                 <label asp-for="RepMO" class="control-label"></label>
-                <input asp-for="RepMO" class="form-control" />
+                @Html.DropDownList("RepMO", ViewBag.RepMoList as SelectList, new { @class = "form-control" })
                 <span asp-validation-for="RepMO" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="KIDdiv" class="control-label"></label>
-                <select asp-for="KIDdiv" class="form-control">
-                    @foreach (var tmp in Model.getSPAa())
+                <label asp-for="idKIDdiv" class="control-label"></label>
+                @Html.DropDownList("idKIDdiv", ViewBag.KIDdivList as SelectList, new { @class = "form-control" })
+                @*
+            <select asp-for="KIDdiv" class="form-control">
+                @foreach (var tmp in Model.getSPAa())
+                {
+                    //@if (String.Equals(Model.KIDdiv.Trim(), tmp.KID.Trim()))
+                    //SelectList
+                    @if(ViewBag.SelectedKIDdiv==tmp.KID.Trim())
                     {
-                        @if (String.Equals(Model.KIDdiv, tmp.KID))
-                        {
-                            <option value=@Html.DisplayFor(modelItem => tmp.KID) selected>
-                                @Html.DisplayFor(modelItem => tmp.name)
-                            </option>
-                        }
-                        else
-                        {
-                            <option value=@Html.DisplayFor(modelItem => tmp.KID)>
-                                @Html.DisplayFor(modelItem => tmp.name)
-                            </option>
-
-                        }
+                        <option value=@Html.DisplayFor(modelItem => tmp.KID) selected>
+                            @Html.DisplayFor(modelItem => tmp.name)
+                        </option>
                     }
-                </select>
-                <span asp-validation-for="KIDdiv" class="text-danger"></span>
+                    else
+                    {
+                        <option value=@Html.DisplayFor(modelItem => tmp.KID)>
+                            @Html.DisplayFor(modelItem => tmp.name)
+                        </option>
+
+                    }
+                }
+            </select>
+                *@
+                <span asp-validation-for="idKIDdiv" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="KIDspc" class="control-label"></label>
@@ -79,8 +86,9 @@
                 <input asp-for="culled" class="form-control" />
                 <span asp-validation-for="culled" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <input type="submit" value="Edit" class="btn btn-success" />
+                <input type="submit" value="Edit" asp-route-id="@Model.ID" class="btn btn-success" />
             </div>
         </form>
     </div>

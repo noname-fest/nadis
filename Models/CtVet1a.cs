@@ -1,4 +1,5 @@
-﻿using nadis.tools;
+﻿using nadis.Models.sp;
+using nadis.tools;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -30,7 +31,7 @@ namespace nadis.Models
                     {
                         sp_AiylAimaki tmp = new sp_AiylAimaki();
                         {
-                            tmp.KID = dr["KID"].ToString();
+                            tmp.KID = dr["KID"].ToString().Trim();
                             tmp.name = dr["Socunit"].ToString();
                         }
                         SPAa.Add(tmp);
@@ -49,13 +50,14 @@ namespace nadis.Models
         public string KIDro { get; set; }     //code ???????
         //[StringLength(10)]
         public string KIDdiv { get; set; }  //raion a/a 
+        public string idKIDdiv { get; set; }
 
         //[StringLength(4)]
         public string KIDspc { get; set; } // vid jivotnogo
         
         //[StringLength(4)]
         public string KIDdis { get; set; } // bolezn
-
+        public string idKIDdis { get; set; }
 
         public int? pos_units { get; set; }
 

@@ -9,6 +9,33 @@ namespace nadis.Models
     public class CtVet1aDAL
     {
         //readonly string connectionString = "Data Source=.\\SQLEXPRESS;Initial Catalog=nadis;Integrated Security=True";
+        /*
+        public List<sp.sp_values> GetSPValues(string sp_name, string sp_table_name)
+        {
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+
+            List<sp.sp_values> tmpList = new List<sp.sp_values>();
+            using (SqlConnection _conn = new SqlConnection(connectionString))
+            {
+                _conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT KID,name FROM " + sp_table_name, _conn);
+                SqlDataReader rd = cmd.ExecuteReader();
+                if (rd.HasRows)
+                {
+                    while (rd.Read())
+                    {
+                        sp.sp_values tmp = new sp.sp_values();
+                        tmp.KID = rd.GetValue(0).ToString().Trim();
+                        tmp.name = rd.GetValue(1).ToString().Trim();
+                        tmpList.Add(tmp);
+                    }
+                    return tmpList;
+                }
+                else return null;
+            }
+        }
+        */    
          public IEnumerable<CtVet1a> GetAllCtVet1a(string KIDro, string repMO)
         {
 
@@ -30,12 +57,14 @@ namespace nadis.Models
                 {
                     CtVet1a tmp = new CtVet1a
                     {
-                        ID              = Guid.Parse(dr["ID"].ToString()),
-                        KIDro           = dr["KIDro"].ToString(),
+                        ID              = Guid.Parse(dr["ID"].ToString().Trim()),
+                        KIDro           = dr["KIDro"].ToString().Trim(),
                         RepMO           = (DateTime)dr["repMO"],
-                        KIDdiv          = dr["KIDdiv"].ToString(),
-                        KIDspc          = dr["KIDspc"].ToString(),
-                        KIDdis          = dr["KIDdis"].ToString(),
+                        idKIDdiv        = dr["id_KIDdiv"].ToString().Trim(),
+                        KIDdiv          = dr["KIDdiv"].ToString().Trim(),
+                        KIDspc          = dr["KIDspc"].ToString().Trim(),
+                        KIDdis          = dr["KIDdis"].ToString().Trim(),
+                        idKIDdis        = dr["id_KIDdis"].ToString().Trim(),
                         pos_units       = (int?)dr["pos_units"],
                         positives       = (int?)dr["positives"],
                         dead            = (int?)dr["dead"],
@@ -90,8 +119,9 @@ namespace nadis.Models
                 CommandType = CommandType.StoredProcedure
             };
             cmd.Parameters.AddWithValue("@ID", tmp.ID);
-            cmd.Parameters.AddWithValue("@KIDro", tmp.KIDro);
-            cmd.Parameters.AddWithValue("@KIDvdiv", tmp.KIDdiv);
+            cmd.Parameters.AddWithValue("@KIDro", "RD02205");//tmp.KIDro);
+            cmd.Parameters.AddWithValue("@repMO", "01/12/2019");//tmp.RepMO);
+            cmd.Parameters.AddWithValue("@KIDdiv", tmp.idKIDdiv);
             cmd.Parameters.AddWithValue("@KIDspc", tmp.KIDspc);
             cmd.Parameters.AddWithValue("@KIDdis", tmp.KIDdis);
             cmd.Parameters.AddWithValue("@pos_units", tmp.pos_units);
