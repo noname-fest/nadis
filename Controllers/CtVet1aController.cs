@@ -44,6 +44,7 @@ namespace nadis.Controllers
             {
                 return NotFound();
             }
+
             return View(tmpVet1a);
         }
 
@@ -60,6 +61,7 @@ namespace nadis.Controllers
                 vet1aDAL.UpdateCtVet1a(objCtVet1a);
                 return RedirectToAction("Index");
             }
+            ViewBag
             return View(vet1aDAL);
         }
         [HttpGet]

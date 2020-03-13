@@ -10,18 +10,19 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
+            <input type="hidden" asp-for="ID" />
             <div class="form-group">
                 <label asp-for="RepMO" class="control-label"></label>
                 <input asp-for="RepMO" class="form-control" />
                 <span asp-validation-for="RepMO" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="KIDdiv" class="control-label"></label>
                 <select asp-for="KIDdiv" class="form-control">
                     @foreach (var tmp in Model.getSPAa())
                     {
-                        @if (String.Equals(Model.KIDdiv,tmp.KID))
+                        @if (String.Equals(Model.KIDdiv, tmp.KID))
                         {
                             <option value=@Html.DisplayFor(modelItem => tmp.KID) selected>
                                 @Html.DisplayFor(modelItem => tmp.name)
@@ -79,7 +80,6 @@
                 <span asp-validation-for="culled" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="hidden" asp-for="ID"/>
                 <input type="submit" value="Edit" class="btn btn-success" />
             </div>
         </form>

@@ -9,8 +9,8 @@ namespace nadis.Models
 {
     public class CtVet1a
     {
-        private static List<SPAa> SPAa { get; set; } =  new List<SPAa>();
-        public List<SPAa> getSPAa() { return SPAa; }
+        private static List<sp_AiylAimaki> SPAa { get; set; } =  new List<sp_AiylAimaki>();
+        public List<sp_AiylAimaki> getSPAa() { return SPAa; }
         public CtVet1a()
         {
             if(!(SPAa.Count>0)) 
@@ -28,7 +28,7 @@ namespace nadis.Models
                     SqlDataReader dr = cmd.ExecuteReader();
                     while (dr.Read())
                     {
-                        SPAa tmp = new SPAa();
+                        sp_AiylAimaki tmp = new sp_AiylAimaki();
                         {
                             tmp.KID = dr["KID"].ToString();
                             tmp.name = dr["Socunit"].ToString();
