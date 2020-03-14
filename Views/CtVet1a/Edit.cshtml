@@ -19,61 +19,64 @@
             </div>
             <div class="form-group">
                 <label asp-for="KIDdivDisplay" class="control-label"></label>
-                <input asp-for="KIDdiv" class="form-control" />
+                <!--<input asp-for="KIDdiv" class="form-control" />-->
+                @Html.DropDownList("KIDdiv", ViewBag.KIDdivList as SelectList, new { @class = "form-control" })
                 <span asp-validation-for="KIDdiv" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="KIDspc" class="control-label"></label>
-                <input asp-for="KIDspc" class="form-control" />
+                <label asp-for="KIDspcDisplay" class="control-label"></label>
+                <!--<input asp-for="KIDspc" class="form-control" />-->
+                @Html.DropDownList("KIDspc", ViewBag.KIDspcList as SelectList, new { @class = "form-control" })
                 <span asp-validation-for="KIDspc" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="KIDdis" class="control-label"></label>
-                <input asp-for="KIDdis" class="form-control" />
+                <label asp-for="KIDdisDisplay" class="control-label"></label>
+                <!--<input asp-for="KIDdis" class="form-control" />-->
+                @Html.DropDownList("KIDdis", ViewBag.KIDdisList as SelectList, new { @class = "form-control" })
                 <span asp-validation-for="KIDdis" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="pos_units" class="control-label"></label>
-                <input asp-for="pos_units" class="form-control" />
-                <span asp-validation-for="pos_units" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="positives" class="control-label"></label>
-                <input asp-for="positives" class="form-control" />
-                <span asp-validation-for="positives" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="dead" class="control-label"></label>
-                <input asp-for="dead" class="form-control" />
-                <span asp-validation-for="dead" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="end_pos_units" class="control-label"></label>
-                <input asp-for="end_pos_units" class="form-control" />
-                <span asp-validation-for="end_pos_units" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="end_pos_animals" class="control-label"></label>
-                <input asp-for="end_pos_animals" class="form-control" />
-                <span asp-validation-for="end_pos_animals" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="culled" class="control-label"></label>
-                <input asp-for="culled" class="form-control" />
-                <span asp-validation-for="culled" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="pos_units" class="control-label"></label>
+                    <input asp-for="pos_units" class="form-control" />
+                    <span asp-validation-for="pos_units" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="positives" class="control-label"></label>
+                    <input asp-for="positives" class="form-control" />
+                    <span asp-validation-for="positives" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="dead" class="control-label"></label>
+                    <input asp-for="dead" class="form-control" />
+                    <span asp-validation-for="dead" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="end_pos_units" class="control-label"></label>
+                    <input asp-for="end_pos_units" class="form-control" />
+                    <span asp-validation-for="end_pos_units" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="end_pos_animals" class="control-label"></label>
+                    <input asp-for="end_pos_animals" class="form-control" />
+                    <span asp-validation-for="end_pos_animals" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="culled" class="control-label"></label>
+                    <input asp-for="culled" class="form-control" />
+                    <span asp-validation-for="culled" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <input type="submit" value="Edit" asp-route-id="@Model.ID" class="btn btn-success" />
-            </div>
-        </form>
+                <div class="form-group">
+                    <input type="submit" value="Edit" asp-route-id="@Model.ID" class="btn btn-success" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-<div>
-    <a asp-action="Index">Назад к списку</a>
-</div>
-@*
-    @section Script{
-        @{ await Html.RenderPartialAsync("_ValudationScriptPartial");}
-    }
-*@
+    <div>
+        <a asp-action="Index">Назад к списку</a>
+    </div>
+    @*
+        @section Script{
+            @{ await Html.RenderPartialAsync("_ValudationScriptPartial");}
+        }
+    *@

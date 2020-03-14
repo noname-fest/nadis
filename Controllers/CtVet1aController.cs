@@ -64,10 +64,10 @@ namespace nadis.Controllers
             }
             ViewBag.RepMoList = new SelectList(tmpList, "ID", "Text");//,tmpVet1a.RepMO.ToString());
 
-            //Ayil Aimak ------------------------------------------------------
-            List<sp_values> tmpList2 = new List<sp_values>();
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
+            //Ayil Aimak ------------------------------------------------------
+            List<sp_values> tmpList2 = new List<sp_values>();
             using (SqlConnection _conn = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand("sp_Get_SPAa", _conn)
@@ -89,6 +89,58 @@ namespace nadis.Controllers
                 _conn.Close();
             }
             ViewBag.KIDdivList = new SelectList(tmpList2, "ID", "Text");//,tmpVet1a.idKIDdiv);
+
+
+            //sp_Get_SPVidJiv
+            //Vid jivodnih ------------------------------------------------------
+            List<sp_values> tmpList3 = new List<sp_values>();
+            using (SqlConnection _conn = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("sp_Get_SPVidJiv", _conn)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                _conn.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    sp_values tmp = new sp_values();
+                    {
+                        tmp.ID = dr["KID"].ToString();
+                        tmp.Text = dr["Species"].ToString().Trim();
+                    }
+                    tmpList3.Add(tmp);
+                }
+                _conn.Close();
+            }
+            ViewBag.KIDspcList = new SelectList(tmpList3, "ID", "Text");
+
+
+            //sp_Get_SPBolezni
+            //Vid Bolizni ------------------------------------------------------
+            List<sp_values> tmpList4 = new List<sp_values>();
+            using (SqlConnection _conn = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("sp_Get_SPBolezni", _conn)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                _conn.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    sp_values tmp = new sp_values();
+                    {
+                        tmp.ID = dr["KID"].ToString();
+                        tmp.Text = dr["Disease"].ToString().Trim();
+                    }
+                    tmpList4.Add(tmp);
+                }
+                _conn.Close();
+            }
+            ViewBag.KIDdisList = new SelectList(tmpList4, "ID", "Text");
+
+
 
 
             return View(tmpVet1a);
