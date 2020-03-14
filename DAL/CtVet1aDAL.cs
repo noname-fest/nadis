@@ -8,34 +8,6 @@ namespace nadis.Models
 {
     public class CtVet1aDAL
     {
-        //readonly string connectionString = "Data Source=.\\SQLEXPRESS;Initial Catalog=nadis;Integrated Security=True";
-        /*
-        public List<sp.sp_values> GetSPValues(string sp_name, string sp_table_name)
-        {
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-
-            List<sp.sp_values> tmpList = new List<sp.sp_values>();
-            using (SqlConnection _conn = new SqlConnection(connectionString))
-            {
-                _conn.Open();
-                SqlCommand cmd = new SqlCommand("SELECT KID,name FROM " + sp_table_name, _conn);
-                SqlDataReader rd = cmd.ExecuteReader();
-                if (rd.HasRows)
-                {
-                    while (rd.Read())
-                    {
-                        sp.sp_values tmp = new sp.sp_values();
-                        tmp.KID = rd.GetValue(0).ToString().Trim();
-                        tmp.name = rd.GetValue(1).ToString().Trim();
-                        tmpList.Add(tmp);
-                    }
-                    return tmpList;
-                }
-                else return null;
-            }
-        }
-        */
         public IEnumerable<CtVet1a> GetAllCtVet1a(string KIDro)//, string repMO)
         {
 

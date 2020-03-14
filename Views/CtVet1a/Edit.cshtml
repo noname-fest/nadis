@@ -37,32 +37,32 @@
             </div>
                 <div class="form-group">
                     <label asp-for="pos_units" class="control-label"></label>
-                    <input asp-for="pos_units" class="form-control" />
+                    <input asp-for="pos_units" class="form-control" type="number" min="0" step="1"/>
                     <span asp-validation-for="pos_units" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="positives" class="control-label"></label>
-                    <input asp-for="positives" class="form-control" />
+                    <input asp-for="positives" class="form-control"   type="number" min="0" step="1"/>
                     <span asp-validation-for="positives" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="dead" class="control-label"></label>
-                    <input asp-for="dead" class="form-control" />
+                    <input asp-for="dead" class="form-control"   type="number" min="0" step="1"/>
                     <span asp-validation-for="dead" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="end_pos_units" class="control-label"></label>
-                    <input asp-for="end_pos_units" class="form-control" />
+                    <input asp-for="end_pos_units" class="form-control"   type="number" min="0" step="1"/>
                     <span asp-validation-for="end_pos_units" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="end_pos_animals" class="control-label"></label>
-                    <input asp-for="end_pos_animals" class="form-control" />
+                    <input asp-for="end_pos_animals" class="form-control"   type="number" min="0" step="1"/>
                     <span asp-validation-for="end_pos_animals" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="culled" class="control-label"></label>
-                    <input asp-for="culled" class="form-control" />
+                    <input asp-for="culled" class="form-control"  type="number" min="0" step="1"/>
                     <span asp-validation-for="culled" class="text-danger"></span>
                 </div>
 
