@@ -35,8 +35,8 @@ namespace nadis.Models
                 else return null;
             }
         }
-        */    
-         public IEnumerable<CtVet1a> GetAllCtVet1a(string KIDro, string repMO)
+        */
+        public IEnumerable<CtVet1a> GetAllCtVet1a(string KIDro)//, string repMO)
         {
 
             var appSettingsJson = AppSettingJSON.GetAppSettings();
@@ -50,7 +50,7 @@ namespace nadis.Models
                     CommandType = CommandType.StoredProcedure
                 };
                 cmd.Parameters.AddWithValue("@KIDro", KIDro);
-                cmd.Parameters.AddWithValue("@repMO", repMO);
+                //cmd.Parameters.AddWithValue("@repMO", repMO);
                 _conn.Open();
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
@@ -60,11 +60,9 @@ namespace nadis.Models
                         ID              = Guid.Parse(dr["ID"].ToString().Trim()),
                         KIDro           = dr["KIDro"].ToString().Trim(),
                         RepMO           = (DateTime)dr["repMO"],
-                        idKIDdiv        = dr["id_KIDdiv"].ToString().Trim(),
                         KIDdiv          = dr["KIDdiv"].ToString().Trim(),
                         KIDspc          = dr["KIDspc"].ToString().Trim(),
                         KIDdis          = dr["KIDdis"].ToString().Trim(),
-                        idKIDdis        = dr["id_KIDdis"].ToString().Trim(),
                         pos_units       = (int?)dr["pos_units"],
                         positives       = (int?)dr["positives"],
                         dead            = (int?)dr["dead"],
@@ -90,7 +88,8 @@ namespace nadis.Models
             {
                 CommandType = CommandType.StoredProcedure
             };
-            SqlParameter sqlParameter = cmd.Parameters.AddWithValue("@KIDro", /*tmp.KIDro*/"RD02205");
+
+            cmd.Parameters.AddWithValue("@KIDro", /*tmp.KIDro*/"RD02205");
             cmd.Parameters.AddWithValue("@repMO", tmp.RepMO);
             cmd.Parameters.AddWithValue("@KIDdiv", tmp.KIDdiv);
             cmd.Parameters.AddWithValue("@KIDspc", tmp.KIDspc);
@@ -120,8 +119,7 @@ namespace nadis.Models
             };
             cmd.Parameters.AddWithValue("@ID", tmp.ID);
             cmd.Parameters.AddWithValue("@KIDro", "RD02205");//tmp.KIDro);
-            cmd.Parameters.AddWithValue("@repMO", "01/12/2019");//tmp.RepMO);
-            cmd.Parameters.AddWithValue("@KIDdiv", tmp.idKIDdiv);
+            cmd.Parameters.AddWithValue("@repMO", tmp.RepMO);
             cmd.Parameters.AddWithValue("@KIDspc", tmp.KIDspc);
             cmd.Parameters.AddWithValue("@KIDdis", tmp.KIDdis);
             cmd.Parameters.AddWithValue("@pos_units", tmp.pos_units);

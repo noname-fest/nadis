@@ -10,8 +10,9 @@ namespace nadis.Models
 {
     public class CtVet1a
     {
-        private static List<sp_AiylAimaki> SPAa { get; set; } =  new List<sp_AiylAimaki>();
-        public List<sp_AiylAimaki> getSPAa() { return SPAa; }
+        //private static List<sp_AiylAimaki> SPAa { get; set; } = new List<sp_AiylAimaki>();
+        //public List<sp_AiylAimaki> getSPAa() { return SPAa; }
+        /*
         public CtVet1a()
         {
             if(!(SPAa.Count>0)) 
@@ -40,63 +41,77 @@ namespace nadis.Models
                 }
             } 
         }
+        */
 
+        [Display(Name = "guid Записи")]
+        //[ScaffoldColumn(false)]
         public Guid ID { get; set; }
 
+        [Display(Name = "Отчетный периуд")]
         [DisplayFormat(DataFormatString = "{0:MMM yyyy}")]
         public DateTime RepMO { get; set; } //periud dannix
-
+       
+        //[ScaffoldColumn(false)]
         [StringLength(7)]
-        public string KIDro { get; set; }     //code ???????
-        //[StringLength(10)]
+        public string KIDro { get; set; }     //code пользователя RD02525
+
+        [Display(Name = "Айыл Аймак")]
+        [StringLength(10)]
         public string KIDdiv { get; set; }  //raion a/a 
-        public string idKIDdiv { get; set; }
 
-        //[StringLength(4)]
+        [Display(Name = "Вид животного")]
+        [StringLength(4)]
         public string KIDspc { get; set; } // vid jivotnogo
-        
-        //[StringLength(4)]
-        public string KIDdis { get; set; } // bolezn
-        public string idKIDdis { get; set; }
 
+        [Display(Name = "Болезнь")]
+        [StringLength(4)]
+        public string KIDdis { get; set; } // bolezn
+
+        [Display(Name = "Выявл. неблагополуч. пунктов")]
         public int? pos_units { get; set; }
 
+        [Display(Name = "Заболело голов")]
         public int? positives { get; set; }
 
+        [Display(Name = "Пало голов")]
         public int? dead { get; set; }
 
+        [Display(Name = "Неблагополуч.пунктов")]
         public int? end_pos_units { get; set; }
 
+        [Display(Name = "Больных животных голов")]
         public int? end_pos_animals { get; set; }
 
+        [Display(Name = "Забито")]
         public int? culled { get; set; }
+
         //public static List<SPAa> Aa { get; set; } = { list; }
-    /*
+        /*
 
-    [Column(TypeName = "date")]
-    public DateTime? dtObs { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? dtObs { get; set; }
 
 
-    [Column(TypeName = "date")]
-    public DateTime? dtExp { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? dtExp { get; set; }
 
-    [Column(TypeName = "date")]
-    public DateTime? dtCR { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? dtCR { get; set; }
 
-    [StringLength(10)]
-    public string byCR { get; set; }
+        [StringLength(10)]
+        public string byCR { get; set; }
 
-    [StringLength(10)]
-    public string byCH { get; set; }
+        [StringLength(10)]
+        public string byCH { get; set; }
 
-    public DateTime? dtCH { get; set; }
+        public DateTime? dtCH { get; set; }
 
-    [StringLength(7)]
-    public string KIDro { get; set; }
+        [StringLength(7)]
+        public string KIDro { get; set; }
 
-    public bool? isExp { get; set; }
+        public bool? isExp { get; set; }
 
-      */
+          */
 
-}
+    }
 }
