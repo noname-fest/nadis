@@ -27,8 +27,8 @@ namespace nadis.Models
                     while (rd.Read())
                     {
                         sp.sp_values tmp = new sp.sp_values();
-                        tmp.KID = rd.GetValue(0).ToString().Trim();
-                        tmp.name = rd.GetValue(1).ToString().Trim();
+                        tmp.ID = rd.GetValue(0).ToString().Trim();
+                        tmp.Text = rd.GetValue(1).ToString().Trim();
                         tmpList.Add(tmp);
                     }
                     return tmpList;

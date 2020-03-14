@@ -51,18 +51,20 @@ namespace nadis.Controllers
             {
                 return NotFound();
             }
+
+            //repMO -------------------------------------------------------
             List<sp_values> tmpList = new List<sp_values>();
             int year = tmpVet1a.RepMO.Year;
             for (int i = 1; i < 13; i++)
             {
                 sp_values tmp_sp = new sp_values();
-                tmp_sp.KID  = new DateTime(year,i,1).ToString();
-                tmp_sp.name = new DateTime(year, i, 1).ToString("MMM yyyy");
+                tmp_sp.ID  = new DateTime(year,i,1).ToString();
+                tmp_sp.Text = new DateTime(year, i, 1).ToString("MMM yyyy");
                 tmpList.Add(tmp_sp);
             }
-            ViewBag.RepMoList = new SelectList(tmpList, "KID", "name");//,tmpVet1a.RepMO.ToString());
+            ViewBag.RepMoList = new SelectList(tmpList, "ID", "Text");//,tmpVet1a.RepMO.ToString());
 
-
+            //Ayil Aimak ------------------------------------------------------
             List<sp_values> tmpList2 = new List<sp_values>();
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
@@ -72,21 +74,21 @@ namespace nadis.Controllers
                 {
                     CommandType = CommandType.StoredProcedure
                 };
-                cmd.Parameters.AddWithValue("@idL", "02-205");
+                cmd.Parameters.AddWithValue("@idL", id);
                 _conn.Open();
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
                     sp_values tmp = new sp_values();
                     {
-                        tmp.KID = dr["KID"].ToString();
-                        tmp.name = dr["Socunit"].ToString().Trim();
+                        tmp.ID = dr["KID"].ToString();
+                        tmp.Text = dr["Socunit"].ToString().Trim();
                     }
                     tmpList2.Add(tmp);
                 }
                 _conn.Close();
             }
-            ViewBag.KIDdivList = new SelectList(tmpList2, "KID", "name");//,tmpVet1a.idKIDdiv);
+            ViewBag.KIDdivList = new SelectList(tmpList2, "ID", "Text");//,tmpVet1a.idKIDdiv);
 
 
             return View(tmpVet1a);

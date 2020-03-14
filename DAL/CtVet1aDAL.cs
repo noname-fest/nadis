@@ -60,9 +60,16 @@ namespace nadis.Models
                         ID              = Guid.Parse(dr["ID"].ToString().Trim()),
                         KIDro           = dr["KIDro"].ToString().Trim(),
                         RepMO           = (DateTime)dr["repMO"],
+
                         KIDdiv          = dr["KIDdiv"].ToString().Trim(),
+                        KIDdivDisplay   = dr["KIDdivDisplay"].ToString().Trim(),
+
                         KIDspc          = dr["KIDspc"].ToString().Trim(),
+                        KIDspcDisplay   = dr["KIDspcDisplay"].ToString().Trim(),
+
                         KIDdis          = dr["KIDdis"].ToString().Trim(),
+                        KIDdisDisplay   = dr["KIDdisDisplay"].ToString().Trim(),
+
                         pos_units       = (int?)dr["pos_units"],
                         positives       = (int?)dr["positives"],
                         dead            = (int?)dr["dead"],
@@ -118,8 +125,9 @@ namespace nadis.Models
                 CommandType = CommandType.StoredProcedure
             };
             cmd.Parameters.AddWithValue("@ID", tmp.ID);
-            cmd.Parameters.AddWithValue("@KIDro", "RD02205");//tmp.KIDro);
+            cmd.Parameters.AddWithValue("@KIDro",tmp.KIDro);
             cmd.Parameters.AddWithValue("@repMO", tmp.RepMO);
+            cmd.Parameters.AddWithValue("@KIDdiv", tmp.KIDdiv);
             cmd.Parameters.AddWithValue("@KIDspc", tmp.KIDspc);
             cmd.Parameters.AddWithValue("@KIDdis", tmp.KIDdis);
             cmd.Parameters.AddWithValue("@pos_units", tmp.pos_units);
@@ -168,15 +176,22 @@ namespace nadis.Models
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
-                    tmp.ID = Guid.Parse(dr["ID"].ToString());
-                    tmp.KIDro = dr["GID"].ToString();
-                    tmp.RepMO = (DateTime)dr["repMO"];
-                    tmp.KIDdiv = dr["KIDdiv"].ToString();
-                    tmp.KIDspc = dr["KIDspc"].ToString();
-                    tmp.KIDdis = dr["KIDdis"].ToString();
-                    tmp.pos_units = (int?)dr["pos_units"];
-                    tmp.positives = (int?)dr["positives"];
-                    tmp.dead = (int?)dr["dead"];
+                    tmp.ID              = Guid.Parse(dr["ID"].ToString());
+                    tmp.KIDro           = dr["GID"].ToString();
+                    tmp.RepMO           = (DateTime)dr["repMO"];
+
+                    tmp.KIDdiv          = dr["KIDdiv"].ToString();
+                    tmp.KIDdivDisplay   = dr["KIDdivDisplay"].ToString();
+
+                    tmp.KIDspc          = dr["KIDspc"].ToString();
+                    tmp.KIDspcDisplay   = dr["KIDspcDisplay"].ToString();
+
+                    tmp.KIDdis          = dr["KIDdis"].ToString();
+                    tmp.KIDdisDisplay   = dr["KIDdis"].ToString();
+
+                    tmp.pos_units   = (int?)dr["pos_units"];
+                    tmp.positives   = (int?)dr["positives"];
+                    tmp.dead        = (int?)dr["dead"];
                     tmp.end_pos_units = (int?)dr["end_pos_units"];
                     tmp.end_pos_animals = (int?)dr["end_pos_animals"];
                     tmp.culled = (int?)dr["culled"];
