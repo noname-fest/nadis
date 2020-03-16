@@ -26,8 +26,11 @@ namespace nadis.Controllers
             ViewData["UserName"]  = User.Identity.Name;
             ViewData["KIDro"] = User.Claims.ToList().
                                         FirstOrDefault(x => x.Type == "KIDro").Value;
+            ViewData["Role"] = User.Claims.ToList().
+                                        FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
             return View();
         }
+
         [Authorize]
         public IActionResult Privacy()
         {

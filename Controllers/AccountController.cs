@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AuthSample.Controllers
 {
@@ -50,12 +51,14 @@ namespace AuthSample.Controllers
             return View(loginModel);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterModel registerModel)
@@ -71,7 +74,8 @@ namespace AuthSample.Controllers
                     {
                         username = registerModel.username,
                         userpassword = registerModel.userpassword,
-                        KIDro = registerModel.KIDro
+                        KIDro = registerModel.KIDro,
+                        Role  = registerModel.Role
                     });
                     await _userContext.SaveChangesAsync();
 
@@ -100,6 +104,7 @@ namespace AuthSample.Controllers
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, username),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, U.Role),
                 new Claim("KIDro", U.KIDro),
                 new Claim("Role", U.Role)
             };
