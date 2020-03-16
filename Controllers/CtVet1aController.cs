@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using nadis.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using nadis.Models.sp;
-using System.Data.SqlClient;
-using nadis.tools;
-using System.Data;
 
 namespace nadis.Controllers
 {
