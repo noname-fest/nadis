@@ -4,7 +4,7 @@ namespace nadis.Models
 {
     public class LoginModel
     {
-        [Required(ErrorMessage = "Не указан Email")]
+        [Required(ErrorMessage = "Не указан Имя пользователя")]
         public string username { get; set; }
          
         [Required(ErrorMessage = "Не указан пароль")]

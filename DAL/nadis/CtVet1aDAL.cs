@@ -68,7 +68,7 @@ namespace nadis.Models
                 CommandType = CommandType.StoredProcedure
             };
 
-            cmd.Parameters.AddWithValue("@KIDro", /*tmp.KIDro*/"RD02205");
+            cmd.Parameters.AddWithValue("@KIDro", tmp.KIDro);
             cmd.Parameters.AddWithValue("@repMO", tmp.RepMO);
             cmd.Parameters.AddWithValue("@KIDdiv", tmp.KIDdiv);
             cmd.Parameters.AddWithValue("@KIDspc", tmp.KIDspc);

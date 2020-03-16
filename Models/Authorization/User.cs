@@ -7,7 +7,7 @@
         public string username { get; set; }
         public string userpassword { get; set; }
 
-        public string KIDdiv { get; set; }
+        public string KIDro { get; set; }
         public string Role { get; set; }
     }
 }

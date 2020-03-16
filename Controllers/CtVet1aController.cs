@@ -15,9 +15,10 @@ namespace nadis.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            string KIDdivCode = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDdiv").Value;
             _ = new List<CtVet1a>();
-            List<CtVet1a> vet1aList = vet1aDAL.GetAllCtVet1a(KIDdivCode).ToList();
+            List<CtVet1a> vet1aList = vet1aDAL.GetAllCtVet1a(
+                                                User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value).
+                                                ToList();
             return View(vet1aList);
         }
         [Authorize]
@@ -30,6 +31,7 @@ namespace nadis.Controllers
             ViewBag.KIDdisList = spList.KIDdisList();
             CtVet1a tmp = new CtVet1a
             {
+                KIDro =  User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value,
                 RepMO = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)
             };
             return View(tmp);

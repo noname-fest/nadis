@@ -9,7 +9,11 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <!--<input type="hidden" asp-for="ID"/>-->
+            <input type="hidden" asp-for="KIDro" />
+            <div class="form-group">
+                <label asp-for="KIDro" class="control-label"></label>
+                <span asp-validation-for="KIDro" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="RepMO" class="control-label"></label>
                 @Html.DropDownList("RepMO", ViewBag.RepMoList as SelectList, new { @class = "form-control" })
@@ -32,32 +36,32 @@
             </div>
             <div class="form-group">
                 <label asp-for="pos_units" class="control-label"></label>
-                <input asp-for="pos_units" class="form-control"   type="number" min="0" step="1"/>
+                <input asp-for="pos_units" class="form-control" type="number" min="0" step="1" />
                 <span asp-validation-for="pos_units" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="positives" class="control-label"></label>
-                <input asp-for="positives" class="form-control"   type="number" min="0" step="1"/>
+                <input asp-for="positives" class="form-control" type="number" min="0" step="1" />
                 <span asp-validation-for="positives" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="dead" class="control-label"></label>
-                <input asp-for="dead" class="form-control"   type="number" min="0" step="1"/>
+                <input asp-for="dead" class="form-control" type="number" min="0" step="1" />
                 <span asp-validation-for="dead" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="end_pos_units" class="control-label"></label>
-                <input asp-for="end_pos_units" class="form-control"   type="number" min="0" step="1"/>
+                <input asp-for="end_pos_units" class="form-control" type="number" min="0" step="1" />
                 <span asp-validation-for="end_pos_units" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="end_pos_animals" class="control-label"></label>
-                <input asp-for="end_pos_animals" class="form-control"   type="number" min="0" step="1"/>
+                <input asp-for="end_pos_animals" class="form-control" type="number" min="0" step="1" />
                 <span asp-validation-for="end_pos_animals" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="culled" class="control-label"></label>
-                <input asp-for="culled" class="form-control"   type="number" min="0" step="1"/>
+                <input asp-for="culled" class="form-control" type="number" min="0" step="1" />
                 <span asp-validation-for="culled" class="text-danger"></span>
             </div>
             <div class="form-group">

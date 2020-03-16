@@ -10,39 +10,6 @@ namespace nadis.Models
 {
     public class CtVet1a
     {
-        //private static List<sp_AiylAimaki> SPAa { get; set; } = new List<sp_AiylAimaki>();
-        //public List<sp_AiylAimaki> getSPAa() { return SPAa; }
-        /*
-        public CtVet1a()
-        {
-            if(!(SPAa.Count>0)) 
-            {
-                var appSettingsJson = AppSettingJSON.GetAppSettings();
-                var connectionString = appSettingsJson["DefaultConnection"];
-                using (SqlConnection _conn = new SqlConnection(connectionString))
-                {
-                    SqlCommand cmd = new SqlCommand("sp_Get_SPAa", _conn)
-                    {
-                        CommandType = CommandType.StoredProcedure
-                    };
-                    cmd.Parameters.AddWithValue("@idL", "02-205");
-                    _conn.Open();
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    while (dr.Read())
-                    {
-                        sp_AiylAimaki tmp = new sp_AiylAimaki();
-                        {
-                            tmp.KID = dr["KID"].ToString().Trim();
-                            tmp.name = dr["Socunit"].ToString();
-                        }
-                        SPAa.Add(tmp);
-                    }
-                    _conn.Close();
-                }
-            } 
-        }
-        */
-
         [Display(Name = "guid Записи")]
         //[ScaffoldColumn(false)]
         public Guid ID { get; set; }

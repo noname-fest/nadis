@@ -23,9 +23,9 @@ namespace nadis.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            ViewData["UserEmail"]  = User.Identity.Name;
-            ViewData["KIDDivCode"] = User.Claims.ToList().
-                                        FirstOrDefault(x => x.Type == "KIDdiv").Value;
+            ViewData["UserName"]  = User.Identity.Name;
+            ViewData["KIDro"] = User.Claims.ToList().
+                                        FirstOrDefault(x => x.Type == "KIDro").Value;
             return View();
         }
         [Authorize]

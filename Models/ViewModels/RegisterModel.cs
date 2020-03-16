@@ -15,7 +15,7 @@ namespace nadis.Models
         [Compare("userpassword", ErrorMessage = "Пароль введен неверно")]
         public string ConfirmPassword { get; set; }
 
-        public string KIDdivCode { get; set; }
+        public string KIDro { get; set; }
         public string Role { get; set; }
     }
 }

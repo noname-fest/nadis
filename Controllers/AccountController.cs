@@ -38,7 +38,7 @@ namespace AuthSample.Controllers
                 if (user != null)
                 {
                     //if()
-                    await Authenticate(loginModel.username, user.KIDdiv);
+                    await Authenticate(loginModel.username);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -71,11 +71,11 @@ namespace AuthSample.Controllers
                     {
                         username = registerModel.username,
                         userpassword = registerModel.userpassword,
-                        KIDdiv = registerModel.KIDdivCode
+                        KIDro = registerModel.KIDro
                     });
                     await _userContext.SaveChangesAsync();
 
-                    await Authenticate(registerModel.username,registerModel.KIDdivCode);
+                    await Authenticate(registerModel.username);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -93,12 +93,15 @@ namespace AuthSample.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-        private async Task Authenticate(string email, string KIDdiv)
+        private async Task Authenticate(string username)
         {
+            var U = await _userContext.Users
+                    .FirstOrDefaultAsync(u => u.username == username);
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, email),
-                new Claim("KIDdiv", KIDdiv),
+                new Claim(ClaimsIdentity.DefaultNameClaimType, username),
+                new Claim("KIDro", U.KIDro),
+                new Claim("Role", U.Role)
             };
 
             var id = new ClaimsIdentity(claims, "ApplicationCookie",

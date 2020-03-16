@@ -3,9 +3,9 @@
 }
 
     <div class="text-center">
-        <h1 class="display-4">Welcome</h1>
+        <h1 class="display-4">Welcome @ViewData["UserName"]</h1>
         <div>@ViewData["UserName"]</div>
-        <div>@ViewData["KIDdivCode"]</div>
+        <div>@ViewData["KIDro"]</div>
         <form asp-action="Logout" asp-controller="Account">
             <input type="submit" value="Выйти из системы">
         </form>
