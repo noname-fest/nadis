@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using nadis.Models;
 
@@ -11,13 +12,15 @@ namespace nadis.Controllers
         readonly CtVet1aDAL vet1aDAL = new CtVet1aDAL();
         readonly spDAL spList = new spDAL();
 
+        [Authorize]
         public IActionResult Index()
         {
+            string KIDdivCode = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDdiv").Value;
             _ = new List<CtVet1a>();
-            List<CtVet1a> vet1aList = vet1aDAL.GetAllCtVet1a("RD02205").ToList();
+            List<CtVet1a> vet1aList = vet1aDAL.GetAllCtVet1a(KIDdivCode).ToList();
             return View(vet1aList);
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult Create()
         {
@@ -31,7 +34,7 @@ namespace nadis.Controllers
             };
             return View(tmp);
         }
-
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind] CtVet1a tmpVet)
@@ -44,8 +47,9 @@ namespace nadis.Controllers
             return View(tmpVet);
         }
 
-        [HttpGet]
 
+        [Authorize]
+        [HttpGet]
         public IActionResult Edit(Guid id)
         {
             if (id == null)
@@ -67,6 +71,7 @@ namespace nadis.Controllers
             return View(tmpVet1a);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Guid id,[Bind] CtVet1a objCtVet1a)
@@ -82,6 +87,9 @@ namespace nadis.Controllers
             }
             return View(vet1aDAL);
         }
+
+
+        [Authorize]
         [HttpGet]
         public IActionResult Details(Guid id)
         {
@@ -97,6 +105,7 @@ namespace nadis.Controllers
             return View(tmpVet1a);
         }
 
+        [Authorize]
         public IActionResult Delete(Guid id)
         {
             if (id == null)
@@ -111,7 +120,7 @@ namespace nadis.Controllers
             return View(tmpVet1a);
         }
 
-
+        [Authorize]
         [HttpPost,ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteCtVet1a(Guid id)

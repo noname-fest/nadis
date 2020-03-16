@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AuthSample.ViewModels
+namespace nadis.Models
 {
     public class RegisterModel
     {

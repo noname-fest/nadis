@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace AuthSample.Models
+namespace nadis.Models
 {
     public class UserContext : DbContext
     {

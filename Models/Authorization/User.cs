@@ -1,4 +1,4 @@
-﻿namespace AuthSample.Models
+﻿namespace nadis.Models
 {
     public class User
     {
