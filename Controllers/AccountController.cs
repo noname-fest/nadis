@@ -21,9 +21,9 @@ namespace AuthSample.Controllers
 
         [HttpGet]
         public IActionResult Login()
-        {
-            return View();
-        }
+            {
+                return View();
+            }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -47,16 +47,15 @@ namespace AuthSample.Controllers
                     ModelState.AddModelError("", "Некорректные логин или пароль");
                 }
             }
-
             return View(loginModel);
         }
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Register()
-        {
-            return View();
-        }
+            {
+                return View();
+            }
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
@@ -67,7 +66,6 @@ namespace AuthSample.Controllers
             {
                 var user = await _userContext.Users
                     .FirstOrDefaultAsync(u => u.username == registerModel.username);
-
                 if (user == null)
                 {
                     _userContext.Users.Add(new User
@@ -81,13 +79,11 @@ namespace AuthSample.Controllers
 
                     await Authenticate(registerModel.username);
                     return RedirectToAction("Index", "Home");
-                }
-                else
+                } else
                 {
                     ModelState.AddModelError("", "Некорректные логин или пароль");
                 }
             }
-
             return View(registerModel);
         }
 

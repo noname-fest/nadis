@@ -9,9 +9,9 @@
         <div>@ViewData["Role"]</div>
 
         @if (@ViewData["Role"].ToString().Trim() == "Admin")
-        {
-            <a asp-action="Register" asp-controller="Account">Регистрация</a>
-        }
+            {
+                <a asp-action="Register" asp-controller="Account">Регистрация</a>
+            }
 
         <form asp-action="Logout" asp-controller="Account">
             <input type="submit" value="Выйти из системы">

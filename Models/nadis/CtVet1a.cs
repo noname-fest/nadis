@@ -14,7 +14,7 @@ namespace nadis.Models
         //[ScaffoldColumn(false)]
         public Guid ID { get; set; }
 
-        [Display(Name = "Отчетный периуд")]
+        [Display(Name = " Периуд ")]
         [DisplayFormat(DataFormatString = "{0:MMM yyyy}")]
         public DateTime RepMO { get; set; } = DateTime.Now;//periud dannix
 
@@ -22,14 +22,14 @@ namespace nadis.Models
         [StringLength(7)]
         public string KIDro { get; set; }     //code пользователя RD02525
 
-        [Display(Name = "Айыл Аймак")]
+        [Display(Name = "     Айыл Аймак     ")]
         public string KIDdivDisplay { get; set; } = "";
 
         [StringLength(10)]
         //public string KIDdiv { get; set; }  //raion a/a 
         public string KIDdiv { get; set; } = "";
 
-        [Display(Name = "Вид животного")]
+        [Display(Name = "Вид")]
         public string KIDspcDisplay { get; set; } = "";
 
         [StringLength(4)]
@@ -40,57 +40,28 @@ namespace nadis.Models
         [StringLength(4)]
         public string KIDdis { get; set; } = ""; // bolezn
 
-        [Display(Name = "Выявл. неблагополуч. пунктов")]
+        [Display(Name = "Выявл. небл. пунк.")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public int? pos_units { get; set; } = 0;
 
-        [Display(Name = "Заболело голов")]
+        [Display(Name = "Забол. гол.")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public int? positives { get; set; } = 0;
 
-        [Display(Name = "Пало голов")]
+        [Display(Name = "Пало гол.")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public int? dead { get; set; } = 0;
 
-        [Display(Name = "Неблагополуч. пунктов")]
+        [Display(Name = "Небл. пункт.")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public int? end_pos_units { get; set; } = 0;
 
-        [Display(Name = "Больных животных голов")]
+        [Display(Name = "Больных")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public int? end_pos_animals { get; set; } = 0;
 
         [Display(Name = "Забито")]
-        //[Required(ErrorMessage = "Только целое число > 0")]
+        [Required(ErrorMessage = "Только целое число > 0")]
         public int? culled { get; set; } = 0;
-
-        //public static List<SPAa> Aa { get; set; } = { list; }
-        /*
-
-        [Column(TypeName = "date")]
-        public DateTime? dtObs { get; set; }
-
-
-        [Column(TypeName = "date")]
-        public DateTime? dtExp { get; set; }
-
-        [Column(TypeName = "date")]
-        public DateTime? dtCR { get; set; }
-
-        [StringLength(10)]
-        public string byCR { get; set; }
-
-        [StringLength(10)]
-        public string byCH { get; set; }
-
-        public DateTime? dtCH { get; set; }
-
-        [StringLength(7)]
-        public string KIDro { get; set; }
-
-        public bool? isExp { get; set; }
-
-          */
-
     }
 }
