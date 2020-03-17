@@ -7,7 +7,7 @@ namespace nadis.Models.sp
 {
     public class sp_values
     {
-        public string KID { get; set; }
-        public string name { get; set; }
+        public string ID { get; set; }
+        public string Text { get; set; }
     }
 }

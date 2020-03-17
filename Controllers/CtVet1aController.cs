@@ -1,30 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using nadis.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using nadis.Models.sp;
-using System.Data.SqlClient;
-using nadis.tools;
-using System.Data;
 
 namespace nadis.Controllers
 {
     public class CtVet1aController : Controller
     {
         readonly CtVet1aDAL vet1aDAL = new CtVet1aDAL();
+        readonly spDAL spList = new spDAL();
+
+        [Authorize]
         public IActionResult Index()
         {
             _ = new List<CtVet1a>();
-            List<CtVet1a> vet1aList = vet1aDAL.GetAllCtVet1a("RD02205", "01/12/2019").ToList();
+            List<CtVet1a> vet1aList = vet1aDAL.GetAllCtVet1a(
+                                                User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value).
+                                                ToList();
             return View(vet1aList);
         }
+        [Authorize]
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            ViewBag.RepMoList  = spList.RepMO1YearList();
+            ViewBag.KIDdivList = spList.KIDdivList();
+            ViewBag.KIDspcList = spList.KIDspcList();
+            ViewBag.KIDdisList = spList.KIDdisList();
+            CtVet1a tmp = new CtVet1a
+            {
+                KIDro =  User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value,
+                RepMO = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)
+            };
+            return View(tmp);
         }
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind] CtVet1a tmpVet)
@@ -37,6 +49,8 @@ namespace nadis.Controllers
             return View(tmpVet);
         }
 
+
+        [Authorize]
         [HttpGet]
         public IActionResult Edit(Guid id)
         {
@@ -49,47 +63,17 @@ namespace nadis.Controllers
             {
                 return NotFound();
             }
-            List<sp_values> tmpList = new List<sp_values>();
-            int year = tmpVet1a.RepMO.Year;
-            for (int i = 1; i < 13; i++)
-            {
-                sp_values tmp_sp = new sp_values();
-                tmp_sp.KID  = new DateTime(year,i,1).ToString();
-                tmp_sp.name = new DateTime(year, i, 1).ToString("MMM yyyy");
-                tmpList.Add(tmp_sp);
-            }
-            ViewBag.RepMoList = new SelectList(tmpList, "KID", "name");//,tmpVet1a.RepMO.ToString());
 
-
-            List<sp_values> tmpList2 = new List<sp_values>();
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-            using (SqlConnection _conn = new SqlConnection(connectionString))
-            {
-                SqlCommand cmd = new SqlCommand("sp_Get_SPAa", _conn)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-                cmd.Parameters.AddWithValue("@idL", "02-205");
-                _conn.Open();
-                SqlDataReader dr = cmd.ExecuteReader();
-                while (dr.Read())
-                {
-                    sp_values tmp = new sp_values();
-                    {
-                        tmp.KID = dr["KID"].ToString();
-                        tmp.name = dr["Socunit"].ToString().Trim();
-                    }
-                    tmpList2.Add(tmp);
-                }
-                _conn.Close();
-            }
-            ViewBag.KIDdivList = new SelectList(tmpList2, "KID", "name");//,tmpVet1a.idKIDdiv);
-
+ 
+            ViewBag.RepMoList = spList.RepMO1YearList(id);
+            ViewBag.KIDdivList = spList.KIDdivList(id);
+            ViewBag.KIDspcList = spList.KIDspcList();
+            ViewBag.KIDdisList = spList.KIDdisList();
 
             return View(tmpVet1a);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Guid id,[Bind] CtVet1a objCtVet1a)
@@ -103,10 +87,11 @@ namespace nadis.Controllers
                 vet1aDAL.UpdateCtVet1a(objCtVet1a);
                 return RedirectToAction("Index");
             }
-            //ViewBag
-            //ViewBag.sp_aa = objCtVet1a.getSPAa();
             return View(vet1aDAL);
         }
+
+
+        [Authorize]
         [HttpGet]
         public IActionResult Details(Guid id)
         {
@@ -122,6 +107,7 @@ namespace nadis.Controllers
             return View(tmpVet1a);
         }
 
+        [Authorize]
         public IActionResult Delete(Guid id)
         {
             if (id == null)
@@ -135,6 +121,8 @@ namespace nadis.Controllers
             }
             return View(tmpVet1a);
         }
+
+        [Authorize]
         [HttpPost,ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteCtVet1a(Guid id)

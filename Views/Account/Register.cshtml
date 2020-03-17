@@ -1,0 +1,37 @@
+﻿@model nadis.Models.RegisterModel
+
+<h2>Регистрация</h2>
+
+<form asp-action="Register" asp-controller="Account" asp-anti-forgery="true">
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
+    <div>
+        <div>
+            <label asp-for="username">Введите Имя пользователя</label><br />
+            <input type="text" asp-for="username" />
+            <span asp-validation-for="username"></span>
+        </div>
+        <div>
+            <label asp-for="userpassword">Введите пароль</label><br />
+            <input asp-for="userpassword" />
+            <span asp-validation-for="userpassword"></span>
+        </div>
+        <div>
+            <label asp-for="ConfirmPassword">Повторите пароль</label><br />
+            <input asp-for="ConfirmPassword" />
+            <span asp-validation-for="ConfirmPassword"></span>
+        </div>
+        <div>
+            <label asp-for="KIDro">Код района</label><br />
+            <input asp-for="KIDro" />
+            <span asp-validation-for="KIDro"></span>
+        </div>
+        <div>
+            <label asp-for="Role">Роль пользователя</label><br />
+            <input asp-for="Role" />
+            <span asp-validation-for="Role"></span>
+        </div>
+        <div>
+            <input type="submit" value="Регистрация" />
+        </div>
+    </div>
+</form>

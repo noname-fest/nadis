@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using nadis.Models;
@@ -18,11 +20,18 @@ namespace nadis.Controllers
             _logger = logger;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
+            ViewData["UserName"]  = User.Identity.Name;
+            ViewData["KIDro"] = User.Claims.ToList().
+                                        FirstOrDefault(x => x.Type == "KIDro").Value;
+            ViewData["Role"] = User.Claims.ToList().
+                                        FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
             return View();
         }
 
+        [Authorize]
         public IActionResult Privacy()
         {
             return View();
