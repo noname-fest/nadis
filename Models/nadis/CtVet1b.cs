@@ -35,14 +35,14 @@ namespace nadis.Models
         public string KIDdis { get; set; } = ""; // bolezn
 
         [Display(Name = "Дата наблюдения")]
-        [DisplayFormat(DataFormatString = "{0:dd/mm/yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}")]
         [Column(TypeName = "date")]
-        public DateTime? dtObs { get; set; } = DateTime.Today;  //Дата наблюдения
+        public DateTime dtObs { get; set; } = DateTime.Today;  //Дата наблюдения
 
         [Display(Name = " Периуд ")]
         [DisplayFormat(DataFormatString = "{0:MMM yyyy}")]
         [Column(TypeName = "date")]
-        public DateTime? repMO { get; set; } = DateTime.Today; // периуд записи
+        public DateTime repMO { get; set; } = DateTime.Today; // периуд записи
 
         [StringLength(7)]
         public string KIDro { get; set; }  // code raion

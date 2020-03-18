@@ -1,0 +1,46 @@
+﻿@model nadis.Models.CtVet1b
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Удаление</h1>
+<div>
+    <h4>Information</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RepMO)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.KIDdivDisplay)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.dtObs)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.KIDspcDisplay)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.KIDdisDisplay)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.femage_1)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.femage_2)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.fage1_pos)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.fage2_pos)
+        </dt>
+    </dl>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ID" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-action="Index">К списку</a>
+    </form>
+</div>
+

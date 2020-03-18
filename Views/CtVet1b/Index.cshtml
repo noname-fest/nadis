@@ -17,6 +17,9 @@
                 @Html.DisplayNameFor(model => model.KIDdivDisplay)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.dtObs)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.KIDspcDisplay)
             </th>
             <th>
@@ -42,45 +45,48 @@
     <tbody>
         @foreach (var tmp in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => tmp.RepMO)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => tmp.KIDdivDisplay)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => tmp.KIDspcDisplay)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => tmp.KIDdisDisplay)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => tmp.testDisplay)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => tmp.femage_1)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => tmp.femage_2)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => tmp.fage1_pos)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => tmp.fage2_pos)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@tmp.ID">Редак.</a>&nbsp;&nbsp;<a asp-action="Delete" asp-route-id="@tmp.ID">Удал.</a>
-                    <!--
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => tmp.RepMO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tmp.KIDdivDisplay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tmp.dtObs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tmp.KIDspcDisplay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tmp.KIDdisDisplay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tmp.testDisplay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tmp.femage_1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tmp.femage_2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tmp.fage1_pos)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tmp.fage2_pos)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@tmp.ID">Редак.</a>&nbsp;&nbsp;<a asp-action="Delete" asp-route-id="@tmp.ID">Удал.</a>
+                <!--
 
-                                    <img src="~/img/edit.png" width="20%" />
-                                        <img src="~/img/delete.png" width="20%" />
-                    <a asp-action="Details" asp-route-id="@tmp.ID">Просм.</a>
-                    -->
+                        <img src="~/img/edit.png" width="20%" />
+                            <img src="~/img/delete.png" width="20%" />
+        <a asp-action="Details" asp-route-id="@tmp.ID">Просм.</a>
+        -->
 
-                </td>
-            </tr>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

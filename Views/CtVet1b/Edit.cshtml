@@ -1,19 +1,17 @@
 ﻿@model nadis.Models.CtVet1b
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Создать </h1><h3>ctVet1b</h3>
+<h1>Редактировать</h1>
+<h3>ctVet1b</h3>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
             <input type="hidden" asp-for="KIDro" />
-            <div class="form-group">
-                <label asp-for="KIDro" class="control-label"></label>
-                <span asp-validation-for="KIDro" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="RepMO" class="control-label"></label>
                 @Html.DropDownList("RepMO", ViewBag.RepMoList as SelectList, new { @class = "form-control" })
@@ -21,30 +19,28 @@
             </div>
             <div class="form-group">
                 <label asp-for="KIDdivDisplay" class="control-label"></label>
+                <!--<input asp-for="KIDdiv" class="form-control" />-->
                 @Html.DropDownList("KIDdiv", ViewBag.KIDdivList as SelectList, new { @class = "form-control" })
                 <span asp-validation-for="KIDdiv" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="dtObs" class="control-label"></label>
-                <input asp-for="dtObs" class="form-control" type="date"/>
+                <input asp-for="dtObs" class="form-control" type="date" />
                 <span asp-validation-for="dtObs" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="KIDspcDisplay" class="control-label"></label>
+                <!--<input asp-for="KIDspc" class="form-control" />-->
                 @Html.DropDownList("KIDspc", ViewBag.KIDspcList as SelectList, new { @class = "form-control" })
                 <span asp-validation-for="KIDspc" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="KIDdisDisplay" class="control-label"></label>
+                <!--<input asp-for="KIDdis" class="form-control" />-->
                 @Html.DropDownList("KIDdis", ViewBag.KIDdisList as SelectList, new { @class = "form-control" })
                 <span asp-validation-for="KIDdis" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="testDisplay" class="control-label"></label>
-                @Html.DropDownList("test", ViewBag.testList as SelectList, new { @class = "form-control" })
-                <span asp-validation-for="test" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="femage_1" class="control-label"></label>
@@ -67,7 +63,7 @@
                 <span asp-validation-for="fage2_pos" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Создать" class="btn btn-success" />
+                <input type="submit" value="Сохранить" asp-route-id="@Model.ID" class="btn btn-success" />
             </div>
         </form>
     </div>
@@ -75,4 +71,3 @@
 <div>
     <a asp-action="Index">Назад к списку</a>
 </div>
-

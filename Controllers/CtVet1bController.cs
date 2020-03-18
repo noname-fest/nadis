@@ -36,10 +36,11 @@ namespace nadis.Controllers
             {
                 KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value,
                 RepMO = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1),
-                dtObs = new DateTime?(DateTime.Now)
+                dtObs = DateTime.Now
             };
             return View(tmp);
         }
+        
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -51,6 +52,79 @@ namespace nadis.Controllers
                 return RedirectToAction("Index");
             }
             return View(tmpVet);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult Edit(Guid id)
+        {
+            if (id == null) return NotFound();
+            CtVet1b tmpVet1b = vet1bDAL.GetCtVet1bById(id);
+            if (tmpVet1b == null) return NotFound();
+
+            ViewBag.RepMoList = spDAL.RepMO1YearList(tmpVet1b.RepMO.Year);
+            ViewBag.KIDdivList = spDAL.KIDdivList(User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value);
+            ViewBag.KIDspcList = spDAL.KIDspcList(); ViewBag.KIDdisList = spDAL.KIDdisList();
+
+            return View(tmpVet1b);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Guid id, [Bind] CtVet1b objCtVet1b)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                vet1bDAL.UpdateCtVet1b(objCtVet1b);
+                return RedirectToAction("Index");
+            }
+            return View(vet1bDAL);
+        }
+
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult Details(Guid id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            CtVet1b tmpVet1b = vet1bDAL.GetCtVet1bById(id);
+            if (tmpVet1b == null)
+            {
+                return NotFound();
+            }
+            return View(tmpVet1b);
+        }
+
+        [Authorize]
+        public IActionResult Delete(Guid id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            CtVet1b tmpVet1a = vet1bDAL.GetCtVet1bById(id);
+            if (tmpVet1a == null)
+            {
+                return NotFound();
+            }
+            return View(tmpVet1a);
+        }
+
+        [Authorize]
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteCtVet1a(Guid id)
+        {
+            vet1bDAL.DeleteCtVet1b(id);
+            return RedirectToAction("Index");
         }
 
     }
