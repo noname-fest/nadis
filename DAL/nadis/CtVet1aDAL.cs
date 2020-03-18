@@ -22,7 +22,6 @@ namespace nadis.Models
                     CommandType = CommandType.StoredProcedure
                 };
                 cmd.Parameters.AddWithValue("@KIDro", KIDro);
-                //cmd.Parameters.AddWithValue("@repMO", repMO);
                 _conn.Open();
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
@@ -49,7 +48,6 @@ namespace nadis.Models
                         end_pos_animals = (int?)dr["end_pos_animals"],
                         culled          = (int?)dr["culled"]
                     };
-
                     tmpList.Add(tmp);
                 }
                 _conn.Close();
@@ -88,29 +86,32 @@ namespace nadis.Models
 
         public void UpdateCtVet1a(CtVet1a tmp)
         {
+            if (tmp is null) { return; }
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
 
             using SqlConnection _conn = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand("sp_Update_CtVet1a", _conn)
+            using (SqlCommand cmd = new SqlCommand("sp_Update_CtVet1a", _conn)
             {
                 CommandType = CommandType.StoredProcedure
-            };
-            cmd.Parameters.AddWithValue("@ID", tmp.ID);
-            cmd.Parameters.AddWithValue("@KIDro",tmp.KIDro);
-            cmd.Parameters.AddWithValue("@repMO", tmp.RepMO);
-            cmd.Parameters.AddWithValue("@KIDdiv", tmp.KIDdiv);
-            cmd.Parameters.AddWithValue("@KIDspc", tmp.KIDspc);
-            cmd.Parameters.AddWithValue("@KIDdis", tmp.KIDdis);
-            cmd.Parameters.AddWithValue("@pos_units", tmp.pos_units);
-            cmd.Parameters.AddWithValue("@positives", tmp.positives);
-            cmd.Parameters.AddWithValue("@dead", tmp.dead);
-            cmd.Parameters.AddWithValue("@end_pos_units", tmp.end_pos_units);
-            cmd.Parameters.AddWithValue("@end_pos_animals", tmp.end_pos_animals);
-            cmd.Parameters.AddWithValue("@culled", tmp.culled);
+            })
+            {
+                cmd.Parameters.AddWithValue("@ID", tmp.ID);
+                cmd.Parameters.AddWithValue("@KIDro", tmp.KIDro);
+                cmd.Parameters.AddWithValue("@repMO", tmp.RepMO);
+                cmd.Parameters.AddWithValue("@KIDdiv", tmp.KIDdiv);
+                cmd.Parameters.AddWithValue("@KIDspc", tmp.KIDspc);
+                cmd.Parameters.AddWithValue("@KIDdis", tmp.KIDdis);
+                cmd.Parameters.AddWithValue("@pos_units", tmp.pos_units);
+                cmd.Parameters.AddWithValue("@positives", tmp.positives);
+                cmd.Parameters.AddWithValue("@dead", tmp.dead);
+                cmd.Parameters.AddWithValue("@end_pos_units", tmp.end_pos_units);
+                cmd.Parameters.AddWithValue("@end_pos_animals", tmp.end_pos_animals);
+                cmd.Parameters.AddWithValue("@culled", tmp.culled);
 
-            _conn.Open();
-            cmd.ExecuteNonQuery();
+                _conn.Open();
+                cmd.ExecuteNonQuery();
+            }
             _conn.Close();
         }
 

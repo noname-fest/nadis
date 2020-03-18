@@ -10,7 +10,6 @@ namespace nadis.Controllers
     public class CtVet1aController : Controller
     {
         readonly CtVet1aDAL vet1aDAL = new CtVet1aDAL();
-        readonly spDAL spList = new spDAL();
 
         [Authorize]
         public IActionResult Index()
@@ -21,14 +20,15 @@ namespace nadis.Controllers
                                                 ToList();
             return View(vet1aList);
         }
+        
         [Authorize]
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.RepMoList  = spList.RepMO1YearList();
-            ViewBag.KIDdivList = spList.KIDdivList();
-            ViewBag.KIDspcList = spList.KIDspcList();
-            ViewBag.KIDdisList = spList.KIDdisList();
+            ViewBag.RepMoList  = spDAL.RepMO1YearList(DateTime.Today.Year);
+            ViewBag.KIDdivList = spDAL.KIDdivList(User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value);
+            ViewBag.KIDspcList = spDAL.KIDspcList();
+            ViewBag.KIDdisList = spDAL.KIDdisList();
             CtVet1a tmp = new CtVet1a
             {
                 KIDro =  User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value,
@@ -54,21 +54,13 @@ namespace nadis.Controllers
         [HttpGet]
         public IActionResult Edit(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
             CtVet1a tmpVet1a = vet1aDAL.GetCtVet1aById(id);
-            if(tmpVet1a == null)
-            {
-                return NotFound();
-            }
+            if(tmpVet1a == null) return NotFound();
 
- 
-            ViewBag.RepMoList = spList.RepMO1YearList(id);
-            ViewBag.KIDdivList = spList.KIDdivList(id);
-            ViewBag.KIDspcList = spList.KIDspcList();
-            ViewBag.KIDdisList = spList.KIDdisList();
+            ViewBag.RepMoList  = spDAL.RepMO1YearList(tmpVet1a.RepMO.Year);
+            ViewBag.KIDdivList = spDAL.KIDdivList(User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value);
+            ViewBag.KIDspcList = spDAL.KIDspcList(); ViewBag.KIDdisList = spDAL.KIDdisList();
 
             return View(tmpVet1a);
         }

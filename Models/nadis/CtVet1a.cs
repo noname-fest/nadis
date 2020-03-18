@@ -16,7 +16,7 @@ namespace nadis.Models
 
         [Display(Name = " Периуд ")]
         [DisplayFormat(DataFormatString = "{0:MMM yyyy}")]
-        public DateTime RepMO { get; set; } = DateTime.Now;//periud dannix
+        public DateTime RepMO { get; set; } = DateTime.Today;//periud dannix
 
         //[ScaffoldColumn(false)]
         [StringLength(7)]

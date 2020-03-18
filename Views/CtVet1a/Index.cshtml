@@ -78,10 +78,14 @@
                     @Html.DisplayFor(modelItem => tmp.culled)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@tmp.ID">Редакт.</a>
-                    <a asp-action="Details" asp-route-id="@tmp.ID">Просм.</a>
+                    <a asp-action="Edit" asp-route-id="@tmp.ID">Редак.</a>&nbsp;&nbsp;<a asp-action="Delete" asp-route-id="@tmp.ID">Удал.</a>
+                    <!--
 
-                    <a asp-action="Delete" asp-route-id="@tmp.ID">Удал.</a>
+                    <img src="~/img/edit.png" width="20%" />
+                        <img src="~/img/delete.png" width="20%" />
+    <a asp-action="Details" asp-route-id="@tmp.ID">Просм.</a>
+    -->
+
                 </td>
             </tr>
         }
