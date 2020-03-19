@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace nadis.DAL.nadis
 {
-    public class CtVet1bDAL
+    public static class CtVet1bDAL
     {
-        public IEnumerable<CtVet1b> GetAllCtVet1b(string KIDro)//, string repMO)
+        public static IEnumerable<CtVet1b> GetAllCtVet1b(string KIDro)//, string repMO)
         {
 
             var appSettingsJson = AppSettingJSON.GetAppSettings();
@@ -64,7 +64,7 @@ namespace nadis.DAL.nadis
         }
 
 
-        public void AddCtVet1b(CtVet1b tmp)
+        public static void AddCtVet1b(CtVet1b tmp)
         {
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
@@ -94,7 +94,7 @@ namespace nadis.DAL.nadis
         }
 
 
-        public CtVet1b GetCtVet1bById(Guid id)
+        public static CtVet1b GetCtVet1bById(Guid id)
         {
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
@@ -140,7 +140,7 @@ namespace nadis.DAL.nadis
         }
 
 
-        public void UpdateCtVet1b(CtVet1b tmp)
+        public static void UpdateCtVet1b(CtVet1b tmp)
         {
             if (tmp is null) { return; }
             var appSettingsJson = AppSettingJSON.GetAppSettings();
@@ -171,7 +171,7 @@ namespace nadis.DAL.nadis
             _conn.Close();
         }
 
-        public void DeleteCtVet1b(Guid id)
+        public static void DeleteCtVet1b(Guid id)
         {
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];

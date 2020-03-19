@@ -11,12 +11,12 @@ namespace nadis.Controllers
 {
     public class CtVet1bController : Controller
     {
-        readonly CtVet1bDAL vet1bDAL = new CtVet1bDAL();
+        //readonly CtVet1bDAL vet1bDAL = new CtVet1bDAL();
         [Authorize]
         public IActionResult Index()
         {
             _ = new List<CtVet1b>();
-            List<CtVet1b> vet1aList = vet1bDAL.GetAllCtVet1b(
+            List<CtVet1b> vet1aList = CtVet1bDAL.GetAllCtVet1b(
                                                 User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value).
                                                 ToList();
             return View(vet1aList);
@@ -48,7 +48,7 @@ namespace nadis.Controllers
         {
             if (ModelState.IsValid)
             {
-                vet1bDAL.AddCtVet1b(tmpVet);
+                CtVet1bDAL.AddCtVet1b(tmpVet);
                 return RedirectToAction("Index");
             }
             return View(tmpVet);
@@ -59,7 +59,7 @@ namespace nadis.Controllers
         public IActionResult Edit(Guid id)
         {
             if (id == null) return NotFound();
-            CtVet1b tmpVet1b = vet1bDAL.GetCtVet1bById(id);
+            CtVet1b tmpVet1b = CtVet1bDAL.GetCtVet1bById(id);
             if (tmpVet1b == null) return NotFound();
 
             ViewBag.RepMoList = spDAL.RepMO1YearList(tmpVet1b.RepMO.Year);
@@ -80,10 +80,10 @@ namespace nadis.Controllers
             }
             if (ModelState.IsValid)
             {
-                vet1bDAL.UpdateCtVet1b(objCtVet1b);
+                CtVet1bDAL.UpdateCtVet1b(objCtVet1b);
                 return RedirectToAction("Index");
             }
-            return View(vet1bDAL);
+            return View(objCtVet1b);
         }
 
 
@@ -95,7 +95,7 @@ namespace nadis.Controllers
             {
                 return NotFound();
             }
-            CtVet1b tmpVet1b = vet1bDAL.GetCtVet1bById(id);
+            CtVet1b tmpVet1b = CtVet1bDAL.GetCtVet1bById(id);
             if (tmpVet1b == null)
             {
                 return NotFound();
@@ -110,7 +110,7 @@ namespace nadis.Controllers
             {
                 return NotFound();
             }
-            CtVet1b tmpVet1a = vet1bDAL.GetCtVet1bById(id);
+            CtVet1b tmpVet1a = CtVet1bDAL.GetCtVet1bById(id);
             if (tmpVet1a == null)
             {
                 return NotFound();
@@ -123,7 +123,7 @@ namespace nadis.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteCtVet1a(Guid id)
         {
-            vet1bDAL.DeleteCtVet1b(id);
+            CtVet1bDAL.DeleteCtVet1b(id);
             return RedirectToAction("Index");
         }
 

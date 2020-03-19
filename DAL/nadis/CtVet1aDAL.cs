@@ -6,9 +6,9 @@ using nadis.tools;
 
 namespace nadis.Models
 {
-    public class CtVet1aDAL
+    public static class CtVet1aDAL
     {
-        public IEnumerable<CtVet1a> GetAllCtVet1a(string KIDro)//, string repMO)
+        public static IEnumerable<CtVet1a> GetAll_CtVet1a(string KIDro)//, string repMO)
         {
 
             var appSettingsJson = AppSettingJSON.GetAppSettings();
@@ -55,13 +55,13 @@ namespace nadis.Models
             return tmpList;
         }
 
-        public void AddCtVet1a(CtVet1a tmp)
+        public static void Add_CtVet1a(CtVet1a tmp)
         {
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
 
             using SqlConnection _conn = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand("sp_Add_CtVet1a", _conn)
+            SqlCommand cmd = new SqlCommand("nadis_Add_CtVet1a", _conn)
             {
                 CommandType = CommandType.StoredProcedure
             };
@@ -81,10 +81,9 @@ namespace nadis.Models
             _conn.Open();
             cmd.ExecuteNonQuery();
             _conn.Close();
-
         }
 
-        public void UpdateCtVet1a(CtVet1a tmp)
+        public static void UpdateCtVet1a(CtVet1a tmp)
         {
             if (tmp is null) { return; }
             var appSettingsJson = AppSettingJSON.GetAppSettings();
@@ -115,7 +114,7 @@ namespace nadis.Models
             _conn.Close();
         }
 
-        public void DeleteCtVet1a(Guid id)
+        public static void DeleteCtVet1a(Guid id)
         {
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
@@ -132,7 +131,7 @@ namespace nadis.Models
             _conn.Close();
         }
 
-        public CtVet1a GetCtVet1aById(Guid id)
+        public static CtVet1a GetCtVet1aById(Guid id)
         {
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];

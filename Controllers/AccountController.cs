@@ -34,12 +34,12 @@ namespace AuthSample.Controllers
                 var user = await _userContext.Users
                     .FirstOrDefaultAsync(u =>
                         u.username == loginModel.username &&
-                        u.userpassword == loginModel.userpassword);
+                        u.userpassword == loginModel.userpassword).ConfigureAwait(false);
 
                 if (user != null)
                 {
                     //if()
-                    await Authenticate(loginModel.username);
+                    await Authenticate(loginModel.username).ConfigureAwait(false);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -65,7 +65,7 @@ namespace AuthSample.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userContext.Users
-                    .FirstOrDefaultAsync(u => u.username == registerModel.username);
+                    .FirstOrDefaultAsync(u => u.username == registerModel.username).ConfigureAwait(false);
                 if (user == null)
                 {
                     _userContext.Users.Add(new User
@@ -75,9 +75,9 @@ namespace AuthSample.Controllers
                         KIDro = registerModel.KIDro,
                         Role  = registerModel.Role
                     });
-                    await _userContext.SaveChangesAsync();
+                    await _userContext.SaveChangesAsync().ConfigureAwait(false);
 
-                    await Authenticate(registerModel.username);
+                    await Authenticate(registerModel.username).ConfigureAwait(false);
                     return RedirectToAction("Index", "Home");
                 } else
                 {
@@ -89,14 +89,14 @@ namespace AuthSample.Controllers
 
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme).ConfigureAwait(false);
             return RedirectToAction("Login", "Account");
         }
 
         private async Task Authenticate(string username)
         {
             var U = await _userContext.Users
-                    .FirstOrDefaultAsync(u => u.username == username);
+                    .FirstOrDefaultAsync(u => u.username == username).ConfigureAwait(false);
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, username),
@@ -108,7 +108,7 @@ namespace AuthSample.Controllers
             var id = new ClaimsIdentity(claims, "ApplicationCookie",
                 ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
 
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id)).ConfigureAwait(false);
         }
      }
 }
