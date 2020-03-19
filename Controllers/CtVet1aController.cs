@@ -44,6 +44,10 @@ namespace nadis.Controllers
             {
                 //проверка на существования аналогичной записи
                 if(CtVet1aDAL.IsUniqueRecord(tmpVet)) CtVet1aDAL.Add_CtVet1a(tmpVet);
+                    else
+                    {
+                        return NotFound();
+                    };
                 return RedirectToAction("Index");
             }
             return View(tmpVet);
@@ -70,7 +74,7 @@ namespace nadis.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Guid id,[Bind] CtVet1a objCtVet1a)
         {
-            if (id == null)
+            if ((id == null)||(CtVet1aDAL.IsUniqueRecord(objCtVet1a)))
             {
                 return NotFound();
             }
