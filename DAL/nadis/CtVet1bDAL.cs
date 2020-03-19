@@ -47,14 +47,18 @@ namespace nadis.DAL.nadis
                         test = dr["test"].ToString().Trim(),
                         testDisplay = dr["testDisplay"].ToString().Trim(),
 
-                        femage_1 = (int?)dr["femage_1"],
-                        femage_2 = (int?)dr["femage_2"],
-                        fage1_pos = (int?)dr["fage1_pos"],
-                        fage2_pos = (int?)dr["fage2_pos"],
+                        //femage_1 = (int?)dr["femage_1"],
+                        femage_1 = dr["femage_1"] is null ? 0 : (int?)dr["femage_1"],
+                        femage_2 = dr["femage_2"] is null ? 0 : (int?)dr["femage_2"],
+                        
+                        //fage1_pos = (int?)dr["fage1_pos"],
+                        fage1_pos = dr["fage1_pos"] is null ? 0 : (int?)dr["fage1_pos"],
+                        fage2_pos = dr["fage2_pos"] is null ? 0 : (int?)dr["fage1_pos"],
+
                         //if (tmp.dtObs is null) { tmp.dtObs = DateTime.Today; } else tmp.dtObs = DateTime.Today;
                         dtObs = dr["dtObs"] is null ? DateTime.Today : (DateTime)(dr["dtObs"])
                         //dtObs = (DateTime)(dr["dtObs"])
-                };
+                    };
                     
                     tmpList.Add(tmp);
                 }
@@ -70,7 +74,7 @@ namespace nadis.DAL.nadis
             var connectionString = appSettingsJson["DefaultConnection"];
 
             using SqlConnection _conn = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand("sp_Add_CtVet1b", _conn)
+            SqlCommand cmd = new SqlCommand("nadis_Add_CtVet1b", _conn)
             {
                 CommandType = CommandType.StoredProcedure
             };
@@ -102,7 +106,7 @@ namespace nadis.DAL.nadis
             CtVet1b tmp = new CtVet1b();
             using (SqlConnection _conn = new SqlConnection(connectionString))
             {
-                SqlCommand cmd = new SqlCommand("sp_GetById_CtVet1b", _conn)
+                SqlCommand cmd = new SqlCommand("nadis_GetByID_CtVet1b", _conn)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
@@ -147,7 +151,7 @@ namespace nadis.DAL.nadis
             var connectionString = appSettingsJson["DefaultConnection"];
 
             using SqlConnection _conn = new SqlConnection(connectionString);
-            using (SqlCommand cmd = new SqlCommand("sp_Update_CtVet1b", _conn)
+            using (SqlCommand cmd = new SqlCommand("nadis_Update_CtVet1b", _conn)
             {
                 CommandType = CommandType.StoredProcedure
             })
@@ -177,7 +181,7 @@ namespace nadis.DAL.nadis
             var connectionString = appSettingsJson["DefaultConnection"];
 
             using SqlConnection _conn = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand("sp_Delete_CtVet1b", _conn)
+            SqlCommand cmd = new SqlCommand("[nadis_Delete_CtVet1b]", _conn)
             {
                 CommandType = CommandType.StoredProcedure
             };
@@ -187,5 +191,33 @@ namespace nadis.DAL.nadis
             cmd.ExecuteNonQuery();
             _conn.Close();
         }
+
+        public static bool IsUniqueRecord(CtVet1b tmp)
+        {
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+            int countR = 0;
+            using (SqlConnection _conn = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("nadis_CheckRecord_CtVet1b", _conn)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                cmd.Parameters.AddWithValue("@repMO", tmp.RepMO);
+                cmd.Parameters.AddWithValue("@KIDro", tmp.KIDro);
+                cmd.Parameters.AddWithValue("@KIDdiv", tmp.KIDdiv);
+                cmd.Parameters.AddWithValue("@KIDdis", tmp.KIDdis);
+                cmd.Parameters.AddWithValue("@KIDspc", tmp.KIDspc);
+                cmd.Parameters.AddWithValue("@test", tmp.test);
+                _conn.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read()) countR = (int)dr["kolvo"];
+                _conn.Close();
+            }
+            if (countR == 0) { return true; } else return false;
+        }
+
+
     }
 }

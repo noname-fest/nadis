@@ -42,6 +42,14 @@
                 @Html.DropDownList("KIDdis", ViewBag.KIDdisList as SelectList, new { @class = "form-control" })
                 <span asp-validation-for="KIDdis" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="testDisplay" class="control-label"></label>
+                <!--<input asp-for="KIDdis" class="form-control" />-->
+                @Html.DropDownList("test", ViewBag.testList as SelectList, new { @class = "form-control" })
+                <span asp-validation-for="test" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <label asp-for="femage_1" class="control-label"></label>
                 <input asp-for="femage_1" class="form-control" type="number" min="0" step="1" />

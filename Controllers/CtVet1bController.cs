@@ -48,7 +48,12 @@ namespace nadis.Controllers
         {
             if (ModelState.IsValid)
             {
-                CtVet1bDAL.Add_CtVet1b(tmpVet);
+                //проверка на существования аналогичной записи
+                if (CtVet1bDAL.IsUniqueRecord(tmpVet)) CtVet1bDAL.Add_CtVet1b(tmpVet);
+                else
+                {
+                    return NotFound();
+                };
                 return RedirectToAction("Index");
             }
             return View(tmpVet);
@@ -62,9 +67,11 @@ namespace nadis.Controllers
             CtVet1b tmpVet1b = CtVet1bDAL.GetCtVet1bById(id);
             if (tmpVet1b == null) return NotFound();
 
-            ViewBag.RepMoList = spDAL.RepMO1YearList(tmpVet1b.RepMO.Year);
+            ViewBag.RepMoList  = spDAL.RepMO1YearList(tmpVet1b.RepMO.Year);
             ViewBag.KIDdivList = spDAL.KIDdivList(User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value);
-            ViewBag.KIDspcList = spDAL.KIDspcList(); ViewBag.KIDdisList = spDAL.KIDdisList();
+            ViewBag.KIDspcList = spDAL.KIDspcList();
+            ViewBag.KIDdisList = spDAL.KIDdisList();
+            ViewBag.testList   = spDAL.testList();
 
             return View(tmpVet1b);
         }

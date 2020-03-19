@@ -21,7 +21,7 @@ namespace nadis.Models
         [Display(Name = "      Айыл Аймак      ")]
         public string KIDdivDisplay { get; set; } = "";
         [StringLength(10)]
-        public string KIDdiv { get; set; } // AA code
+        public string KIDdiv { get; set; } = ""; // AA code
 
 
         [Display(Name = "Вид")]
@@ -71,7 +71,9 @@ namespace nadis.Models
         [Required(ErrorMessage = "Только целое число > 0")]
         public int? fage2_pos { get; set; } = 0;
 
-        public static string KIDtrt = "DIAG"; ///???????
+        public static string KIDtrt = "DIAG";
+
+        ///???????
 
     }
 }
