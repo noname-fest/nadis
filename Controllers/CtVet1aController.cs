@@ -16,6 +16,7 @@ namespace nadis.Controllers
             List<CtVet1a> vet1aList = CtVet1aDAL.GetAll_CtVet1a(
                                                 User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value).
                                                 ToList();
+            ViewBag.DateFilterList = spDAL.RepMO1YearList(DateTime.Today.Year);
             return View(vet1aList);
         }
         
@@ -41,7 +42,8 @@ namespace nadis.Controllers
         {
             if (ModelState.IsValid)
             {
-                CtVet1aDAL.AddCtVet1a(tmpVet);
+                //проверка на существования аналогичной записи
+                if(CtVet1aDAL.IsUniqueRecord(tmpVet)) CtVet1aDAL.Add_CtVet1a(tmpVet);
                 return RedirectToAction("Index");
             }
             return View(tmpVet);
@@ -53,7 +55,7 @@ namespace nadis.Controllers
         public IActionResult Edit(Guid id)
         {
             if (id == null) return NotFound();
-            CtVet1a tmpVet1a = CtVet1aDAL.GetCtVet1aById(id);
+            CtVet1a tmpVet1a = CtVet1aDAL.Get_CtVet1a_ById(id);
             if(tmpVet1a == null) return NotFound();
 
             ViewBag.RepMoList  = spDAL.RepMO1YearList(tmpVet1a.RepMO.Year);
@@ -89,7 +91,7 @@ namespace nadis.Controllers
             {
                 return NotFound();
             } 
-            CtVet1a tmpVet1a = CtVet1aDAL.GetCtVet1aById(id);
+            CtVet1a tmpVet1a = CtVet1aDAL.Get_CtVet1a_ById(id);
             if (tmpVet1a == null)
             {
                 return NotFound();
@@ -104,7 +106,7 @@ namespace nadis.Controllers
             {
                 return NotFound();
             }
-            CtVet1a tmpVet1a = CtVet1aDAL.GetCtVet1aById(id);
+            CtVet1a tmpVet1a = CtVet1aDAL.Get_CtVet1a_ById(id);
             if (tmpVet1a == null)
             {
                 return NotFound();
@@ -117,7 +119,7 @@ namespace nadis.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteCtVet1a(Guid id)
         {
-            CtVet1aDAL.DeleteCtVet1a(id);
+            CtVet1aDAL.Delete_CtVet1a(id);
             return RedirectToAction("Index");
         }
     }
