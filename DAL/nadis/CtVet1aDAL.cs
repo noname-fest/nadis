@@ -6,9 +6,9 @@ using nadis.tools;
 
 namespace nadis.Models
 {
-    public class CtVet1aDAL
+    public static class CtVet1aDAL
     {
-        public IEnumerable<CtVet1a> GetAllCtVet1a(string KIDro)//, string repMO)
+        public static IEnumerable<CtVet1a> GetAll_CtVet1a(string KIDro)//, string repMO)
         {
 
             var appSettingsJson = AppSettingJSON.GetAppSettings();
@@ -17,7 +17,7 @@ namespace nadis.Models
             List<CtVet1a> tmpList = new List<CtVet1a>();
             using (SqlConnection _conn = new SqlConnection(connectionString))
             {
-                SqlCommand cmd = new SqlCommand("sp_Get_CtVet1a", _conn)
+                SqlCommand cmd = new SqlCommand("nadis_GetAll_CtVet1a", _conn)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
@@ -55,13 +55,13 @@ namespace nadis.Models
             return tmpList;
         }
 
-        public void AddCtVet1a(CtVet1a tmp)
+        public static void Add_CtVet1a(CtVet1a tmp)
         {
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
 
             using SqlConnection _conn = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand("sp_Add_CtVet1a", _conn)
+            SqlCommand cmd = new SqlCommand("nadis_Add_CtVet1a", _conn)
             {
                 CommandType = CommandType.StoredProcedure
             };
@@ -81,17 +81,16 @@ namespace nadis.Models
             _conn.Open();
             cmd.ExecuteNonQuery();
             _conn.Close();
-
         }
 
-        public void UpdateCtVet1a(CtVet1a tmp)
+        public static void UpdateCtVet1a(CtVet1a tmp)
         {
             if (tmp is null) { return; }
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
 
             using SqlConnection _conn = new SqlConnection(connectionString);
-            using (SqlCommand cmd = new SqlCommand("sp_Update_CtVet1a", _conn)
+            using (SqlCommand cmd = new SqlCommand("nadis_Update_CtVet1a", _conn)
             {
                 CommandType = CommandType.StoredProcedure
             })
@@ -115,13 +114,13 @@ namespace nadis.Models
             _conn.Close();
         }
 
-        public void DeleteCtVet1a(Guid id)
+        public static void Delete_CtVet1a(Guid id)
         {
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
 
             using SqlConnection _conn = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand("sp_Delete_CtVet1a", _conn)
+            SqlCommand cmd = new SqlCommand("nadis_Delete_CtVet1a", _conn)
             {
                 CommandType = CommandType.StoredProcedure
             };
@@ -132,7 +131,7 @@ namespace nadis.Models
             _conn.Close();
         }
 
-        public CtVet1a GetCtVet1aById(Guid id)
+        public static CtVet1a Get_CtVet1a_ById(Guid id)
         {
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
@@ -140,7 +139,7 @@ namespace nadis.Models
             CtVet1a tmp = new CtVet1a();
             using (SqlConnection _conn = new SqlConnection(connectionString))
             {
-                SqlCommand cmd = new SqlCommand("sp_GetById_CtVet1a", _conn)
+                SqlCommand cmd = new SqlCommand("nadis_GetByID_CtVet1a", _conn)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
@@ -150,7 +149,7 @@ namespace nadis.Models
                 while (dr.Read())
                 {
                     tmp.ID              = Guid.Parse(dr["ID"].ToString());
-                    tmp.KIDro           = dr["GID"].ToString();
+                    tmp.KIDro           = dr["KIDro"].ToString();
                     tmp.RepMO           = (DateTime)dr["repMO"];
 
                     tmp.KIDdiv          = dr["KIDdiv"].ToString();
@@ -172,6 +171,31 @@ namespace nadis.Models
                 _conn.Close();
             }
             return tmp;
+        }
+
+        public static bool IsUniqueRecord(CtVet1a tmp)
+        {
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+                int countR = 0;
+            using (SqlConnection _conn = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("nadis_CheckRecord_CtVet1a", _conn)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                cmd.Parameters.AddWithValue("@repMO", tmp.RepMO);
+                cmd.Parameters.AddWithValue("@KIDro", tmp.KIDro);
+                cmd.Parameters.AddWithValue("@KIDdiv", tmp.KIDdiv);
+                cmd.Parameters.AddWithValue("@KIDdis", tmp.KIDdis);
+                cmd.Parameters.AddWithValue("@KIDspc", tmp.KIDspc);
+                _conn.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read()) countR = (int)dr["kolvo"];
+                _conn.Close();
+            }
+            if(countR==0) {return true;} else return false;
         }
     }
 }

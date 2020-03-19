@@ -9,15 +9,14 @@ namespace nadis.Controllers
 {
     public class CtVet1aController : Controller
     {
-        readonly CtVet1aDAL vet1aDAL = new CtVet1aDAL();
-
         [Authorize]
         public IActionResult Index()
         {
             _ = new List<CtVet1a>();
-            List<CtVet1a> vet1aList = vet1aDAL.GetAllCtVet1a(
+            List<CtVet1a> vet1aList = CtVet1aDAL.GetAll_CtVet1a(
                                                 User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value).
                                                 ToList();
+            ViewBag.DateFilterList = spDAL.RepMO1YearList(DateTime.Today.Year);
             return View(vet1aList);
         }
         
@@ -43,7 +42,12 @@ namespace nadis.Controllers
         {
             if (ModelState.IsValid)
             {
-                vet1aDAL.AddCtVet1a(tmpVet);
+                //проверка на существования аналогичной записи
+                if(CtVet1aDAL.IsUniqueRecord(tmpVet)) CtVet1aDAL.Add_CtVet1a(tmpVet);
+                    else
+                    {
+                        return NotFound();
+                    };
                 return RedirectToAction("Index");
             }
             return View(tmpVet);
@@ -55,7 +59,7 @@ namespace nadis.Controllers
         public IActionResult Edit(Guid id)
         {
             if (id == null) return NotFound();
-            CtVet1a tmpVet1a = vet1aDAL.GetCtVet1aById(id);
+            CtVet1a tmpVet1a = CtVet1aDAL.Get_CtVet1a_ById(id);
             if(tmpVet1a == null) return NotFound();
 
             ViewBag.RepMoList  = spDAL.RepMO1YearList(tmpVet1a.RepMO.Year);
@@ -70,16 +74,16 @@ namespace nadis.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Guid id,[Bind] CtVet1a objCtVet1a)
         {
-            if (id == null)
+            if ((id == null)||(CtVet1aDAL.IsUniqueRecord(objCtVet1a)))
             {
                 return NotFound();
             }
             if (ModelState.IsValid)
             {
-                vet1aDAL.UpdateCtVet1a(objCtVet1a);
+                CtVet1aDAL.UpdateCtVet1a(objCtVet1a);
                 return RedirectToAction("Index");
             }
-            return View(vet1aDAL);
+            return View(objCtVet1a);
         }
 
 
@@ -91,7 +95,7 @@ namespace nadis.Controllers
             {
                 return NotFound();
             } 
-            CtVet1a tmpVet1a = vet1aDAL.GetCtVet1aById(id);
+            CtVet1a tmpVet1a = CtVet1aDAL.Get_CtVet1a_ById(id);
             if (tmpVet1a == null)
             {
                 return NotFound();
@@ -106,7 +110,7 @@ namespace nadis.Controllers
             {
                 return NotFound();
             }
-            CtVet1a tmpVet1a = vet1aDAL.GetCtVet1aById(id);
+            CtVet1a tmpVet1a = CtVet1aDAL.Get_CtVet1a_ById(id);
             if (tmpVet1a == null)
             {
                 return NotFound();
@@ -119,7 +123,7 @@ namespace nadis.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteCtVet1a(Guid id)
         {
-            vet1aDAL.DeleteCtVet1a(id);
+            CtVet1aDAL.Delete_CtVet1a(id);
             return RedirectToAction("Index");
         }
     }

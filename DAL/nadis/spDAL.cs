@@ -64,10 +64,10 @@ namespace nadis.Models
             List<sp_values> tmpList = new List<sp_values>();
             using (SqlConnection _conn = new SqlConnection(connectionString))
             {
-                SqlCommand cmd = new SqlCommand("sp_Get_SPVidJiv", _conn)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
+                SqlCommand cmd = new SqlCommand("SELECT KID, Species FROM [d2SPECIES]", _conn);
+                //{
+                //    CommandType = CommandType.StoredProcedure
+                //};
                 _conn.Open();
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
@@ -91,10 +91,10 @@ namespace nadis.Models
             List<sp_values> tmpList = new List<sp_values>();
             using (SqlConnection _conn = new SqlConnection(connectionString))
             {
-                SqlCommand cmd = new SqlCommand("sp_Get_SPBolezni", _conn)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
+                SqlCommand cmd = new SqlCommand("SELECT KID, Disease FROM [d2DISEASES]", _conn);
+                //{
+                //    CommandType = CommandType.StoredProcedure
+                //};
                 _conn.Open();
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
