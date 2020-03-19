@@ -16,7 +16,7 @@ namespace nadis.Controllers
         public IActionResult Index()
         {
             _ = new List<CtVet1b>();
-            List<CtVet1b> vet1aList = CtVet1bDAL.GetAllCtVet1b(
+            List<CtVet1b> vet1aList = CtVet1bDAL.GetAll_CtVet1b(
                                                 User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value).
                                                 ToList();
             return View(vet1aList);
@@ -48,7 +48,7 @@ namespace nadis.Controllers
         {
             if (ModelState.IsValid)
             {
-                CtVet1bDAL.AddCtVet1b(tmpVet);
+                CtVet1bDAL.Add_CtVet1b(tmpVet);
                 return RedirectToAction("Index");
             }
             return View(tmpVet);

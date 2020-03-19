@@ -11,7 +11,7 @@ namespace nadis.DAL.nadis
 {
     public static class CtVet1bDAL
     {
-        public static IEnumerable<CtVet1b> GetAllCtVet1b(string KIDro)//, string repMO)
+        public static IEnumerable<CtVet1b> GetAll_CtVet1b(string KIDro)//, string repMO)
         {
 
             var appSettingsJson = AppSettingJSON.GetAppSettings();
@@ -20,7 +20,7 @@ namespace nadis.DAL.nadis
             List<CtVet1b> tmpList = new List<CtVet1b>();
             using (SqlConnection _conn = new SqlConnection(connectionString))
             {
-                SqlCommand cmd = new SqlCommand("sp_Get_CtVet1b", _conn)
+                SqlCommand cmd = new SqlCommand("nadis_GetAll_CtVet1b", _conn)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
@@ -64,7 +64,7 @@ namespace nadis.DAL.nadis
         }
 
 
-        public static void AddCtVet1b(CtVet1b tmp)
+        public static void Add_CtVet1b(CtVet1b tmp)
         {
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
