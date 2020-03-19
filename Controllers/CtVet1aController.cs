@@ -12,11 +12,13 @@ namespace nadis.Controllers
         [Authorize]
         public IActionResult Index()
         {
+            //if(!ViewBag.Filter){};
             _ = new List<CtVet1a>();
             List<CtVet1a> vet1aList = CtVet1aDAL.GetAll_CtVet1a(
                                                 User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value).
                                                 ToList();
             ViewBag.DateFilterList = spDAL.RepMO1YearList(DateTime.Today.Year);
+            ViewBag.repMOFilter = DateTime.Today;
             return View(vet1aList);
         }
         
