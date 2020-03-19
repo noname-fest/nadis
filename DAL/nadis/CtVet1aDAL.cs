@@ -17,7 +17,7 @@ namespace nadis.Models
             List<CtVet1a> tmpList = new List<CtVet1a>();
             using (SqlConnection _conn = new SqlConnection(connectionString))
             {
-                SqlCommand cmd = new SqlCommand("sp_Get_CtVet1a", _conn)
+                SqlCommand cmd = new SqlCommand("nadis_GetAll_CtVet1a", _conn)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
