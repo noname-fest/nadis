@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using nadis.Models.sp;
 using nadis.tools;
 
-namespace nadis.Models
+namespace nadis.DAL.nadis
 {
   
     public static class spDAL

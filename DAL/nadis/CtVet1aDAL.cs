@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using nadis.tools;
+using nadis.Models;
 
-namespace nadis.Models
+namespace nadis.DAL.nadis
 {
     public static class CtVet1aDAL
     {
