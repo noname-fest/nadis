@@ -7,25 +7,54 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using nadis.Models.sp;
 using nadis.tools;
+using Dapper;
 
 namespace nadis.DAL.nadis
 {
-  
+
     public static class spDAL
     {
-        public static SelectList RepMO1YearList(int y)
+        public static string DivDisplay(string KIDro, string KIDdiv)
+        {
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+            using (SqlConnection _conn = new SqlConnection(connectionString))
+            {
+                return  _conn.QueryFirst(
+                    "SELECT Socunit FROM[73GEO3] " +
+                    "INNER JOIN[1VETUNITS] ON[1VETUNITS].KIDray = [73GEO3].gRID " +
+                    "WHERE[1VETUNITS].KID = @KIDroP and gAID = @KIDdivP", new { KIDroP = KIDdiv, KIDdivP = KIDdiv });
+            }
+        }
+        public static List<sp_values> __RepMO1YearList(int y)
         {
             List<sp_values> tmpList = new List<sp_values>();
             for (int i = 1; i < 13; i++)
             {
                 sp_values tmp_sp = new sp_values
                 {
-                    ID   = new DateTime(y, i, 1).ToString(),
+                    ID = new DateTime(y, i, 1).ToString(),
                     Text = new DateTime(y, i, 1).ToString("MMM yyyy")
                 };
                 tmpList.Add(tmp_sp);
             }
-            return new SelectList(tmpList, "ID", "Text");
+            return tmpList;
+        }
+        public static SelectList RepMO1YearList(int y)
+        {
+            /*
+            List<sp_values> tmpList = new List<sp_values>();
+            for (int i = 1; i < 13; i++)
+            {
+                sp_values tmp_sp = new sp_values
+                {
+                    ID = new DateTime(y, i, 1).ToString(),
+                    Text = new DateTime(y, i, 1).ToString("MMM yyyy")
+                };
+                tmpList.Add(tmp_sp);
+            }
+            */
+            return new SelectList(__RepMO1YearList(y), "ID", "Text");
         }
 
         public static SelectList KIDdivList(string KIDro)
