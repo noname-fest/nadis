@@ -29,6 +29,7 @@ namespace AuthSample.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModel loginModel)
         {
+            if(loginModel != null)
             if (ModelState.IsValid)
             {
                 var user = await _userContext.Users
@@ -62,6 +63,7 @@ namespace AuthSample.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterModel registerModel)
         {
+            if (registerModel != null)
             if (ModelState.IsValid)
             {
                 var user = await _userContext.Users

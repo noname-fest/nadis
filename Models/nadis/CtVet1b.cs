@@ -18,7 +18,7 @@ namespace nadis.Models
         public DateTime RepMO { get; set; } = DateTime.Now;//periud dannix
 
 
-        [Display(Name = "      Айыл Аймак      ")]
+        [Display(Name = "Айыл Аймак")]
         public string KIDdivDisplay { get; set; } = "";
         [StringLength(10)]
         public string KIDdiv { get; set; } = ""; // AA code
@@ -34,7 +34,7 @@ namespace nadis.Models
         [StringLength(4)]
         public string KIDdis { get; set; } = ""; // bolezn
 
-        [Display(Name = "Дата наблюдения")]
+        [Display(Name = "Дата наблюд.")]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}")]
         [Column(TypeName = "date")]
         public DateTime dtObs { get; set; } = DateTime.Today;  //Дата наблюдения
