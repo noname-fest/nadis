@@ -21,4 +21,15 @@ namespace nadis.Controllers
             return View(BioPrepList);
         }
     }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult Create()
+        {
+            ViewBag.RepMoList = spDAL.RepMoList(DateTime.Today.Year);
+            ViewBag.KIDdivList = spDAL.VetPrepList(User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value);
+            ViewBag.KIDspcList = spDAL.KIDspcList();
+            ViewBag.KIDdisList = spDAL.KIDdisList();
+
+        }
 }
