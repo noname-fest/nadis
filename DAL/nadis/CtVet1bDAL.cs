@@ -70,6 +70,7 @@ namespace nadis.DAL.nadis
 
         public static void Add_CtVet1b(CtVet1b tmp)
         {
+            if(tmp==null)return;
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
 

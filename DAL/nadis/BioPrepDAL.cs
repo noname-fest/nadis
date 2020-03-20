@@ -55,7 +55,11 @@ namespace nadis.DAL.nadis
                 + "PostupiloVsego,PostupiloRazn,IzrashodVsego,IzrashodDrugoe) VALUES (" +
                 "@KIDroP,@repMOP,@VetPrepP,@EdIzmP,@ByloP,"
                 + "@PostupiloVsegoP,@PostupiloRaznP,@IzrashodVsegovP,@IzrashodDrugoeP)",
-                new { }
+                new {
+                        KIDroP=KIDro,repMOP=repMO,VetPrepP=VetPrep,EdIzmP=EdIzm,ByloP=Bylo,
+                        PostupiloVsegoP=PostupiloVsego,PostupiloRaznP=PostupiloRazn,
+                        IzrashodDrugoeP=IzrashodDrugoeP,IzrashodVsegoP=IzrashodVsego
+                    }
                 );
             _conn.Close();
         }
