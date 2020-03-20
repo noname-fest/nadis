@@ -14,6 +14,31 @@ namespace nadis.DAL.nadis
 
     public static class spDAL
     {
+        public static SelectList VetPrepList()
+        {
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+            using SqlConnection _conn = new SqlConnection(connectionString);
+            var tmp = _conn.Query<sp_values>("SELECT KID as ID, PrepType as Text FROM VetPrep");
+            List<sp_values> tL = new List<sp_values>();
+            foreach (var tt in tmp)
+            {
+                tL.Add(tt);
+            }
+            return new SelectList(tL, "ID", "Text");
+        }
+
+        public static SelectList EdIzmList()
+        {
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+            using SqlConnection _conn = new SqlConnection(connectionString);
+            var tmp = _conn.Query<sp_values>("SELECT KID as ID, EdIzm as Text FROM EdIzm");
+            List<sp_values> tL = new List<sp_values>();
+            foreach (var tt in tmp) tL.Add(tt);
+            return new SelectList(tL, "ID", "Text");
+        }
+
         public static string VetPrepName(string KIDVetPrep)
         {
             var appSettingsJson = AppSettingJSON.GetAppSettings();

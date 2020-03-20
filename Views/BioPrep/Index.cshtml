@@ -5,38 +5,42 @@
 }
 
 <h1>Записи</h1>
+<p>
+    <a asp-action="Create">Создать новый</a>
+</p>
+
 <table class="table table-striped table-responsive-sm">
-     <thead>
-         <tr>
-             <th>
+    <thead>
+        <tr>
+            <th>
                 @Html.DisplayNameFor(model => model.RepMO)
-             </th>
-             <th>
-                 @Html.DisplayNameFor(model => model.VetPrepDisplay)
-             </th>
-             <th>
-                 @Html.DisplayNameFor(model => model.EdIzmDisplay)
-             </th>
-             <th>
-                 @Html.DisplayNameFor(model => model.Bylo)
-             </th>
-             <th>
-                 @Html.DisplayNameFor(model => model.PostupiloVsego)
-             </th>
-             <th>
-                 @Html.DisplayNameFor(model => model.PostupiloRazn)
-             </th>
-             <th>
-                 @Html.DisplayNameFor(model => model.IzrashodVsego)
-             </th>
-             <th>
-                 @Html.DisplayNameFor(model => model.IzrashodDrugoe)
-             </th>
-             <th>
-                 @Html.DisplayNameFor(model => model.Ostatok_za_mesyac)
-             </th>
-         </tr>
-     </thead>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VetPrepDisplay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EdIzmDisplay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bylo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PostupiloVsego)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PostupiloRazn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IzrashodVsego)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IzrashodDrugoe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ostatok_za_mesyac)
+            </th>
+        </tr>
+    </thead>
     <tbody>
         @foreach (var tmp in Model)
         {

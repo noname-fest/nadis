@@ -36,7 +36,7 @@ namespace nadis.DAL.nadis
             SqlConnection _conn = new SqlConnection(connectionString);
 
             BioPrep tmp = _conn.QueryFirst<BioPrep>(
-                "SELECT TOP 1 FROM BioPrep WHERE ID=@IDv",
+                "SELECT * FROM BioPrep WHERE ID=@IDv",
                  new { IDv = Id });
             _conn.Close();
             tmp.VetPrepDisplay = spDAL.VetPrepName(tmp.VetPrep);
@@ -54,14 +54,63 @@ namespace nadis.DAL.nadis
             _conn.Execute("INSERT INTO BioPrep (KIDro, repMO,VetPrep,EdIzm,Bylo,"
                 + "PostupiloVsego,PostupiloRazn,IzrashodVsego,IzrashodDrugoe) VALUES (" +
                 "@KIDroP,@repMOP,@VetPrepP,@EdIzmP,@ByloP,"
-                + "@PostupiloVsegoP,@PostupiloRaznP,@IzrashodVsegovP,@IzrashodDrugoeP)",
+                + "@PostupiloVsegoP,@PostupiloRaznP,@IzrashodVsegoP,@IzrashodDrugoeP)",
                 new {
-                        KIDroP=KIDro,repMOP=repMO,VetPrepP=VetPrep,EdIzmP=EdIzm,ByloP=Bylo,
-                        PostupiloVsegoP=PostupiloVsego,PostupiloRaznP=PostupiloRazn,
-                        IzrashodDrugoeP=IzrashodDrugoeP,IzrashodVsegoP=IzrashodVsego
+                        KIDroP=tmp.KIDro,repMOP= tmp.RepMO, VetPrepP= tmp.VetPrep,EdIzmP= tmp.EdIzm,ByloP= tmp.Bylo,
+                        PostupiloVsegoP= tmp.PostupiloVsego,PostupiloRaznP= tmp.PostupiloRazn,
+                        IzrashodDrugoeP= tmp.IzrashodDrugoe,IzrashodVsegoP= tmp.IzrashodVsego
                     }
                 );
             _conn.Close();
         }
+
+        public static void Update_BioPrep(BioPrep tmp)
+        {
+            if (tmp == null) return;
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+
+            SqlConnection _conn = new SqlConnection(connectionString);
+            _conn.Execute("UPDATE BioPrep SET KIDro=@KIDroP," +
+                "repMO=@repMOP," +
+                "VetPrep=@VetPrepP," +
+                "EdIzm=@EdIzmP," +
+                "Bylo=@ByloP," +
+                "PostupiloVsego=@PostupiloVsegoP," +
+                "PostupiloRazn=@PostupiloRaznP," +
+                "IzrashodVsego=@IzrashodVsegoP," +
+                "IzrashodDrugoe=@IzrashodDrugoeP) WHERE ID=@IdP" ,
+                new
+                {
+                    IdP = tmp.ID,
+                    KIDroP = tmp.KIDro,
+                    repMOP = tmp.RepMO,
+                    VetPrepP = tmp.VetPrep,
+                    EdIzmP = tmp.EdIzm,
+                    ByloP = tmp.Bylo,
+                    PostupiloVsegoP = tmp.PostupiloVsego,
+                    PostupiloRaznP = tmp.PostupiloRazn,
+                    IzrashodDrugoeP = tmp.IzrashodDrugoe,
+                    IzrashodVsegoP = tmp.IzrashodVsego
+                }      );
+            _conn.Close();
+        }
+
+        public static bool IsUniqueRecord(BioPrep tmp)
+        {
+            if (tmp == null) return false;
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+            using (SqlConnection _conn = new SqlConnection(connectionString))
+            {
+                int count = _conn.QueryFirst<int>("SELECT COUNT(*) FROM BioPrep WHERE ("
+                    + "repMO=@repMOP and KIDro=@KIDroP and VetPrep=@VetPrepP and EdIzm=@EdIzmP)",
+                    new {repMOP=tmp.RepMO, KIDroP=tmp.KIDro, VetPrepP=tmp.VetPrep, EdIzmP=tmp.EdIzm });
+                _conn.Close();
+                if (count == 0) { return true; } else { return false; }
+            }
+            
+        }
+
     }
 }
