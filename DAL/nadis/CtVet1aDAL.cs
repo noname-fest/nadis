@@ -58,6 +58,7 @@ namespace nadis.DAL.nadis
 
         public static void Add_CtVet1a(CtVet1a tmp)
         {
+            if (tmp == null) return;
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
 
@@ -176,6 +177,7 @@ namespace nadis.DAL.nadis
 
         public static bool IsUniqueRecord(CtVet1a tmp)
         {
+            if (tmp == null) return false;
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
                 int countR = 0;

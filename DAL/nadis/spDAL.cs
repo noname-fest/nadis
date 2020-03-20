@@ -14,18 +14,29 @@ namespace nadis.DAL.nadis
 
     public static class spDAL
     {
-        public static string DivDisplay(string KIDro, string KIDdiv)
+        public static string VetPrepName(string KIDVetPrep)
         {
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
             using (SqlConnection _conn = new SqlConnection(connectionString))
             {
-                return  _conn.QueryFirst(
-                    "SELECT Socunit FROM[73GEO3] " +
-                    "INNER JOIN[1VETUNITS] ON[1VETUNITS].KIDray = [73GEO3].gRID " +
-                    "WHERE[1VETUNITS].KID = @KIDroP and gAID = @KIDdivP", new { KIDroP = KIDdiv, KIDdivP = KIDdiv });
+                string VetUnit = _conn.QueryFirst<string>(
+                        "SELECT TOP 1 PrepType FROM [VetPrep] WHERE KID=@VetPP", new { VetPP = KIDVetPrep});
+                return VetUnit;
             }
         }
+
+        public static string EdIzmName(string KIDEdIzm)
+        {
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+            using (SqlConnection _conn = new SqlConnection(connectionString))
+            {
+                return _conn.QueryFirst<string>(
+                        "SELECT TOP 1 EdIzm FROM [EdIzm] WHERE KID=@VetPP", new { VetPP = KIDEdIzm });
+            }
+        }
+
         public static List<sp_values> __RepMO1YearList(int y)
         {
             List<sp_values> tmpList = new List<sp_values>();

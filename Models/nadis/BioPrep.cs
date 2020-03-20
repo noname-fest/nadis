@@ -14,13 +14,6 @@ public class BioPrep
         [StringLength(7)]
         public string KIDro { get; set; }
 
-        [Display(Name = "     Айыл Аймак     ")]
-        public string KIDdivDisplay { get; set; } = "";
-
-        [StringLength(10)]
-        //public string KIDdiv { get; set; }  //raion a/a 
-        public string KIDdiv { get; set; } = "";
-
         [Display(Name = " Периуд ")]
         [DisplayFormat(DataFormatString = "{0:MMM yyyy}")]
         public DateTime RepMO { get; set; } = DateTime.Today;//periud dannix
