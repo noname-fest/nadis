@@ -1,15 +1,15 @@
-
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using nadis.Models;
-using nadis.DAL;
 using nadis.DAL.nadis;
-using System.Security.Claims;
+using nadis.Models;
 
 namespace nadis.Controllers
 {
-    public class BioPrepController
+    public class BioPrepController : Controller
     {
         [Authorize]
         public IActionResult Index()
@@ -19,6 +19,6 @@ namespace nadis.Controllers
                                                 User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value).
                                                 ToList();
             return View(BioPrepList);
-        }        
+        }
     }
 }
