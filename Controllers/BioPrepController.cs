@@ -93,6 +93,31 @@ namespace nadis.Controllers
             return View(objBioPrep);
         }
 
+        [Authorize]
+        public IActionResult Delete(Guid id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            BioPrep tmp = BioPrepDAL.GetById_BioPrep(id);
+            if (tmp == null)
+            {
+                return NotFound();
+            }
+            return View(tmp);
+        }
+
+        [Authorize]
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteBioPrep(Guid id)
+        {
+            BioPrepDAL.Delete_BioPrep(id);
+            return RedirectToAction("Index");
+        }
+
+
     }
 
 }

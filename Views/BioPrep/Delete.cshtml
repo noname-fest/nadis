@@ -1,0 +1,46 @@
+﻿@model nadis.Models.BioPrep
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Удаление записи</h1>
+<div>
+    <h4>Information</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RepMO)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.VetPrepDisplay)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.EdIzmDisplay)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Bylo)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.PostupiloVsego)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.PostupiloRazn)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.IzrashodVsego)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.IzrashodDrugoe)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Ostatok_za_mesyac)
+        </dt>
+    </dl>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ID" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-action="Index">К списку</a>
+    </form>
+
+
