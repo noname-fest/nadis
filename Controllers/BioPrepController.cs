@@ -80,14 +80,14 @@ namespace nadis.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Guid id, [Bind] BioPrep objBioPrep)
         {
-            bool uniq = BioPrepDAL.IsUniqueRecord(objBioPrep);
-            if ((id == null) || uniq)
+            if (id == null)
             {
                 return NotFound();
             }
             if (ModelState.IsValid)
             {
-                BioPrepDAL.Update_BioPrep(objBioPrep);
+                //if(BioPrepDAL.IsUniqueRecord(objBioPrep))
+                    BioPrepDAL.Update_BioPrep(objBioPrep);
                 return RedirectToAction("Index");
             }
             return View(objBioPrep);

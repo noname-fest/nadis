@@ -79,7 +79,7 @@ namespace nadis.DAL.nadis
                 "PostupiloVsego=@PostupiloVsegoP," +
                 "PostupiloRazn=@PostupiloRaznP," +
                 "IzrashodVsego=@IzrashodVsegoP," +
-                "IzrashodDrugoe=@IzrashodDrugoeP) WHERE ID=@IdP" ,
+                "IzrashodDrugoe=@IzrashodDrugoeP WHERE ID=@IdP" ,
                 new
                 {
                     IdP = tmp.ID,
