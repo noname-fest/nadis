@@ -43,7 +43,7 @@ namespace nadis.Models
         [Display(Name = "Мероприятие")]
         public string KIDtrtDisplay {get;set;}
         [StringLength(5)]
-        public string KIDtrt { get; set; }
+        public string KIDtrt { get; set; } = "";
 
         /*
         [Required(ErrorMessage = "Только целое число > 0")]
@@ -53,16 +53,16 @@ namespace nadis.Models
         public int treated { get; set; }
         */
         [Required(ErrorMessage = "Только целое число > 0")]
-        public int tfemage1 { get; set; }
+        public int tfemage1 { get; set; } = 0;
 
         [Required(ErrorMessage = "Только целое число > 0")]
-        public int tfemage2 { get; set; }
+        public int tfemage2 { get; set; } = 0;
 
         [Required(ErrorMessage = "Только целое число > 0")]
-        public int tmalage1 { get; set; }
+        public int tmalage1 { get; set; } = 0;
 
         [Required(ErrorMessage = "Только целое число > 0")]
-        public int tmalage2 { get; set; }
+        public int tmalage2 { get; set; } = 0;
 
         public const string test = "NOTS";
 
