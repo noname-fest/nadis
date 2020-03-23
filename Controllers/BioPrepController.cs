@@ -53,9 +53,9 @@ namespace nadis.Controllers
                     BioPrepDAL.Add_BioPrep(tmp);
                 else
                 {
-                    //return NotFound();
-                    ViewBag.ErrorMessage = "Такая запись уже существует";
-                    //return RedirectToAction("Index");
+                    TempData["EM"] = "Такая запись уже существует";
+                    //return LocalRedirect("~/Home/Error");
+                    //return RedirectToAction("Error");
                 };
                 return RedirectToAction("Index");
             }
@@ -118,7 +118,6 @@ namespace nadis.Controllers
             BioPrepDAL.Delete_BioPrep(id);
             return RedirectToAction("Index");
         }
-
 
     }
 

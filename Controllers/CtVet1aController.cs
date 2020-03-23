@@ -18,8 +18,6 @@ namespace nadis.Controllers
             List<CtVet1a> vet1aList = CtVet1aDAL.GetAll_CtVet1a(
                                                 User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value).
                                                 ToList();
-            ViewBag.DateFilterList = spDAL.RepMO1YearList(DateTime.Today.Year);
-            ViewBag.repMOFilter = DateTime.Today;
             return View(vet1aList);
         }
         
@@ -50,7 +48,8 @@ namespace nadis.Controllers
                         CtVet1aDAL.Add_CtVet1a(tmpVet);
                     else
                     {
-                        return NotFound();
+                        TempData["EM"] = "Такая запись уже существует";
+                        //return NotFound();
                     };
                 return RedirectToAction("Index");
             }

@@ -4,8 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Записи</h1>
-<h2>@ViewBag.ErrorMessage</h2>
+<font color="red" size=18>@TempData["EM"]</font>
 <p>
     <a asp-action="Create">Создать новый</a>
 </p>

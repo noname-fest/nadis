@@ -52,7 +52,8 @@ namespace nadis.Controllers
                 if (CtVet1bDAL.IsUniqueRecord(tmpVet)) CtVet1bDAL.Add_CtVet1b(tmpVet);
                 else
                 {
-                    return NotFound();
+                    TempData["EM"] = "Такая запись уже существует";
+                    //return NotFound();
                 };
                 return RedirectToAction("Index");
             }
