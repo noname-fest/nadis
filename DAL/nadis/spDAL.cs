@@ -14,6 +14,34 @@ namespace nadis.DAL.nadis
 
     public static class spDAL
     {
+        public static string KIDdivName(string KIDdiv)
+        {
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+            using (SqlConnection _conn = new SqlConnection(connectionString))
+            {
+                string rez = _conn.QueryFirst<string>(
+                        "SELECT TOP 1 [Socunit] FROM [[73GEO3]] WHERE [gAID]=@val", new { val = KIDdiv});
+                return rez;
+            }
+        }
+        
+        //d3PREVMEASURES
+        public static SelectList MeasuresList()
+        {
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+            using SqlConnection _conn = new SqlConnection(connectionString);
+            var tmp = _conn.Query<sp_values>("SELECT KID as ID, [Measure] as Text FROM [d3PREVMEASURES]");
+            List<sp_values> tL = new List<sp_values>();
+            foreach (var tt in tmp)
+            {
+                tL.Add(tt);
+            }
+            return new SelectList(tL, "ID", "Text");
+        }
+
+
         public static SelectList VetPrepList()
         {
             var appSettingsJson = AppSettingJSON.GetAppSettings();
