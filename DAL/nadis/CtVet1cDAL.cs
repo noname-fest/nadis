@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using nadis.Models.nadis;
 using nadis.tools;
 using System.Data.SqlClient;
 using nadis.Models;

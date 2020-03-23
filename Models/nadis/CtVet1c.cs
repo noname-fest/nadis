@@ -3,7 +3,7 @@
     using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace nadis.Models.nadis
+namespace nadis.Models
 {
     public class CtVet1c
     {
@@ -37,6 +37,7 @@ namespace nadis.Models.nadis
 
         [Display(Name="Дата наблюдения")]
         [Column(TypeName = "date")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}")]
         public DateTime dtObs { get; set; } = DateTime.Today;
         
         [Display(Name = "Мероприятие")]

@@ -16,28 +16,31 @@
                 @Html.DisplayNameFor(model => model.RepMO)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.VetPrepDisplay)
+                @Html.DisplayNameFor(model => model.KIDdivDisplay)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EdIzmDisplay)
+                @Html.DisplayNameFor(model => model.dtObs)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Bylo)
+                @Html.DisplayNameFor(model => model.KIDspcDisplay)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PostupiloVsego)
+                @Html.DisplayNameFor(model => model.KIDdisDisplay)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PostupiloRazn)
+                @Html.DisplayNameFor(model => model.KIDtrtDisplay)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IzrashodVsego)
+                @Html.DisplayNameFor(model => model.tfemage1)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IzrashodDrugoe)
+                @Html.DisplayNameFor(model => model.tfemage2)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Ostatok_za_mesyac)
+                @Html.DisplayNameFor(model => model.tmalage1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tmalage2)
             </th>
         </tr>
     </thead>
@@ -49,28 +52,31 @@
                     @Html.DisplayFor(modelItem => tmp.RepMO)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => tmp.VetPrepDisplay)
+                    @Html.DisplayFor(modelItem => tmp.KIDdivDisplay)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => tmp.EdIzmDisplay)
+                    @Html.DisplayFor(modelItem => tmp.dtObs)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => tmp.Bylo)
+                    @Html.DisplayFor(modelItem => tmp.KIDspcDisplay)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => tmp.PostupiloVsego)
+                    @Html.DisplayFor(modelItem => tmp.KIDdisDisplay)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => tmp.PostupiloRazn)
+                    @Html.DisplayFor(modelItem => tmp.KIDtrtDisplay)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => tmp.IzrashodVsego)
+                    @Html.DisplayFor(modelItem => tmp.tfemage1)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => tmp.IzrashodDrugoe)
+                    @Html.DisplayFor(modelItem => tmp.tfemage2)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => tmp.Ostatok_za_mesyac)
+                    @Html.DisplayFor(modelItem => tmp.tmalage1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.tmalage2)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@tmp.ID">Редак.</a>&nbsp;&nbsp;<a asp-action="Delete" asp-route-id="@tmp.ID">Удал.</a>

@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using nadis.DAL.nadis;
 using nadis.Models;
-using nadis.Models.nadis;
 
 namespace nadis.Controllers
 {
@@ -25,5 +24,22 @@ namespace nadis.Controllers
                                                 ).ToList();
             return View(CtVet1cList);
         }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult Edit(Guid id)
+        {
+            if (id == null) return NotFound();
+            CtVet1c tmp = CtVet1cDAL.GetById_CtVet1c(id);
+            if (tmp == null) return NotFound();
+
+            ViewBag.RepMoList  = spDAL.RepMO1YearList(DateTime.Today.Year);
+            ViewBag.KIDdivList = spDAL.KIDdivList(User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value);
+            ViewBag.KIDspcList = spDAL.KIDspcList();
+            ViewBag.KIDdisList = spDAL.KIDdisList();
+            ViewBag.KIDtrtList = spDAL.KIDtrtList();
+            return View(tmp);
+        }
+
     }
 }
