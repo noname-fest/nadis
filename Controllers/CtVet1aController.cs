@@ -46,7 +46,8 @@ namespace nadis.Controllers
             if (ModelState.IsValid)
             {
                 //проверка на существования аналогичной записи
-                if(CtVet1aDAL.IsUniqueRecord(tmpVet)) CtVet1aDAL.Add_CtVet1a(tmpVet);
+                if(CtVet1aDAL.IsUniqueRecord(tmpVet)) 
+                        CtVet1aDAL.Add_CtVet1a(tmpVet);
                     else
                     {
                         return NotFound();

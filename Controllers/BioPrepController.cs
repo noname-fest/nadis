@@ -53,7 +53,9 @@ namespace nadis.Controllers
                     BioPrepDAL.Add_BioPrep(tmp);
                 else
                 {
-                    return NotFound();
+                    //return NotFound();
+                    ViewBag.ErrorMessage = "Такая запись уже существует";
+                    //return RedirectToAction("Index");
                 };
                 return RedirectToAction("Index");
             }
