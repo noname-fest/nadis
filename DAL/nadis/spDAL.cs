@@ -14,6 +14,32 @@ namespace nadis.DAL.nadis
 
     public static class spDAL
     {
+
+        public static string KIDtrtName(string KIDtrt)
+        {
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+            using (SqlConnection _conn = new SqlConnection(connectionString))
+            {
+                string rez = _conn.QueryFirst<string>(
+                        "SELECT TOP 1 [Measure] FROM [d3PREVMEASURES] WHERE [KID]=@val", new { val = KIDtrt});
+                return rez;
+            }
+        }
+
+        public static string KIDdisName(string KIDdis)
+        {
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+            using (SqlConnection _conn = new SqlConnection(connectionString))
+            {
+                string rez = _conn.QueryFirst<string>(
+                        "SELECT TOP 1 [Disease] FROM [d2DISEASES] WHERE [KID]=@val", new { val = KIDdis});
+                return rez;
+            }
+        }
+
+
         public static string KIDdivName(string KIDdiv)
         {
             var appSettingsJson = AppSettingJSON.GetAppSettings();
@@ -21,11 +47,22 @@ namespace nadis.DAL.nadis
             using (SqlConnection _conn = new SqlConnection(connectionString))
             {
                 string rez = _conn.QueryFirst<string>(
-                        "SELECT TOP 1 [Socunit] FROM [[73GEO3]] WHERE [gAID]=@val", new { val = KIDdiv});
+                        "SELECT TOP 1 [Socunit] FROM [73GEO3] WHERE [gAID]=@val", new { val = KIDdiv});
                 return rez;
             }
         }
         
+        public static string KIDspcName(string KIDspc)
+        {
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+            using (SqlConnection _conn = new SqlConnection(connectionString))
+            {
+                string rez = _conn.QueryFirst<string>(
+                        "SELECT TOP 1 [Species] FROM [d2SPECIES] WHERE KID=@val", new { val = KIDspc});
+                return rez;
+            }
+        }
         //d3PREVMEASURES
         public static SelectList MeasuresList()
         {

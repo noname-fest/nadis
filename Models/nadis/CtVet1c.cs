@@ -39,6 +39,11 @@ namespace nadis.Models.nadis
         [Column(TypeName = "date")]
         public DateTime dtObs { get; set; } = DateTime.Today;
         
+        [Display(Name = "Мероприятие")]
+        public string KIDtrtDisplay {get;set;}
+        [StringLength(5)]
+        public string KIDtrt { get; set; }
+
         /*
         [Required(ErrorMessage = "Только целое число > 0")]
         public int? nVT { get; set; }
@@ -46,12 +51,6 @@ namespace nadis.Models.nadis
         [Required(ErrorMessage = "Только целое число > 0")]
         public int treated { get; set; }
         */
-
-        [Display(Name = "Мероприятие")]
-        public string KIDtrtDisplay {get;set;}
-        [StringLength(5)]
-        public string KIDtrt { get; set; }
-
         [Required(ErrorMessage = "Только целое число > 0")]
         public int tfemage1 { get; set; }
 
