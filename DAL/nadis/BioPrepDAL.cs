@@ -10,15 +10,19 @@ namespace nadis.DAL.nadis
 {
     public static class BioPrepDAL
     {
-        public static IEnumerable<BioPrep> GetAll_BioPrep(string KIDro)
+        public static IEnumerable<BioPrep> GetAll_BioPrep(string KIDro, int rpDtYear, int rpDtMonth)
         {
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
 
             SqlConnection _conn = new SqlConnection(connectionString);
             IEnumerable<BioPrep> tmpList =
-                _conn.Query<BioPrep>("SELECT * FROM BioPrep WHERE (KIDro=@KIDroP and DATEDIFF(mm,repMO,GETDATE())<2)"
-                                      + " ORDER BY repMO DESC", new { KIDroP = KIDro });
+                _conn.Query<BioPrep>("SELECT * FROM BioPrep WHERE (KIDro=@KIDroP and repMo between @bDt and @eDt)"
+                                      + " ORDER BY repMO DESC", 
+                                            new { KIDroP = KIDro, 
+                                                  bDt = new DateTime(rpDtYear,rpDtMonth,1),
+                                                  eDt = new DateTime(DateTime.Today.Year, DateTime.Today.Month,1) 
+                                                });
             _conn.Close();
             foreach (var tmp in tmpList)
             {

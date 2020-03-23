@@ -15,9 +15,14 @@ namespace nadis.Controllers
         {
             //if(!ViewBag.Filter){};
             _ = new List<CtVet1a>();
+            int reportDtYear = Convert.ToInt32(User.Claims.ToList().FirstOrDefault(x => x.Type == "reportDtYear").Value);
+            int reportDtMonth = Convert.ToInt32(User.Claims.ToList().FirstOrDefault(x => x.Type == "reportDtMonth").Value);
+
             List<CtVet1a> vet1aList = CtVet1aDAL.GetAll_CtVet1a(
-                                                User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value).
-                                                ToList();
+                                                User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value,
+                                                reportDtYear,
+                                                reportDtMonth
+                                                ).ToList();
             return View(vet1aList);
         }
         
@@ -49,6 +54,7 @@ namespace nadis.Controllers
                     else
                     {
                         TempData["EM"] = "Такая запись уже существует";
+                        ModelState.AddModelError("","Такая запись уже существует");
                         //return NotFound();
                     };
                 return RedirectToAction("Index");

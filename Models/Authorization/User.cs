@@ -1,4 +1,6 @@
-﻿namespace nadis.Models
+﻿using System;
+
+namespace nadis.Models
 {
     public class User
     {
@@ -9,5 +11,7 @@
 
         public string KIDro { get; set; }
         public string Role { get; set; }
+        
+        public DateTime reportDt {get; set;}
     }
 }

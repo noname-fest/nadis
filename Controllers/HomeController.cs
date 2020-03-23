@@ -28,6 +28,11 @@ namespace nadis.Controllers
                                         FirstOrDefault(x => x.Type == "KIDro").Value;
             ViewData["Role"] = User.Claims.ToList().
                                         FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
+            ViewData["reportDt"] =(new DateTime(Convert.ToInt32(User.Claims.ToList().
+                                        FirstOrDefault(x => x.Type == "reportDtYear").Value),
+                                   Convert.ToInt32(User.Claims.ToList().
+                                        FirstOrDefault(x => x.Type == "reportDtMonth").Value), 1)).ToString("MMMM yyyy") ;
+
             return View();
         }
 

@@ -11,14 +11,19 @@ namespace nadis.Controllers
 {
     public class CtVet1bController : Controller
     {
-        //readonly CtVet1bDAL vet1bDAL = new CtVet1bDAL();
+
         [Authorize]
         public IActionResult Index()
         {
             _ = new List<CtVet1b>();
+            int reportDtYear = Convert.ToInt32(User.Claims.ToList().FirstOrDefault(x => x.Type == "reportDtYear").Value);
+            int reportDtMonth = Convert.ToInt32(User.Claims.ToList().FirstOrDefault(x => x.Type == "reportDtMonth").Value);
+
             List<CtVet1b> vet1aList = CtVet1bDAL.GetAll_CtVet1b(
-                                                User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value).
-                                                ToList();
+                                                User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value,
+                                                reportDtYear,
+                                                reportDtMonth
+                                                ).ToList();
             return View(vet1aList);
         }
 
@@ -53,7 +58,6 @@ namespace nadis.Controllers
                 else
                 {
                     TempData["EM"] = "Такая запись уже существует";
-                    //return NotFound();
                 };
                 return RedirectToAction("Index");
             }

@@ -15,9 +15,13 @@ namespace nadis.Controllers
         public IActionResult Index()
         {
             _ = new List<BioPrep>();
+            int reportDtYear = Convert.ToInt32(User.Claims.ToList().FirstOrDefault(x => x.Type == "reportDtYear").Value);
+            int reportDtMonth = Convert.ToInt32(User.Claims.ToList().FirstOrDefault(x => x.Type == "reportDtMonth").Value);
             List<BioPrep> BioPrepList = BioPrepDAL.GetAll_BioPrep(
-                                                User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value).
-                                                ToList();
+                                                User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value,
+                                                reportDtYear,
+                                                reportDtMonth
+                                                ).ToList();
             return View(BioPrepList);
         }
 

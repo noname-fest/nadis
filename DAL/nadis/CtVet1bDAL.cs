@@ -11,7 +11,7 @@ namespace nadis.DAL.nadis
 {
     public static class CtVet1bDAL
     {
-        public static IEnumerable<CtVet1b> GetAll_CtVet1b(string KIDro)//, string repMO)
+        public static IEnumerable<CtVet1b> GetAll_CtVet1b(string KIDro, int Y, int M)
         {
 
             var appSettingsJson = AppSettingJSON.GetAppSettings();
@@ -25,6 +25,9 @@ namespace nadis.DAL.nadis
                     CommandType = CommandType.StoredProcedure
                 };
                 cmd.Parameters.AddWithValue("@KIDro", KIDro);
+                cmd.Parameters.AddWithValue("@Y",Y);
+                cmd.Parameters.AddWithValue("@M",M);
+                
                 _conn.Open();
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())

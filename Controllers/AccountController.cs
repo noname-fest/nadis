@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using System;
 
 namespace AuthSample.Controllers
 {
@@ -75,7 +76,8 @@ namespace AuthSample.Controllers
                         username = registerModel.username,
                         userpassword = registerModel.userpassword,
                         KIDro = registerModel.KIDro,
-                        Role  = registerModel.Role
+                        Role  = registerModel.Role,
+                        reportDt = new DateTime(registerModel.repDtYear,registerModel.repDtMont,1) 
                     });
                     await _userContext.SaveChangesAsync().ConfigureAwait(false);
 
@@ -99,12 +101,23 @@ namespace AuthSample.Controllers
         {
             var U = await _userContext.Users
                     .FirstOrDefaultAsync(u => u.username == username).ConfigureAwait(false);
+            string roleP;
+            string KIDro;
+            DateTime rDt; 
+
+            if(U.Role!=null) roleP = U.Role; else roleP ="";
+            if(U.KIDro!=null) KIDro =U.KIDro; else KIDro = "";
+            if(U.reportDt!=null) rDt = U.reportDt; else rDt = new DateTime(DateTime.Today.Year,DateTime.Today.Month-1,1);
+            int Y = rDt.Year;
+            int M = rDt.Month;
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, username),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, U.Role),
-                new Claim("KIDro", U.KIDro),
-                new Claim("Role", U.Role)
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, roleP),
+                new Claim("KIDro", KIDro),
+                new Claim("Role", roleP),
+                new Claim("reportDtYear", Y.ToString()),
+                new Claim("reportDtMonth", M.ToString())
             };
 
             var id = new ClaimsIdentity(claims, "ApplicationCookie",

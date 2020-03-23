@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace nadis.Models
 {
@@ -17,5 +18,10 @@ namespace nadis.Models
 
         public string KIDro { get; set; }
         public string Role { get; set; }
+
+        //[DataType(DataType.Date)]
+        //public DateTime reportDt {get;set;} = new DateTime(DateTime.Today.Year,DateTime.Today.Month-1,1) ;
+        public int repDtYear {get;set;}
+        public int repDtMont {get; set;}
     }
 }
