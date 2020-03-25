@@ -12,6 +12,21 @@
             <th>
                 @Html.DisplayNameFor(model => model.UserFullName)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KIDro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.reportDt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Role)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.userpassword)
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -20,6 +35,21 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => tmp.UserFullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.KIDro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.reportDt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.Role)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.userpassword)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@tmp.Id">Редак.</a>&nbsp;&nbsp;

@@ -15,6 +15,20 @@ namespace nadis.DAL.nadis
     public static class spDAL
     {
 
+        public static SelectList KIDroList()
+        {
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+            using SqlConnection _conn = new SqlConnection(connectionString);
+            var tmp = _conn.Query<sp_values>("SELECT KID as ID, [VetUnit] as Text FROM [1VETUNITS]");
+            List<sp_values> tL = new List<sp_values>();
+            foreach (var tt in tmp)
+            {
+                tL.Add(tt);
+            }
+            return new SelectList(tL, "ID", "Text");
+        }
+        
         //d3PREVMEASURES
         public static SelectList KIDtrtList()
         {

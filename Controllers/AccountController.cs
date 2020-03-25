@@ -8,6 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using System;
+using System.Linq;
+using nadis.tools;
+using System.Data.SqlClient;
+using Dapper;
+using nadis.DAL.nadis;
 
 namespace AuthSample.Controllers
 {
@@ -50,14 +55,37 @@ namespace AuthSample.Controllers
 
 
         [Authorize(Roles = "Admin")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult UsersEdit()
+        [HttpGet]
+        //[ValidateAntiForgeryToken]
+        public  IActionResult UsersEdit()
         {
-            var users = await _userContext.Users.AllAsync().ConfigureAwait(false);
-            return View(users);
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+
+            using(SqlConnection _conn = new SqlConnection(connectionString))
+            {
+                var tmpList = _conn.Query<User>("SELECT * FROM Users");
+                _conn.Close();
+                return View(tmpList);
+            };
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            if(id == null) return NotFound();
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+
+            using(SqlConnection _conn = new SqlConnection(connectionString))
+            {
+                var usr = _conn.QueryFirst("SELECT * FROM Users WHERE Id=@idd", new {idd = id});
+                if(usr == null) return NotFound();
+                ViewBag.KIDroList = spDAL.KIDroList();
+                return View(usr);
+            }
+        }
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
@@ -116,6 +144,7 @@ namespace AuthSample.Controllers
             if(U.KIDro!=null) KIDro =U.KIDro; else KIDro = "";
             if(U.reportDt!=null) rDt = U.reportDt; else rDt = new DateTime(DateTime.Today.Year,DateTime.Today.Month-1,1);
             if(U.UserFullName!=null) UserFullName = U.UserFullName; else UserFullName = "";
+
             int Y = rDt.Year;
             int M = rDt.Month;
             var claims = new List<Claim>

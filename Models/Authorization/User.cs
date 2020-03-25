@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace nadis.Models
 {
@@ -6,13 +7,23 @@ namespace nadis.Models
     {
         public int Id { get; set; }
         public int Iduser { get; set; }
+
+        [Display(Name = "Пользователь")]
+        [Required(ErrorMessage = "Должно быть не пустым")]
         public string username { get; set; }
+        [Display(Name = "Полное имя пользователя")]
         public string UserFullName {get;set;}
+        [Display(Name = "Пароль")]
         public string userpassword { get; set; }
 
+        [Display(Name = "Код района")]
         public string KIDro { get; set; }
+
+        [Display(Name = "Роль")]
         public string Role { get; set; }
-        
+
+        [Display(Name = "Отч. периуд")]
+        [DisplayFormat(DataFormatString = "{0:MMM yyyy}")]
         public DateTime reportDt {get; set;}
     }
 }
