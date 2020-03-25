@@ -21,10 +21,7 @@ namespace AuthSample.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login()
-            {
-                return View();
-            }
+        public IActionResult Login() => View();
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -40,7 +37,6 @@ namespace AuthSample.Controllers
 
                 if (user != null)
                 {
-                    //if()
                     await Authenticate(loginModel.username).ConfigureAwait(false);
                     return RedirectToAction("Index", "Home");
                 }
@@ -51,6 +47,17 @@ namespace AuthSample.Controllers
             }
             return View(loginModel);
         }
+
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult UsersEdit()
+        {
+            var users = await _userContext.Users.AllAsync().ConfigureAwait(false);
+            return View(users);
+        }
+
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
@@ -80,7 +87,6 @@ namespace AuthSample.Controllers
                         reportDt = new DateTime(registerModel.repDtYear,registerModel.repDtMont,1) 
                     });
                     await _userContext.SaveChangesAsync().ConfigureAwait(false);
-
                     await Authenticate(registerModel.username).ConfigureAwait(false);
                     return RedirectToAction("Index", "Home");
                 } else
@@ -101,6 +107,7 @@ namespace AuthSample.Controllers
         {
             var U = await _userContext.Users
                     .FirstOrDefaultAsync(u => u.username == username).ConfigureAwait(false);
+            string UserFullName;
             string roleP;
             string KIDro;
             DateTime rDt; 
@@ -108,6 +115,7 @@ namespace AuthSample.Controllers
             if(U.Role!=null) roleP = U.Role; else roleP ="";
             if(U.KIDro!=null) KIDro =U.KIDro; else KIDro = "";
             if(U.reportDt!=null) rDt = U.reportDt; else rDt = new DateTime(DateTime.Today.Year,DateTime.Today.Month-1,1);
+            if(U.UserFullName!=null) UserFullName = U.UserFullName; else UserFullName = "";
             int Y = rDt.Year;
             int M = rDt.Month;
             var claims = new List<Claim>
@@ -117,7 +125,8 @@ namespace AuthSample.Controllers
                 new Claim("KIDro", KIDro),
                 new Claim("Role", roleP),
                 new Claim("reportDtYear", Y.ToString()),
-                new Claim("reportDtMonth", M.ToString())
+                new Claim("reportDtMonth", M.ToString()),
+                new Claim("UserFullName", UserFullName)
             };
 
             var id = new ClaimsIdentity(claims, "ApplicationCookie",

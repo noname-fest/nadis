@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -24,6 +22,8 @@ namespace nadis.Controllers
         public IActionResult Index()
         {
             ViewData["UserName"]  = User.Identity.Name;
+            ViewData["UserFullName"] = User.Claims.ToList().
+                                        FirstOrDefault(x => x.Type == "UserFullName").Value;
             ViewData["KIDro"] = User.Claims.ToList().
                                         FirstOrDefault(x => x.Type == "KIDro").Value;
             ViewData["Role"] = User.Claims.ToList().

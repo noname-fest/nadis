@@ -7,6 +7,7 @@ namespace nadis.Models
         public int Id { get; set; }
         public int Iduser { get; set; }
         public string username { get; set; }
+        public string UserFullName {get;set;}
         public string userpassword { get; set; }
 
         public string KIDro { get; set; }

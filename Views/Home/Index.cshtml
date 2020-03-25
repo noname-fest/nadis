@@ -3,7 +3,7 @@
 }
 
     <div class="text-center">
-        <h1 class="display-4">Welcome @ViewData["UserName"]</h1>
+        <h1 class="display-4">Welcome @ViewData["UserFullName"]</h1>
         <div>@ViewData["UserName"]</div>
         <div>@ViewData["KIDro"]</div>
         <div>@ViewData["Role"]</div>
@@ -12,6 +12,7 @@
         @if (@ViewData["Role"].ToString().Trim() == "Admin")
             {
                 <a asp-action="Register" asp-controller="Account">Регистрация</a>
+                <a asp-action="UsersEdit" asp-controller="Account">Список пользователей</a>
             }
 
         <form asp-action="Logout" asp-controller="Account">
