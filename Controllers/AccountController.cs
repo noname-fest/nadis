@@ -80,7 +80,7 @@ namespace AuthSample.Controllers
 
             using(SqlConnection _conn = new SqlConnection(connectionString))
             {
-                var usr = _conn.QueryFirst("SELECT * FROM Users WHERE Id=@idd", new {idd = id});
+                var usr = _conn.QueryFirst<User>("SELECT * FROM Users WHERE Id=@idd", new {idd = id});
                 if(usr == null) return NotFound();
                 ViewBag.KIDroList = spDAL.KIDroList();
                 return View(usr);
@@ -88,7 +88,42 @@ namespace AuthSample.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpGet]
+        [HttpPost]
+        [ValidateAntiForgeryToken]  
+
+        public IActionResult Edit(int id, [Bind] User objUsr)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                //if(BioPrepDAL.IsUniqueRecord(objBioPrep))
+                    //BioPrepDAL.Update_BioPrep(objBioPrep);
+                var appSettingsJson = AppSettingJSON.GetAppSettings();
+                var connectionString = appSettingsJson["DefaultConnection"];
+
+                using(SqlConnection _conn = new SqlConnection(connectionString))
+                    {
+                        _conn.Execute("UPDATE Users SET KIDro=@_kidro,"+
+                        "username=@_username, UserFullname=@_UserFullname,"+
+                        "userpassword=@_userpassword, Role=@_Role, reportDt=@_reportDt "+
+                        "WHERE Id=@_Id",
+                        new {
+                            _Id = objUsr.Id,
+                            _kidro = objUsr.KIDro,
+                            _username = objUsr.username,
+                            _UserFullname = objUsr.UserFullname,
+                            _userpassword = objUsr.userpassword,
+                            _Role = objUsr.Role,
+                            _reportDt = objUsr.reportDt
+                        } );   
+                        return RedirectToAction("UsersEdit");
+                    }
+            }
+            return View(objUsr);
+        }
         public IActionResult Register()
             {
                 return View();
@@ -135,7 +170,7 @@ namespace AuthSample.Controllers
         {
             var U = await _userContext.Users
                     .FirstOrDefaultAsync(u => u.username == username).ConfigureAwait(false);
-            string UserFullName;
+            string usrFullName;
             string roleP;
             string KIDro;
             DateTime rDt; 
@@ -143,7 +178,7 @@ namespace AuthSample.Controllers
             if(U.Role!=null) roleP = U.Role; else roleP ="";
             if(U.KIDro!=null) KIDro =U.KIDro; else KIDro = "";
             if(U.reportDt!=null) rDt = U.reportDt; else rDt = new DateTime(DateTime.Today.Year,DateTime.Today.Month-1,1);
-            if(U.UserFullName!=null) UserFullName = U.UserFullName; else UserFullName = "";
+            if(U.UserFullname!=null) usrFullName = U.UserFullname; else usrFullName = "";
 
             int Y = rDt.Year;
             int M = rDt.Month;
@@ -155,7 +190,7 @@ namespace AuthSample.Controllers
                 new Claim("Role", roleP),
                 new Claim("reportDtYear", Y.ToString()),
                 new Claim("reportDtMonth", M.ToString()),
-                new Claim("UserFullName", UserFullName)
+                new Claim("UserFullName", usrFullName)
             };
 
             var id = new ClaimsIdentity(claims, "ApplicationCookie",
