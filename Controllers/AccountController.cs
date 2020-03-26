@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using System;
-using System.Linq;
 using nadis.tools;
 using System.Data.SqlClient;
 using Dapper;
@@ -56,7 +55,6 @@ namespace AuthSample.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        //[ValidateAntiForgeryToken]
         public  IActionResult UsersEdit()
         {
             var appSettingsJson = AppSettingJSON.GetAppSettings();
@@ -74,7 +72,6 @@ namespace AuthSample.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            if(id == null) return NotFound();
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
 
@@ -90,13 +87,8 @@ namespace AuthSample.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]  
-
         public IActionResult Edit(int id, [Bind] User objUsr)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
             if (ModelState.IsValid)
             {
                 //if(BioPrepDAL.IsUniqueRecord(objBioPrep))
@@ -124,8 +116,39 @@ namespace AuthSample.Controllers
             }
             return View(objUsr);
         }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult Delete(int Id)
+        {
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+
+            using(SqlConnection _conn = new SqlConnection(connectionString))
+            {
+                var usr = _conn.QueryFirst<User>("SELECT * FROM Users WHERE Id=@idd", new {idd = Id});
+                if(usr == null) return NotFound();
+                return View(usr);
+            }
+        }
+        [Authorize]
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteUser(int Id)
+        {
+            //BioPrepDAL.Delete_BioPrep(id);
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+
+            using(SqlConnection _conn = new SqlConnection(connectionString))
+                _conn.Execute("DELETE FROM Users WHERE Id=@idd", new {idd = Id});
+            return RedirectToAction("UsersEdit");
+        }        
+
+
+        [Authorize(Roles = "Admin")]
         public IActionResult Register()
             {
+                ViewBag.KIDroList = spDAL.KIDroList();
                 return View();
             }
 

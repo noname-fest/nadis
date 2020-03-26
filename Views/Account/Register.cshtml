@@ -22,7 +22,8 @@
         </div>
         <div>
             <label asp-for="KIDro">Код района</label><br />
-            <input asp-for="KIDro" />
+            <!--<input asp-for="KIDro" />-->
+            @Html.DropDownList("KIDro", ViewBag.KIDroList as SelectList, new { @class = "form-control" })
             <span asp-validation-for="KIDro"></span>
         </div>
         <div>
@@ -35,3 +36,4 @@
         </div>
     </div>
 </form>
+<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">На главную</a>
