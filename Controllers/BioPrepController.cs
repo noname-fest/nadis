@@ -22,6 +22,7 @@ namespace nadis.Controllers
                                                 reportDtYear,
                                                 reportDtMonth
                                                 ).ToList();
+            ViewBag.Page = "BioPrep";
             return View(BioPrepList);
         }
 
@@ -40,7 +41,7 @@ namespace nadis.Controllers
                 KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value,
                 RepMO = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)
             };
-
+            ViewBag.Page = "BioPrep";
             return View(tmp);
 
         }
@@ -63,6 +64,7 @@ namespace nadis.Controllers
                 };
                 return RedirectToAction("Index");
             }
+            ViewBag.Page = "BioPrep";
             return View(tmp);
         }
 
@@ -78,6 +80,7 @@ namespace nadis.Controllers
             ViewBag.VetPrepList = spDAL.VetPrepList();
             ViewBag.EdIzmList = spDAL.EdIzmList();
 
+            ViewBag.Page = "BioPrep";
             return View(tmp);
         }
 
@@ -96,6 +99,7 @@ namespace nadis.Controllers
                     BioPrepDAL.Update_BioPrep(objBioPrep);
                 return RedirectToAction("Index");
             }
+            ViewBag.Page = "BioPrep";
             return View(objBioPrep);
         }
 
@@ -111,6 +115,7 @@ namespace nadis.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Page = "BioPrep";
             return View(tmp);
         }
 
@@ -120,6 +125,7 @@ namespace nadis.Controllers
         public IActionResult DeleteBioPrep(Guid id)
         {
             BioPrepDAL.Delete_BioPrep(id);
+            ViewBag.Page = "BioPrep";
             return RedirectToAction("Index");
         }
 

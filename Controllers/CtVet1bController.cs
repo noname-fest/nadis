@@ -24,6 +24,7 @@ namespace nadis.Controllers
                                                 reportDtYear,
                                                 reportDtMonth
                                                 ).ToList();
+            ViewBag.Page = "CtVet1b";
             return View(vet1aList);
         }
 
@@ -43,6 +44,7 @@ namespace nadis.Controllers
                 RepMO = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1),
                 dtObs = DateTime.Now
             };
+            ViewBag.Page = "CtVet1b";
             return View(tmp);
         }
         
@@ -61,6 +63,7 @@ namespace nadis.Controllers
                 };
                 return RedirectToAction("Index");
             }
+            ViewBag.Page = "CtVet1b";
             return View(tmpVet);
         }
 
@@ -78,6 +81,7 @@ namespace nadis.Controllers
             ViewBag.KIDdisList = spDAL.KIDdisList();
             ViewBag.testList   = spDAL.testList();
 
+            ViewBag.Page = "CtVet1b";
             return View(tmpVet1b);
         }
 
@@ -93,8 +97,10 @@ namespace nadis.Controllers
             if (ModelState.IsValid)
             {
                 CtVet1bDAL.UpdateCtVet1b(objCtVet1b);
+                ViewBag.Page = "CtVet1b";
                 return RedirectToAction("Index");
             }
+            ViewBag.Page = "CtVet1b";
             return View(objCtVet1b);
         }
 
@@ -112,6 +118,7 @@ namespace nadis.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Page = "CtVet1b";
             return View(tmpVet1b);
         }
 
@@ -127,6 +134,7 @@ namespace nadis.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Page = "CtVet1b";
             return View(tmpVet1a);
         }
 
@@ -136,6 +144,7 @@ namespace nadis.Controllers
         public IActionResult DeleteCtVet1a(Guid id)
         {
             CtVet1bDAL.DeleteCtVet1b(id);
+            ViewBag.Page = "CtVet1b";
             return RedirectToAction("Index");
         }
 

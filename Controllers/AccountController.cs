@@ -25,7 +25,11 @@ namespace AuthSample.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login() => View();
+        public IActionResult Login() 
+        {
+            ViewBag.Page = "Home";
+            return View();
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -49,6 +53,7 @@ namespace AuthSample.Controllers
                     ModelState.AddModelError("", "Некорректные логин или пароль");
                 }
             }
+            ViewBag.Page = "Home";
             return View(loginModel);
         }
 
@@ -64,6 +69,7 @@ namespace AuthSample.Controllers
             {
                 var tmpList = _conn.Query<User>("SELECT * FROM Users");
                 _conn.Close();
+                ViewBag.Page = "Home";
                 return View(tmpList);
             };
         }
@@ -80,6 +86,7 @@ namespace AuthSample.Controllers
                 var usr = _conn.QueryFirst<User>("SELECT * FROM Users WHERE Id=@idd", new {idd = id});
                 if(usr == null) return NotFound();
                 ViewBag.KIDroList = spDAL.KIDroList();
+                ViewBag.Page = "Home";
                 return View(usr);
             }
         }
@@ -114,6 +121,7 @@ namespace AuthSample.Controllers
                         return RedirectToAction("UsersEdit");
                     }
             }
+            ViewBag.Page = "Home";
             return View(objUsr);
         }
 
@@ -127,9 +135,12 @@ namespace AuthSample.Controllers
             {
                 var usr = _conn.QueryFirst<User>("SELECT * FROM Users WHERE Id=@idd", new {idd = Id});
                 if(usr == null) return NotFound();
+                ViewBag.Page = "Home";
                 return View(usr);
             }
         }
+
+
         [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -141,6 +152,8 @@ namespace AuthSample.Controllers
 
             using(SqlConnection _conn = new SqlConnection(connectionString))
                 _conn.Execute("DELETE FROM Users WHERE Id=@idd", new {idd = Id});
+
+            ViewBag.Page = "Home";
             return RedirectToAction("UsersEdit");
         }        
 
@@ -149,6 +162,7 @@ namespace AuthSample.Controllers
         public IActionResult Register()
             {
                 ViewBag.KIDroList = spDAL.KIDroList();
+                ViewBag.Page = "Home";
                 return View();
             }
 
@@ -180,6 +194,7 @@ namespace AuthSample.Controllers
                     ModelState.AddModelError("", "Некорректные логин или пароль");
                 }
             }
+            ViewBag.Page = "Home";
             return View(registerModel);
         }
 

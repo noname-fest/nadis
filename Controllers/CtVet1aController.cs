@@ -23,6 +23,7 @@ namespace nadis.Controllers
                                                 reportDtYear,
                                                 reportDtMonth
                                                 ).ToList();
+            ViewBag.Page = "CtVet1a";
             return View(vet1aList);
         }
         
@@ -39,6 +40,7 @@ namespace nadis.Controllers
                 KIDro =  User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value,
                 RepMO = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)
             };
+            ViewBag.Page = "CtVet1a";
             return View(tmp);
         }
         [Authorize]
@@ -57,8 +59,10 @@ namespace nadis.Controllers
                         ModelState.AddModelError("","Такая запись уже существует");
                         //return NotFound();
                     };
+                ViewBag.Page = "CtVet1a";
                 return RedirectToAction("Index");
             }
+            ViewBag.Page = "CtVet1a";
             return View(tmpVet);
         }
 
@@ -74,7 +78,7 @@ namespace nadis.Controllers
             ViewBag.RepMoList  = spDAL.RepMO1YearList(tmpVet1a.RepMO.Year);
             ViewBag.KIDdivList = spDAL.KIDdivList(User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value);
             ViewBag.KIDspcList = spDAL.KIDspcList(); ViewBag.KIDdisList = spDAL.KIDdisList();
-
+            ViewBag.Page = "CtVet1a";
             return View(tmpVet1a);
         }
 
@@ -90,8 +94,10 @@ namespace nadis.Controllers
             if (ModelState.IsValid)
             {
                 CtVet1aDAL.UpdateCtVet1a(objCtVet1a);
+                ViewBag.Page = "CtVet1a";
                 return RedirectToAction("Index");
             }
+            ViewBag.Page = "CtVet1a";
             return View(objCtVet1a);
         }
 
@@ -109,6 +115,7 @@ namespace nadis.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Page = "CtVet1a";
             return View(tmpVet1a);
         }
 
@@ -124,6 +131,7 @@ namespace nadis.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Page = "CtVet1a";
             return View(tmpVet1a);
         }
 
@@ -133,6 +141,7 @@ namespace nadis.Controllers
         public IActionResult DeleteCtVet1a(Guid id)
         {
             CtVet1aDAL.Delete_CtVet1a(id);
+            ViewBag.Page = "CtVet1a";
             return RedirectToAction("Index");
         }
     }

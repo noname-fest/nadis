@@ -20,6 +20,7 @@ namespace nadis.Controllers
                                                 reportDtYear,
                                                 reportDtMonth
                                                 ).ToList();
+            ViewBag.Page = "CtVet1c";
             return View(CtVet1cList);
         }
 
@@ -36,6 +37,7 @@ namespace nadis.Controllers
             ViewBag.KIDspcList = spDAL.KIDspcList();
             ViewBag.KIDdisList = spDAL.KIDdisList();
             ViewBag.KIDtrtList = spDAL.KIDtrtList();
+            ViewBag.Page = "CtVet1c";
             return View(tmp);
         }
 
@@ -54,6 +56,7 @@ namespace nadis.Controllers
                     CtVet1cDAL.Update_CtVet1c(objCtVet1c);
                 return RedirectToAction("Index");
             }
+            ViewBag.Page = "CtVet1c";
             return View(objCtVet1c);
         }
 
@@ -76,6 +79,7 @@ namespace nadis.Controllers
                 dtObs = DateTime.Today
             };
 
+            ViewBag.Page = "CtVet1c";
             return View(tmp);
 
         }
@@ -97,8 +101,10 @@ namespace nadis.Controllers
                     //return LocalRedirect("~/Home/Error");
                     //return RedirectToAction("Error");
                 };
+                ViewBag.Page = "CtVet1c";
                 return RedirectToAction("Index");
             }
+            ViewBag.Page = "CtVet1c";
             return View(tmp);
         }
 
@@ -114,6 +120,7 @@ namespace nadis.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Page = "CtVet1c";
             return View(tmp);
         }
 
@@ -123,6 +130,7 @@ namespace nadis.Controllers
         public IActionResult DeleteCtVet1c(Guid id)
         {
             CtVet1cDAL.Delete_CtVet1c(id);
+            ViewBag.Page = "CtVet1c";
             return RedirectToAction("Index");
         }
     }

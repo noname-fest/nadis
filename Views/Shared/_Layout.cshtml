@@ -19,22 +19,67 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">НАДИС</a>
+                            @if(@ViewBag.Page=="Home"){
+                                <b>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
+                                    <font color="blue">
+                                    НАДИС
+                                    </font>
+                                </a>
+                                </b>
+                            } else{
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">НАДИС</a>
+                            }
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="CtVet1a" asp-action="Index">Заразные</a>
+                            @if(@ViewBag.Page=="CtVet1a"){
+                                <b>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="CtVet1a" asp-action="Index">
+                                    <font color="blue">Заразные</font></a>
+                                </b>
+                            } else{
+                                <a class="nav-link text-dark" asp-area="" asp-controller="CtVet1a" asp-action="Index">Заразные</a>
+                            }
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="CtVet1b" asp-action="Index">Диагностика</a>
+                             @if(@ViewBag.Page=="CtVet1b"){
+                                <b>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="CtVet1b" asp-action="Index">
+                                    <font color="blue">Диагностика</font></a>
+                                </b>
+                            } else{
+                                <a class="nav-link text-dark" asp-area="" asp-controller="CtVet1b" asp-action="Index">Диагностика</a>
+                            }                       
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="CtVet1c" asp-action="Index">Профилактика</a>
+                             @if(@ViewBag.Page=="CtVet1c"){
+                                <b>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="CtVet1c" asp-action="Index">
+                                    <font color="blue">Профилактика</font></a>
+                                </b>
+                            } else{
+                                <a class="nav-link text-dark" asp-area="" asp-controller="CtVet1c" asp-action="Index">Профилактика</a>
+                            }
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="BioPrep" asp-action="Index">Биопрепараты</a>
+                             @if(@ViewBag.Page=="BioPrep"){
+                                <b>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="BioPrep" asp-action="Index">
+                                    <font color="blue">Биопрепараты</font></a>
+                                </b>
+                            } else{
+                                <a class="nav-link text-dark" asp-area="" asp-controller="BioPrep" asp-action="Index">Биопрепараты</a>
+                            }
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                             @if(@ViewBag.Page=="Privacy"){
+                                <b>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">
+                                    <font color="blue">Privacy</font></a>
+                                </b>
+                            } else{
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            }
                         </li>
                     </ul>
                 </div>

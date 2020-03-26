@@ -32,13 +32,14 @@ namespace nadis.Controllers
                                         FirstOrDefault(x => x.Type == "reportDtYear").Value),
                                    Convert.ToInt32(User.Claims.ToList().
                                         FirstOrDefault(x => x.Type == "reportDtMonth").Value), 1)).ToString("MMMM yyyy") ;
-
+            ViewBag.Page = "Home";
             return View();
         }
 
         [Authorize]
         public IActionResult Privacy()
         {
+            ViewBag.Page = "Privacy";
             return View();
         }
 
