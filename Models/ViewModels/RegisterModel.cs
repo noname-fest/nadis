@@ -19,9 +19,12 @@ namespace nadis.Models
         public string KIDro { get; set; }
         public string Role { get; set; }
 
-        //[DataType(DataType.Date)]
-        //public DateTime reportDt {get;set;} = new DateTime(DateTime.Today.Year,DateTime.Today.Month-1,1) ;
-        public int repDtYear {get;set;}
-        public int repDtMont {get; set;}
+        [Required(ErrorMessage = "Не указан дата отчетности")]
+        //[Column(TypeName = "date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MMM yyyy}")]
+        public DateTime reportDt {get;set;} = new DateTime(DateTime.Today.Year,DateTime.Today.Month-1,1) ;
+        //public int repDtYear {get;set;}
+        //public int repDtMont {get; set;}
     }
 }

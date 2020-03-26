@@ -184,7 +184,7 @@ namespace AuthSample.Controllers
                         userpassword = registerModel.userpassword,
                         KIDro = registerModel.KIDro,
                         Role  = registerModel.Role,
-                        reportDt = new DateTime(registerModel.repDtYear,registerModel.repDtMont,1) 
+                        reportDt = new DateTime(registerModel.reportDt.Year,registerModel.reportDt.Month,1) 
                     });
                     await _userContext.SaveChangesAsync().ConfigureAwait(false);
                     await Authenticate(registerModel.username).ConfigureAwait(false);
