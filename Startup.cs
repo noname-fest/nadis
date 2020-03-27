@@ -25,10 +25,10 @@ namespace nadis
         public void ConfigureServices(IServiceCollection services)
         {
             //var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connection = AppSettingJSON.GetAppSettings()["DefaultConnection"];
+            //var connection = AppSettingJSON.GetAppSettings()["DefaultConnection"];
 
             //var connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<UserContext>(options => options.UseSqlServer(connection));
+            //services.AddDbContext<UserContext>(options => options.UseSqlServer(connection));
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>

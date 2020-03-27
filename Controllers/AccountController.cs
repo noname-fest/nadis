@@ -5,24 +5,24 @@ using nadis.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using nadis.tools;
 using System.Data.SqlClient;
 using Dapper;
+using Dapper.Contrib;
 using nadis.DAL.nadis;
 
 namespace AuthSample.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserContext _userContext;
+        //private readonly UserContext _userContext;
 
-        public AccountController(UserContext userContext)
-        {
-            _userContext = userContext;
-        }
+        //public AccountController(UserContext userContext)
+        //{
+        //    _userContext = userContext;
+        //}
 
         [HttpGet]
         public IActionResult Login() 
@@ -38,19 +38,29 @@ namespace AuthSample.Controllers
             if(loginModel != null)
             if (ModelState.IsValid)
             {
+                /*
                 var user = await _userContext.Users
                     .FirstOrDefaultAsync(u =>
                         u.username == loginModel.username &&
                         u.userpassword == loginModel.userpassword).ConfigureAwait(false);
+                        */
+                var appSettingsJson = AppSettingJSON.GetAppSettings();
+                var connectionString = appSettingsJson["DefaultConnection"];
 
-                if (user != null)
+                using(SqlConnection _conn = new SqlConnection(connectionString))
                 {
-                    await Authenticate(loginModel.username).ConfigureAwait(false);
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Некорректные логин или пароль");
+                    var user = _conn.QueryFirst("SELECT * FROM Users WHERE username=@usr_name and userpassword=@usr_pwd",
+                     new {usr_name = loginModel.username,
+                          usr_pwd  = loginModel.userpassword});
+                  if (user != null)
+                    {
+                       await Authenticate(loginModel.username).ConfigureAwait(false);
+                      return RedirectToAction("Index", "Home");
+                    }
+                  else
+                    {
+                     ModelState.AddModelError("", "Некорректные логин или пароль");
+                    }
                 }
             }
             ViewBag.Page = "Home";
@@ -103,7 +113,7 @@ namespace AuthSample.Controllers
                 var appSettingsJson = AppSettingJSON.GetAppSettings();
                 var connectionString = appSettingsJson["DefaultConnection"];
 
-                using(SqlConnection _conn = new SqlConnection(connectionString))
+                using(var _conn = new SqlConnection(connectionString))
                     {
                         _conn.Execute("UPDATE Users SET KIDro=@_kidro,"+
                         "username=@_username, UserFullname=@_UserFullname,"+
@@ -152,7 +162,6 @@ namespace AuthSample.Controllers
 
             using(SqlConnection _conn = new SqlConnection(connectionString))
                 _conn.Execute("DELETE FROM Users WHERE Id=@idd", new {idd = Id});
-
             ViewBag.Page = "Home";
             return RedirectToAction("UsersEdit");
         }        
@@ -174,25 +183,47 @@ namespace AuthSample.Controllers
             if (registerModel != null)
             if (ModelState.IsValid)
             {
-                var user = await _userContext.Users
-                    .FirstOrDefaultAsync(u => u.username == registerModel.username).ConfigureAwait(false);
-                if (user == null)
+                //var user = await _userContext.Users
+                //    .FirstOrDefaultAsync(u => u.username == registerModel.username).ConfigureAwait(false);
+                var appSettingsJson = AppSettingJSON.GetAppSettings();
+                var connectionString = appSettingsJson["DefaultConnection"];
+
+                SqlConnection _conn = new SqlConnection(connectionString);
+                int usr_count = _conn.QueryFirst<int>("SELECT COUNT(*) FROM Users WHERE username=@usr_name",
+                                                    new{usr_name = registerModel.username});
+                if (usr_count == 0)
                 {
-                    _userContext.Users.Add(new User
-                    {
-                        username = registerModel.username,
-                        userpassword = registerModel.userpassword,
-                        KIDro = registerModel.KIDro,
-                        Role  = registerModel.Role,
-                        reportDt = new DateTime(registerModel.reportDt.Year,registerModel.reportDt.Month,1) 
-                    });
-                    await _userContext.SaveChangesAsync().ConfigureAwait(false);
-                    await Authenticate(registerModel.username).ConfigureAwait(false);
+                        /*
+                        _userContext.Users.Add(new User
+                        {
+                            username = registerModel.username,
+                            userpassword = registerModel.userpassword,
+                            KIDro = registerModel.KIDro,
+                            Role  = registerModel.Role,
+                            reportDt = new DateTime(registerModel.reportDt.Year,registerModel.reportDt.Month,1) 
+                        });
+                        await _userContext.SaveChangesAsync().ConfigureAwait(false);
+                        await Authenticate(registerModel.username).ConfigureAwait(false);
+                        */
+                        var param = new
+                        {
+                            UsrFN = registerModel.UserFullname,
+                            usrname = registerModel.username,
+                            usrpwd = registerModel.userpassword,
+                            @idro = registerModel.KIDro,
+                            @rr = registerModel.Role,
+                            @rDt = registerModel.reportDt
+                        };
+                        _conn.Execute("INSERT INTO Users (UserFullname,username,userpassword,KIDro,Role,reportDt) "+
+                            "VALUES (@UsrFN,@usrname,@usrpwd,@idro,@rr,@rDt)" ,
+                            param);
+                    _conn.Close();
                     return RedirectToAction("Index", "Home");
                 } else
                 {
                     ModelState.AddModelError("", "Некорректные логин или пароль");
                 }
+                _conn.Close();
             }
             ViewBag.Page = "Home";
             return View(registerModel);
@@ -206,17 +237,23 @@ namespace AuthSample.Controllers
 
         private async Task Authenticate(string username)
         {
-            var U = await _userContext.Users
-                    .FirstOrDefaultAsync(u => u.username == username).ConfigureAwait(false);
+            //var U = await _userContext.Users
+            //        .FirstOrDefaultAsync(u => u.username == username).ConfigureAwait(false);
+
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+
+            SqlConnection _conn = new SqlConnection(connectionString);
+            User usr = _conn.QueryFirst<User>("SELECT * FROM Users WHERE username=@usr_name",new{usr_name = username});
             string usrFullName;
             string roleP;
             string KIDro;
             DateTime rDt; 
 
-            if(U.Role!=null) roleP = U.Role; else roleP ="";
-            if(U.KIDro!=null) KIDro =U.KIDro; else KIDro = "";
-            if(U.reportDt!=null) rDt = U.reportDt; else rDt = new DateTime(DateTime.Today.Year,DateTime.Today.Month-1,1);
-            if(U.UserFullname!=null) usrFullName = U.UserFullname; else usrFullName = "";
+            if(usr.Role!=null) roleP = usr.Role; else roleP ="";
+            if(usr.KIDro!=null) KIDro =usr.KIDro; else KIDro = "";
+            if(usr.reportDt!=null) rDt = usr.reportDt; else rDt = new DateTime(DateTime.Today.Year,DateTime.Today.Month-1,1);
+            if(usr.UserFullname!=null) usrFullName = usr.UserFullname; else usrFullName = "";
 
             int Y = rDt.Year;
             int M = rDt.Month;

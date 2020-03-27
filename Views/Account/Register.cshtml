@@ -6,7 +6,12 @@
     <div class="validation" asp-validation-summary="ModelOnly"></div>
     <div>
         <div>
-            <label asp-for="username">Введите Имя пользователя</label><br />
+            <label asp-for="UserFullname">Введите Полное Имя пользователя (описание)</label><br />
+            <input type="text" asp-for="UserFullname" />
+            <span asp-validation-for="UserFullname"></span>
+        </div>
+        <div>
+            <label asp-for="username">Введите Имя пользователя (логин)</label><br />
             <input type="text" asp-for="username" />
             <span asp-validation-for="username"></span>
         </div>

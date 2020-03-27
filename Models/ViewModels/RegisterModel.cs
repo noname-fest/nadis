@@ -5,7 +5,10 @@ namespace nadis.Models
 {
     public class RegisterModel
     {
-        [Required(ErrorMessage ="Не указан Имя пользователя")]
+        [Required(ErrorMessage ="Не указана полное Имя пользователя")]
+        public string UserFullname { get; set; }
+
+        [Required(ErrorMessage ="Не указан Имя пользователя(логин)")]
         public string username { get; set; }
 
         [Required(ErrorMessage = "Не указан пароль")]
