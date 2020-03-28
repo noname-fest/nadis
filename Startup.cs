@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using nadis.tools;
+using Microsoft.AspNetCore.Localization;
 
 namespace nadis
 {
@@ -28,7 +29,10 @@ namespace nadis
 
             //var connection = Configuration.GetConnectionString("DefaultConnection");
             //services.AddDbContext<UserContext>(options => options.UseSqlServer(connection));
-
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new RequestCulture("ru-RU");
+            } );
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
@@ -58,6 +62,7 @@ namespace nadis
                 app.UseHsts();
 
             }
+            app.UseRequestLocalization();
             app.UseStaticFiles();
 
             app.UseRouting();

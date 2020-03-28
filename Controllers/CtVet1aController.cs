@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using nadis.Models;
 using nadis.DAL.nadis;
+using Dapper.Contrib;
+using nadis.tools;
+using System.Data.SqlClient;
 
 namespace nadis.Controllers
 {
@@ -13,6 +16,14 @@ namespace nadis.Controllers
         [Authorize]
         public IActionResult Index()
         {
+            /*
+                var appSettingsJson = AppSettingJSON.GetAppSettings();
+                var connectionString = appSettingsJson["DefaultConnection"];
+                using(SqlConnection _conn = new SqlConnection(connectionString))
+                {
+                    _conn.Insert()
+                }
+            */
             //if(!ViewBag.Filter){};
             _ = new List<CtVet1a>();
             int reportDtYear = Convert.ToInt32(User.Claims.ToList().FirstOrDefault(x => x.Type == "reportDtYear").Value);
