@@ -42,7 +42,10 @@ namespace nadis.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.RepMoList  = spDAL.RepMO1YearList(DateTime.Today.Year);
+            int Y = Convert.ToInt32(User.Claims.ToList().FirstOrDefault(x => x.Type == "reportDtYear").Value);
+            int M = Convert.ToInt32(User.Claims.ToList().FirstOrDefault(x => x.Type == "reportDtMonth").Value);
+
+            ViewBag.RepMoList  = spDAL.RepMO1YearList(Y,M);
             ViewBag.KIDdivList = spDAL.KIDdivList(User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value);
             ViewBag.KIDspcList = spDAL.KIDspcList();
             ViewBag.KIDdisList = spDAL.KIDdisList();
@@ -85,8 +88,11 @@ namespace nadis.Controllers
             if (id == null) return NotFound();
             CtVet1a tmpVet1a = CtVet1aDAL.Get_CtVet1a_ById(id);
             if(tmpVet1a == null) return NotFound();
+ 
+            int Y = Convert.ToInt32(User.Claims.ToList().FirstOrDefault(x => x.Type == "reportDtYear").Value);
+            int M = Convert.ToInt32(User.Claims.ToList().FirstOrDefault(x => x.Type == "reportDtMonth").Value);
 
-            ViewBag.RepMoList  = spDAL.RepMO1YearList(tmpVet1a.RepMO.Year);
+            ViewBag.RepMoList  = spDAL.RepMO1YearList(Y,M);
             ViewBag.KIDdivList = spDAL.KIDdivList(User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value);
             ViewBag.KIDspcList = spDAL.KIDspcList(); ViewBag.KIDdisList = spDAL.KIDdisList();
             ViewBag.Page = "CtVet1a";

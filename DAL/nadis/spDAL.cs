@@ -14,7 +14,6 @@ namespace nadis.DAL.nadis
 
     public static class spDAL
     {
-
         public static SelectList KIDroList()
         {
             var appSettingsJson = AppSettingJSON.GetAppSettings();
@@ -77,7 +76,7 @@ namespace nadis.DAL.nadis
             {
                 string rez = _conn.QueryFirst<string>(
                         "SELECT TOP 1 [Socunit] FROM [73GEO3] WHERE [gAID]=@val", new { val = KIDdiv});
-                return rez;
+                return rez.Replace("АИЛЬНЫЙ ОКРУГ","").Trim();
             }
         }
         
@@ -141,35 +140,27 @@ namespace nadis.DAL.nadis
             }
         }
 
-        public static List<sp_values> __RepMO1YearList(int y)
+        public static List<sp_values> __RepMO1YearList(int YY, int MM)
         {
+
             List<sp_values> tmpList = new List<sp_values>();
-            for (int i = 1; i < 13; i++)
+            DateTime dtB = new DateTime(YY,MM,1);
+            DateTime dtE =  DateTime.Today;
+            while(dtB <= dtE)
             {
                 sp_values tmp_sp = new sp_values
                 {
-                    ID = new DateTime(y, i, 1).ToString(),
-                    Text = new DateTime(y, i, 1).ToString("MMM yyyy")
+                    ID = dtB.ToString(),
+                    Text = dtB.ToString("MMMyyyy")
                 };
+                dtB = dtB.AddMonths(1);
                 tmpList.Add(tmp_sp);
             }
             return tmpList;
         }
-        public static SelectList RepMO1YearList(int y)
+        public static SelectList RepMO1YearList(int y,int m)
         {
-            /*
-            List<sp_values> tmpList = new List<sp_values>();
-            for (int i = 1; i < 13; i++)
-            {
-                sp_values tmp_sp = new sp_values
-                {
-                    ID = new DateTime(y, i, 1).ToString(),
-                    Text = new DateTime(y, i, 1).ToString("MMM yyyy")
-                };
-                tmpList.Add(tmp_sp);
-            }
-            */
-            return new SelectList(__RepMO1YearList(y), "ID", "Text");
+            return new SelectList(__RepMO1YearList(y,m), "ID", "Text");
         }
 
         public static SelectList KIDdivList(string KIDro)
@@ -190,7 +181,7 @@ namespace nadis.DAL.nadis
                     sp_values tmp = new sp_values();
                     {
                         tmp.ID = dr["KID"].ToString();
-                        tmp.Text = dr["Socunit"].ToString().Trim();
+                        tmp.Text = dr["Socunit"].ToString().Replace("АИЛЬНЫЙ ОКРУГ","").Trim();
                     }
                     tmpList.Add(tmp);
                 }

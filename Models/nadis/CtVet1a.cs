@@ -14,7 +14,7 @@ namespace nadis.Models
         //[ScaffoldColumn(false)]
         public Guid ID { get; set; }
 
-        [Display(Name = " Периуд ")]
+        [Display(Name = "Периуд")]
         [DisplayFormat(DataFormatString = "{0:MMMyyyy}")]
         public DateTime RepMO { get; set; } = DateTime.Today;//periud dannix
 
@@ -22,7 +22,7 @@ namespace nadis.Models
         [StringLength(7)]
         public string KIDro { get; set; }     //code пользователя RD02525
 
-        [Display(Name = "     Айыл Аймак     ")]
+        [Display(Name = "Айыл Аймак")]
         //[StringLength(30)]
         public string KIDdivDisplay { get; set; } = "";
 

@@ -31,8 +31,9 @@ namespace nadis.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            //User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value
-            ViewBag.RepMoList = spDAL.RepMO1YearList(DateTime.Today.Year);
+            int reportDtYear = Convert.ToInt32(User.Claims.ToList().FirstOrDefault(x => x.Type == "reportDtYear").Value);
+            int reportDtMonth = Convert.ToInt32(User.Claims.ToList().FirstOrDefault(x => x.Type == "reportDtMonth").Value);
+            ViewBag.RepMoList = spDAL.RepMO1YearList(reportDtYear,reportDtMonth);
             ViewBag.VetPrepList = spDAL.VetPrepList();
             ViewBag.EdIzmList = spDAL.EdIzmList();
 
@@ -76,7 +77,9 @@ namespace nadis.Controllers
             BioPrep tmp = BioPrepDAL.GetById_BioPrep(id);
             if (tmp == null) return NotFound();
 
-            ViewBag.RepMoList = spDAL.RepMO1YearList(DateTime.Today.Year);
+            int Y = Convert.ToInt32(User.Claims.ToList().FirstOrDefault(x => x.Type == "reportDtYear").Value);
+            int M = Convert.ToInt32(User.Claims.ToList().FirstOrDefault(x => x.Type == "reportDtMonth").Value);
+            ViewBag.RepMoList = spDAL.RepMO1YearList(Y,M);
             ViewBag.VetPrepList = spDAL.VetPrepList();
             ViewBag.EdIzmList = spDAL.EdIzmList();
 

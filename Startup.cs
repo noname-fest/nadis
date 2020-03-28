@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using nadis.tools;
 using Microsoft.AspNetCore.Localization;
+using nadis.DAL.nadis;
 
 namespace nadis
 {
