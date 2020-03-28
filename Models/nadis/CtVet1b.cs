@@ -12,12 +12,6 @@ namespace nadis.Models
         [Display(Name = "Guid записи")]
         public Guid ID { get; set; }
 
-
-        [Display(Name = "  Периуд  ")]
-        [DisplayFormat(DataFormatString = "{0:MMM yyyy}")]
-        public DateTime RepMO { get; set; } = DateTime.Now;//periud dannix
-
-
         [Display(Name = "Айыл Аймак")]
         public string KIDdivDisplay { get; set; } = "";
         [StringLength(10)]
@@ -40,7 +34,7 @@ namespace nadis.Models
         public DateTime dtObs { get; set; } = DateTime.Today;  //Дата наблюдения
 
         [Display(Name = " Периуд ")]
-        [DisplayFormat(DataFormatString = "{0:MMM yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:MMMyyyy}")]
         [Column(TypeName = "date")]
         public DateTime repMO { get; set; } = DateTime.Today; // периуд записи
 
@@ -59,7 +53,7 @@ namespace nadis.Models
         [Required(ErrorMessage = "Только целое число > 0")]
         public int? femage_1 { get; set; } = 0;
 
-        [Display(Name = "Взрослые особи")]
+        [Display(Name = "Взрослые")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public int? femage_2 { get; set; } = 0;
 
@@ -67,7 +61,7 @@ namespace nadis.Models
         [Required(ErrorMessage = "Только целое число > 0")]
         public int? fage1_pos { get; set; } = 0;
 
-        [Display(Name = "Взрослые особи")]
+        [Display(Name = "Взрослые")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public int? fage2_pos { get; set; } = 0;
 

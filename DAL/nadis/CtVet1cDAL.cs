@@ -17,7 +17,7 @@ namespace nadis.DAL.nadis
                 using (SqlConnection _conn = new SqlConnection(connectionString))
                 {
                     IEnumerable<CtVet1c> tmpList = 
-                    _conn.Query<CtVet1c>("SELECT TOP 10 * FROM ctVet1c WHERE (KIDro=@KIDroP and repMo between @bDt and @eDt)"
+                    _conn.Query<CtVet1c>("SELECT * FROM ctVet1c WHERE (KIDro=@KIDroP and repMo between @bDt and @eDt)"
                                       + " ORDER BY repMO DESC", 
                                             new { KIDroP = KIDro, 
                                                   bDt = new DateTime(Y,M,1),
@@ -44,7 +44,7 @@ namespace nadis.DAL.nadis
                 using (SqlConnection _conn = new SqlConnection(connectionString))
                 {
                     CtVet1c tmp = 
-                    _conn.QueryFirst<CtVet1c>("SELECT * FROM ctVet1c WHERE ID=@KID",
+                    _conn.QueryFirstOrDefault<CtVet1c>("SELECT * FROM ctVet1c WHERE ID=@KID",
                                               new { KID = Id });
                     _conn.Close();
                         tmp.KIDdivDisplay = spDAL.KIDdivName(tmp.KIDdiv);
@@ -63,7 +63,7 @@ namespace nadis.DAL.nadis
             var connectionString = appSettingsJson["DefaultConnection"];
             using (SqlConnection _conn = new SqlConnection(connectionString))
             {
-                int count = _conn.QueryFirst<int>("SELECT COUNT(*) FROM CtVet1c WHERE ("
+                int count = _conn.QueryFirstOrDefault<int>("SELECT COUNT(*) FROM CtVet1c WHERE ("
                     + "repMO=@repMOP and KIDro=@KIDroP and KIDdiv=@KIDdivP and KIDspc=@KIDspcP "+
                     "and KIDdis=@KIDdisP and KIDtrt=@KIDtrtP)",
                     new { repMOP = tmp.RepMO, KIDroP = tmp.KIDro,
@@ -97,9 +97,9 @@ namespace nadis.DAL.nadis
             SqlConnection _conn = new SqlConnection(connectionString);
             _conn.Execute("INSERT INTO CtVet1c (repMO,KIDro,dtObs,KIDdiv,"
                 + "KIDspc,KIDdis,KIDtrt,"+
-                "tfemage1,tfemage2,tmalage1,tmalage2) VALUES (" +
+                "tfemage1,tfemage2,tmalage1,tmalage2,nVT) VALUES (" +
                 "@repMOP,@KIDroP,@dtObsP,@KIDdivP,@KIDspcP,@KIDdisP,@KIDtrtP,"
-                + "@tfemage1P,@tfemage2P,@tmalage1P,@tmalage2P)",
+                + "@tfemage1P,@tfemage2P,@tmalage1P,@tmalage2P,@nVT)",
                 new
                 {
                     KIDroP = tmp.KIDro,
@@ -112,7 +112,8 @@ namespace nadis.DAL.nadis
                     tfemage1P = tmp.tfemage1,
                     tfemage2P = tmp.tfemage2,
                     tmalage1P = tmp.tfemage1,
-                    tmalage2P = tmp.tfemage2
+                    tmalage2P = tmp.tfemage2,
+                    nVT = tmp.tfemage1+tmp.tfemage2+tmp.tfemage1+tmp.tfemage2
                 }
                 );
             _conn.Close();
@@ -130,7 +131,8 @@ namespace nadis.DAL.nadis
                 "repMo=@repMoP, dtObs=@dtObsP, KIDdiv=@KIDdivP, KIDspc=@KIDspcP,"+
                 "KIDdis=@KIDdisP, KIDtrt=@KIDtrtP, "+
                 "tfemage1 = @tfemage1P, tfemage2 = @tfemage2P, "+
-                "tmalage1 = @tmalage1P, tmalage2 = @tmalage2P WHERE ID=@IdP"  ,
+                "tmalage1 = @tmalage1P, tmalage2 = @tmalage2P, nVT=@nVT "+
+                "WHERE ID=@IdP"  ,
                 new
                     {
                         IdP = tmp.ID,
@@ -144,7 +146,9 @@ namespace nadis.DAL.nadis
                         tfemage1P = tmp.tfemage1,
                         tfemage2P = tmp.tfemage2,
                         tmalage1P = tmp.tfemage1,
-                        tmalage2P = tmp.tfemage2}
+                        tmalage2P = tmp.tfemage2,
+                        nVT = tmp.tfemage1+tmp.tfemage2+tmp.tfemage1+tmp.tfemage2
+                    }
             );
             _conn.Close();
         }

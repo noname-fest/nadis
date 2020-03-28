@@ -13,9 +13,9 @@
             <input type="hidden" asp-for="ID" />
             <input type="hidden" asp-for="KIDro" />
             <div class="form-group">
-                <label asp-for="RepMO" class="control-label"></label>
-                @Html.DropDownList("RepMO", ViewBag.RepMoList as SelectList, new { @class = "form-control" })
-                <span asp-validation-for="RepMO" class="text-danger"></span>
+                <label asp-for="repMO" class="control-label"></label>
+                @Html.DropDownList("repMO", ViewBag.RepMoList as SelectList, new { @class = "form-control" })
+                <span asp-validation-for="repMO" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="KIDdivDisplay" class="control-label"></label>
@@ -49,7 +49,7 @@
                 @Html.DropDownList("test", ViewBag.testList as SelectList, new { @class = "form-control" })
                 <span asp-validation-for="test" class="text-danger"></span>
             </div>
-
+            <p>Исследовано животных голов</p>
             <div class="form-group">
                 <label asp-for="femage_1" class="control-label"></label>
                 <input asp-for="femage_1" class="form-control" type="number" min="0" step="1" />
@@ -60,6 +60,9 @@
                 <input asp-for="femage_2" class="form-control" type="number" min="0" step="1" />
                 <span asp-validation-for="femage_2" class="text-danger"></span>
             </div>
+
+
+            <p>Из них реагировало положительно</p>
             <div class="form-group">
                 <label asp-for="fage1_pos" class="control-label"></label>
                 <input asp-for="fage1_pos" class="form-control" type="number" min="0" step="1" />

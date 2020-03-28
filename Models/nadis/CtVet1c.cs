@@ -12,7 +12,7 @@ namespace nadis.Models
         public Guid ID { get; set; }
 
         [Display(Name = " Периуд ")]
-        [DisplayFormat(DataFormatString = "{0:MMM yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:MMMyyyy}")]
         public DateTime RepMO { get; set; } = DateTime.Today;//periud dannix
 
         //[ScaffoldColumn(false)]
@@ -53,14 +53,18 @@ namespace nadis.Models
         public int treated { get; set; }
         */
         [Required(ErrorMessage = "Только целое число > 0")]
+        [Display(Name = "Самки")]
         public int tfemage1 { get; set; } = 0;
 
+        [Display(Name = "Самки")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public int tfemage2 { get; set; } = 0;
 
+        [Display(Name = "Самцы")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public int tmalage1 { get; set; } = 0;
 
+        [Display(Name = "Самцы")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public int tmalage2 { get; set; } = 0;
 

@@ -1,4 +1,5 @@
-﻿using nadis.Models;
+﻿using Dapper;
+using nadis.Models;
 using nadis.tools;
 using System;
 using System.Collections.Generic;
@@ -16,58 +17,28 @@ namespace nadis.DAL.nadis
 
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
-
-            List<CtVet1b> tmpList = new List<CtVet1b>();
-            using (SqlConnection _conn = new SqlConnection(connectionString))
+            using(SqlConnection _conn = new SqlConnection(connectionString))
             {
-                SqlCommand cmd = new SqlCommand("nadis_GetAll_CtVet1b", _conn)
+                string q = "SELECT * FROM ctVet1b WHERE "+
+                            "(KIDro=@KIDroP and repMO between @bDt and @eDt) ORDER BY repMO DESC";
+                var param = new 
                 {
-                    CommandType = CommandType.StoredProcedure
+                    KIDroP = KIDro, 
+                    bDt = new DateTime(Y,M,1),
+                    eDt = new DateTime(DateTime.Today.Year,
+                                        DateTime.Today.Month+1,
+                                        1) 
                 };
-                cmd.Parameters.AddWithValue("@KIDro", KIDro);
-                cmd.Parameters.AddWithValue("@Y",Y);
-                cmd.Parameters.AddWithValue("@M",M);
-                
-                _conn.Open();
-                SqlDataReader dr = cmd.ExecuteReader();
-                while (dr.Read())
+                IEnumerable<CtVet1b> tmpList = _conn.Query<CtVet1b>(q,param);
+                foreach(var tmp in tmpList)
                 {
-                    CtVet1b tmp = new CtVet1b()
-                    {
-                        ID = Guid.Parse(dr["ID"].ToString().Trim()),
-                        KIDro = dr["KIDro"].ToString().Trim(),
-                        RepMO = (DateTime)dr["repMO"],
-
-                        KIDdiv = dr["KIDdiv"].ToString().Trim(),
-                        KIDdivDisplay = dr["KIDdivDisplay"].ToString().Trim(),
-
-                        KIDspc = dr["KIDspc"].ToString().Trim(),
-                        KIDspcDisplay = dr["KIDspcDisplay"].ToString().Trim(),
-
-                        KIDdis = dr["KIDdis"].ToString().Trim(),
-                        KIDdisDisplay = dr["KIDdisDisplay"].ToString().Trim(),
-
-                        test = dr["test"].ToString().Trim(),
-                        testDisplay = dr["testDisplay"].ToString().Trim(),
-
-                        //femage_1 = (int?)dr["femage_1"],
-                        femage_1 = dr["femage_1"] is null ? 0 : (int?)dr["femage_1"],
-                        femage_2 = dr["femage_2"] is null ? 0 : (int?)dr["femage_2"],
-                        
-                        //fage1_pos = (int?)dr["fage1_pos"],
-                        fage1_pos = dr["fage1_pos"] is null ? 0 : (int?)dr["fage1_pos"],
-                        fage2_pos = dr["fage2_pos"] is null ? 0 : (int?)dr["fage1_pos"],
-
-                        //if (tmp.dtObs is null) { tmp.dtObs = DateTime.Today; } else tmp.dtObs = DateTime.Today;
-                        dtObs = dr["dtObs"] is null ? DateTime.Today : (DateTime)(dr["dtObs"])
-                        //dtObs = (DateTime)(dr["dtObs"])
-                    };
-                    
-                    tmpList.Add(tmp);
+                    tmp.KIDdisDisplay = spDAL.KIDdisName(tmp.KIDdis);
+                    tmp.KIDdivDisplay = spDAL.KIDdivName(tmp.KIDdiv);
+                    tmp.KIDspcDisplay = spDAL.KIDspcName(tmp.KIDspc);
+                    tmp.testDisplay   = spDAL.testName(tmp.test);
                 }
-                _conn.Close();
+                return tmpList;
             }
-            return tmpList;
         }
 
 
@@ -77,28 +48,33 @@ namespace nadis.DAL.nadis
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
 
-            using SqlConnection _conn = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand("nadis_Add_CtVet1b", _conn)
+            using(SqlConnection _conn = new SqlConnection(connectionString))
             {
-                CommandType = CommandType.StoredProcedure
-            };
-
-            cmd.Parameters.AddWithValue("@KIDro", tmp.KIDro);
-            cmd.Parameters.AddWithValue("@repMO", tmp.RepMO);
-            cmd.Parameters.AddWithValue("@KIDdiv", tmp.KIDdiv);
-            cmd.Parameters.AddWithValue("@KIDspc", tmp.KIDspc);
-            cmd.Parameters.AddWithValue("@KIDdis", tmp.KIDdis);
-            cmd.Parameters.AddWithValue("@test", tmp.test);
-            cmd.Parameters.AddWithValue("@femage_1", tmp.femage_1);
-            cmd.Parameters.AddWithValue("@femage_2", tmp.femage_2);
-            cmd.Parameters.AddWithValue("@fage1_pos", tmp.fage1_pos);
-            cmd.Parameters.AddWithValue("@fage2_pos", tmp.fage2_pos);
-            cmd.Parameters.AddWithValue("@dtObs", tmp.dtObs);
-
-            _conn.Open();
-            cmd.ExecuteNonQuery();
-            _conn.Close();
-
+                string q = "INSERT INTO ctVET1b "+ 
+	                "(KIDro,repMO,KIDdiv,KIDspc,KIDdis,test,femage_1,femage_2,"+
+                            "fage1_pos,fage2_pos,dtObs,test_tot,pos_tot) "+
+	                    "VALUES "+
+	                "(@KIDro,@repMO,@KIDdiv,@KIDspc,@KIDdis,@test,@femage_1,@femage_2,"+
+                            "@fage1_pos,@fage2_pos,@dtObs,@test_tot,@pos_tot)";
+                var param = new 
+                {
+                    KIDro = tmp.KIDro,
+                    repMO = tmp.repMO,
+                    KIDdiv = tmp.KIDdiv,
+                    KIDspc = tmp.KIDspc,
+                    KIDdis = tmp.KIDdis,
+                    test = tmp.test,
+                    femage_1 = tmp.femage_1,
+                    femage_2 = tmp.femage_2,
+                    fage1_pos = tmp.fage1_pos,
+                    fage2_pos = tmp.fage2_pos,
+                    dtObs = tmp.dtObs,
+                    test_tot = tmp.femage_1+tmp.femage_2,
+                    pos_tot = tmp.fage1_pos+tmp.fage2_pos
+                };
+                _conn.Execute(q,param);
+                _conn.Close();
+            }
         }
 
 
@@ -106,45 +82,16 @@ namespace nadis.DAL.nadis
         {
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
-
-            CtVet1b tmp = new CtVet1b();
-            using (SqlConnection _conn = new SqlConnection(connectionString))
+            using(SqlConnection _conn = new SqlConnection(connectionString))
             {
-                SqlCommand cmd = new SqlCommand("nadis_GetByID_CtVet1b", _conn)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-                cmd.Parameters.AddWithValue("@ID", id);
-                _conn.Open();
-                SqlDataReader dr = cmd.ExecuteReader();
-                while (dr.Read())
-                {
-                    tmp.ID = Guid.Parse(dr["ID"].ToString());
-                    tmp.KIDro = dr["KIDro"].ToString();
-                    tmp.RepMO = (DateTime)dr["repMO"];
-
-                    tmp.KIDdiv = dr["KIDdiv"].ToString();
-                    tmp.KIDdivDisplay = dr["KIDdivDisplay"].ToString();
-
-                    tmp.KIDspc = dr["KIDspc"].ToString();
-                    tmp.KIDspcDisplay = dr["KIDspcDisplay"].ToString();
-
-                    tmp.KIDdis = dr["KIDdis"].ToString();
-                    tmp.KIDdisDisplay = dr["KIDdis"].ToString();
-
-                    tmp.test = dr["test"].ToString();
-                    tmp.testDisplay = dr["testDisplay"].ToString();
-
-                    tmp.femage_1 = (int?)dr["femage_1"];
-                    tmp.femage_2 = (int?)dr["femage_2"];
-                    tmp.fage1_pos = (int?)dr["fage1_pos"];
-                    tmp.fage2_pos = (int?)dr["fage2_pos"];
-
-                    tmp.dtObs = (DateTime)dr["dtObs"];
-                }
-                _conn.Close();
+                CtVet1b tmp = _conn.QueryFirstOrDefault<CtVet1b>("SELECT * FROM ctVet1b WHERE ID=@idd",
+                                new {idd = id});
+                tmp.KIDdisDisplay = spDAL.KIDdisName(tmp.KIDdis);
+                tmp.KIDdivDisplay = spDAL.KIDdivName(tmp.KIDdiv);
+                tmp.KIDspcDisplay = spDAL.KIDspcName(tmp.KIDspc);
+                tmp.testDisplay   = spDAL.testName(tmp.test);
+                return tmp;
             }
-            return tmp;
         }
 
 
@@ -153,30 +100,35 @@ namespace nadis.DAL.nadis
             if (tmp is null) { return; }
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
-
-            using SqlConnection _conn = new SqlConnection(connectionString);
-            using (SqlCommand cmd = new SqlCommand("nadis_Update_CtVet1b", _conn)
+            
+            using(SqlConnection _conn = new SqlConnection(connectionString))
             {
-                CommandType = CommandType.StoredProcedure
-            })
-            {
-                cmd.Parameters.AddWithValue("@ID", tmp.ID);
-                cmd.Parameters.AddWithValue("@KIDro", tmp.KIDro);
-                cmd.Parameters.AddWithValue("@repMO", tmp.RepMO);
-                cmd.Parameters.AddWithValue("@KIDdiv", tmp.KIDdiv);
-                cmd.Parameters.AddWithValue("@KIDspc", tmp.KIDspc);
-                cmd.Parameters.AddWithValue("@KIDdis", tmp.KIDdis);
-                cmd.Parameters.AddWithValue("@femage_1", tmp.femage_1);
-                cmd.Parameters.AddWithValue("@femage_2", tmp.femage_2);
-                cmd.Parameters.AddWithValue("@fage1_pos", tmp.fage1_pos);
-                cmd.Parameters.AddWithValue("@fage2_pos", tmp.fage2_pos);
-                cmd.Parameters.AddWithValue("@dtObs", tmp.dtObs);
-                cmd.Parameters.AddWithValue("@test", tmp.test);
-
-                _conn.Open();
-                cmd.ExecuteNonQuery();
+                string q = "UPDATE ctVET1b SET "+ 
+		                    "KIDro=@KIDro,repMO=@repMO,KIDdiv=@KIDdiv,"+
+		                    "KIDspc=@KIDspc,KIDdis=@KIDdis,test = @test,"+
+                            "dtObs = @dtObs,femage_1=@femage_1,femage_2=@femage_2,"+
+                            "fage1_pos = @fage1_pos,fage2_pos = @fage2_pos,"+
+                            "test_tot=@test_tot, pos_tot=@pos_tot "+
+                            "WHERE ID=@ID";
+                var param = new 
+                        {
+                            ID = tmp.ID,
+                    		KIDro = tmp.KIDro,
+                            repMO = tmp.repMO,
+                            KIDdiv= tmp.KIDdiv,
+                            KIDspc=tmp.KIDspc,
+                            KIDdis=tmp.KIDdis,
+                            test = tmp.test,
+                            dtObs = tmp.dtObs,
+                            femage_1=tmp.femage_1,
+                            femage_2=tmp.femage_2,
+                            fage1_pos = tmp.fage1_pos,
+                            fage2_pos = tmp.fage2_pos,
+                            test_tot = tmp.femage_1+tmp.femage_2,
+                            pos_tot = tmp.fage1_pos+tmp.fage2_pos
+                        };
+                _conn.Execute(q,param);
             }
-            _conn.Close();
         }
 
         public static void DeleteCtVet1b(Guid id)
@@ -184,44 +136,35 @@ namespace nadis.DAL.nadis
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
 
-            using SqlConnection _conn = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand("[nadis_Delete_CtVet1b]", _conn)
+            using(SqlConnection _conn = new SqlConnection(connectionString))
             {
-                CommandType = CommandType.StoredProcedure
-            };
-            cmd.Parameters.AddWithValue("@ID", id);
-
-            _conn.Open();
-            cmd.ExecuteNonQuery();
-            _conn.Close();
+                _conn.Execute("DELETE FROM ctVet1b WHERE ID=@idd",new{idd = id});
+            }
         }
 
         public static bool IsUniqueRecord(CtVet1b tmp)
         {
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
-            int countR = 0;
-            using (SqlConnection _conn = new SqlConnection(connectionString))
+
+            using(SqlConnection _conn = new SqlConnection(connectionString))
             {
-                SqlCommand cmd = new SqlCommand("nadis_CheckRecord_CtVet1b", _conn)
-                {
-                    CommandType = CommandType.StoredProcedure
+                string q="SELECT COUNT(*) FROM ctVet1b WHERE "+
+                "(repMO=@repMOP and KIDro=@KIDroP and KIDspc=@KIDspcP and "+
+                "KIDdis=@KIDdisP and test=@testP and "+
+                "dtObs=@dtObsP)";
+                var param = new 
+                {  
+                    repMOP=tmp.repMO,
+                    KIDroP=tmp.KIDro,
+                    KIDspcP=tmp.KIDspc,
+                    KIDdisP=tmp.KIDdis,
+                    testP=tmp.test,
+                    dtObsP=tmp.dtObs
                 };
-                cmd.Parameters.AddWithValue("@repMO", tmp.RepMO);
-                cmd.Parameters.AddWithValue("@KIDro", tmp.KIDro);
-                cmd.Parameters.AddWithValue("@KIDdiv", tmp.KIDdiv);
-                cmd.Parameters.AddWithValue("@KIDdis", tmp.KIDdis);
-                cmd.Parameters.AddWithValue("@KIDspc", tmp.KIDspc);
-                cmd.Parameters.AddWithValue("@test", tmp.test);
-                _conn.Open();
-                SqlDataReader dr = cmd.ExecuteReader();
-
-                while (dr.Read()) countR = (int)dr["kolvo"];
-                _conn.Close();
+                int count = _conn.QueryFirstOrDefault<int>(q,param);
+                if (count == 0) { return true; } else { return false; }
             }
-            if (countR == 0) { return true; } else return false;
         }
-
-
     }
 }

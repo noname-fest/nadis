@@ -265,7 +265,7 @@ namespace nadis.DAL.nadis
             List<sp_values> tmpList = new List<sp_values>();
             using (SqlConnection _conn = new SqlConnection(connectionString))
             {
-                SqlCommand cmd = new SqlCommand(@"SELECT KID,Testname FROM [d2TESTS] ", _conn);
+                SqlCommand cmd = new SqlCommand(@"SELECT KID,Testname FROM [d2TESTS]", _conn);
                 _conn.Open();
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
@@ -282,6 +282,18 @@ namespace nadis.DAL.nadis
 
             return new SelectList(tmpList, "ID", "Text", tmpList[0].ID);
         }
+
+        public static string testName(string tst)
+        {
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+            using (SqlConnection _conn = new SqlConnection(connectionString))
+            {
+                string t = _conn.QueryFirstOrDefault<string>(
+                        "SELECT TOP 1 Testname FROM [d2TESTS] WHERE KID=@tt", new { tt = tst});
+                return t;
+            }
+        }        
 
     }
 }

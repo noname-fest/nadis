@@ -15,7 +15,7 @@ public class BioPrep
         public string KIDro { get; set; }
 
         [Display(Name = " Периуд ")]
-        [DisplayFormat(DataFormatString = "{0:MMM yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:MMMyyyy}")]
         public DateTime RepMO { get; set; } = DateTime.Today;//periud dannix
 
         [StringLength(10)]

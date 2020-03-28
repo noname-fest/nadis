@@ -41,7 +41,7 @@ namespace nadis.Controllers
             CtVet1b tmp = new CtVet1b
             {
                 KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value,
-                RepMO = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1),
+                repMO = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1),
                 dtObs = DateTime.Now
             };
             ViewBag.Page = "CtVet1b";
@@ -75,7 +75,7 @@ namespace nadis.Controllers
             CtVet1b tmpVet1b = CtVet1bDAL.GetCtVet1bById(id);
             if (tmpVet1b == null) return NotFound();
 
-            ViewBag.RepMoList  = spDAL.RepMO1YearList(tmpVet1b.RepMO.Year);
+            ViewBag.RepMoList  = spDAL.RepMO1YearList(tmpVet1b.repMO.Year);
             ViewBag.KIDdivList = spDAL.KIDdivList(User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value);
             ViewBag.KIDspcList = spDAL.KIDspcList();
             ViewBag.KIDdisList = spDAL.KIDdisList();

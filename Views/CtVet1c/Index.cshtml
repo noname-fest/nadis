@@ -9,38 +9,44 @@
     <a asp-action="Create">Создать новый</a>
 </p>
 
-<table class="table table-striped table-responsive-sm">
-    <thead>
+<table class="table table-striped table-responsive-sm table-bordered table-sm">
+    <thead align="center">
         <tr>
-            <th>
+            <th rowspan="2">
                 @Html.DisplayNameFor(model => model.RepMO)
             </th>
-            <th>
+            <th rowspan="2">
                 @Html.DisplayNameFor(model => model.KIDdivDisplay)
             </th>
-            <th>
+            <th rowspan="2">
                 @Html.DisplayNameFor(model => model.dtObs)
             </th>
-            <th>
+            <th rowspan="2">
                 @Html.DisplayNameFor(model => model.KIDspcDisplay)
             </th>
-            <th>
+            <th rowspan="2">
                 @Html.DisplayNameFor(model => model.KIDdisDisplay)
             </th>
-            <th>
+            <th rowspan="2">
                 @Html.DisplayNameFor(model => model.KIDtrtDisplay)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.tfemage1)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.tfemage2)
-            </th>
+            <th colspan="2">Молодняк</th>
+            <th colspan="2">Взрослые особи</th>
+            <th rowspan="2">Всего</th>
+        </tr>
+        <tr>
             <th>
                 @Html.DisplayNameFor(model => model.tmalage1)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.tfemage1)
+            </th>
+
+            <th>
                 @Html.DisplayNameFor(model => model.tmalage2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tfemage2)
             </th>
         </tr>
     </thead>
@@ -67,19 +73,23 @@
                     @Html.DisplayFor(modelItem => tmp.KIDtrtDisplay)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => tmp.tmalage1)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => tmp.tfemage1)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => tmp.tfemage2)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => tmp.tmalage1)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => tmp.tmalage2)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@tmp.ID">Редак.</a>&nbsp;&nbsp;<a asp-action="Delete" asp-route-id="@tmp.ID">Удал.</a>
+                    @(tmp.tmalage1 + tmp.tmalage2 + tmp.tfemage1 + tmp.tfemage2)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@tmp.ID">Редак.</a>
+                    <a asp-action="Delete" asp-route-id="@tmp.ID">Удал.</a>
                 </td>
             </tr>
         }

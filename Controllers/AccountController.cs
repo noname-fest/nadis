@@ -38,12 +38,6 @@ namespace AuthSample.Controllers
             if(loginModel != null)
             if (ModelState.IsValid)
             {
-                /*
-                var user = await _userContext.Users
-                    .FirstOrDefaultAsync(u =>
-                        u.username == loginModel.username &&
-                        u.userpassword == loginModel.userpassword).ConfigureAwait(false);
-                        */
                 var appSettingsJson = AppSettingJSON.GetAppSettings();
                 var connectionString = appSettingsJson["DefaultConnection"];
 
