@@ -49,9 +49,13 @@ namespace AuthSample.Controllers
 
                 using(SqlConnection _conn = new SqlConnection(connectionString))
                 {
-                    var user = _conn.QueryFirst("SELECT * FROM Users WHERE username=@usr_name and userpassword=@usr_pwd",
-                     new {usr_name = loginModel.username,
-                          usr_pwd  = loginModel.userpassword});
+                    string q = "SELECT * FROM Users WHERE username=@usr_name and userpassword=@usr_pwd";
+                    var param = new
+                        {
+                          usr_name = loginModel.username,
+                          usr_pwd  = loginModel.userpassword
+                        };
+                    var user = _conn.QueryFirstOrDefault<User>(q,param);
                   if (user != null)
                     {
                        await Authenticate(loginModel.username).ConfigureAwait(false);
