@@ -32,7 +32,7 @@ public class BioPrep
         [Display(Name="Ед.изм")]
         public string EdIzmDisplay {get; set;}
 
-        [Display(Name = "Было")]
+        [Display(Name = "Было на нач.")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public long? Bylo { get; set; } = 0;
 

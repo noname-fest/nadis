@@ -82,28 +82,34 @@ namespace nadis.DAL.nadis
             var connectionString = appSettingsJson["DefaultConnection"];
 
             SqlConnection _conn = new SqlConnection(connectionString);
-            _conn.Execute("UPDATE BioPrep SET KIDro=@KIDroP," +
+            string q = 
+                "UPDATE BioPrep SET KIDro=@KIDroP," +
                 "repMO=@repMOP," +
                 "VetPrep=@VetPrepP," +
                 "EdIzm=@EdIzmP," +
-                "Bylo=@ByloP," +
                 "PostupiloVsego=@PostupiloVsegoP," +
                 "PostupiloRazn=@PostupiloRaznP," +
                 "IzrashodVsego=@IzrashodVsegoP," +
-                "IzrashodDrugoe=@IzrashodDrugoeP WHERE ID=@IdP",
-                new
-                {
+                "IzrashodDrugoe=@IzrashodDrugoeP,"+
+                "Ostatok_za_mesyac=@Ostatok_za_mesyac"+
+                " WHERE ID=@IdP";
+            var param = new {
                     IdP = tmp.ID,
                     KIDroP = tmp.KIDro,
                     repMOP = tmp.RepMO,
                     VetPrepP = tmp.VetPrep,
                     EdIzmP = tmp.EdIzm,
-                    ByloP = tmp.Bylo,
                     PostupiloVsegoP = tmp.PostupiloVsego,
                     PostupiloRaznP = tmp.PostupiloRazn,
                     IzrashodDrugoeP = tmp.IzrashodDrugoe,
-                    IzrashodVsegoP = tmp.IzrashodVsego
-                });
+                    IzrashodVsegoP = tmp.IzrashodVsego,
+                    Ostatok_za_mesyac = 
+                                tmp.Bylo + tmp.PostupiloVsego +
+                                tmp.PostupiloRazn -
+                                tmp.IzrashodDrugoe -
+                                tmp.IzrashodVsego
+            };
+            _conn.Execute(q,param);
             _conn.Close();
         }
 

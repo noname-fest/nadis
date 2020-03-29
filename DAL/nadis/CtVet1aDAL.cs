@@ -144,8 +144,6 @@ namespace nadis.DAL.nadis
             if (tmp == null) return false;
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
-            //SELECT COUNT(ID) as kolvo FROM ctVET1a
-	        //WHERE (repMO = @repMO and KIDdiv=@KIDDiv and KIDspc=@KIDspc and KIDdis=@KIDdis and KIDro=@KIDro)
 
             using(SqlConnection _conn = new SqlConnection(connectionString))
             {
@@ -163,27 +161,6 @@ namespace nadis.DAL.nadis
                 int count = _conn.QueryFirstOrDefault<int>(q,param);
                 if (count == 0) { return true; } else { return false; }
             }
-            /*
-            int countR = 0;
-            using (SqlConnection _conn = new SqlConnection(connectionString))
-            {
-                SqlCommand cmd = new SqlCommand("nadis_CheckRecord_CtVet1a", _conn)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-                cmd.Parameters.AddWithValue("@repMO", tmp.RepMO);
-                cmd.Parameters.AddWithValue("@KIDro", tmp.KIDro);
-                cmd.Parameters.AddWithValue("@KIDdiv", tmp.KIDdiv);
-                cmd.Parameters.AddWithValue("@KIDdis", tmp.KIDdis);
-                cmd.Parameters.AddWithValue("@KIDspc", tmp.KIDspc);
-                _conn.Open();
-                SqlDataReader dr = cmd.ExecuteReader();
-
-                while (dr.Read()) countR = (int)dr["kolvo"];
-                _conn.Close();
-            }
-            if(countR==0) {return true;} else return false;
-            */
         }
     }
 }

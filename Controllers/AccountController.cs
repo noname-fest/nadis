@@ -187,7 +187,7 @@ namespace AuthSample.Controllers
                 var connectionString = appSettingsJson["DefaultConnection"];
 
                 SqlConnection _conn = new SqlConnection(connectionString);
-                int usr_count = _conn.QueryFirst<int>("SELECT COUNT(*) FROM Users WHERE username=@usr_name",
+                int usr_count = await _conn.QueryFirstOrDefaultAsync<int>("SELECT COUNT(*) FROM Users WHERE username=@usr_name",
                                                     new{usr_name = registerModel.username});
                 if (usr_count == 0)
                 {

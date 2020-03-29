@@ -41,19 +41,19 @@ namespace nadis.Models
         [StringLength(4)]
         public string KIDdis { get; set; } = ""; // bolezn
 
-        [Display(Name = "Выявл. небл. пунк.")]
+        [Display(Name = "Небл.пункт")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public int? pos_units { get; set; } = 0;
 
-        [Display(Name = "Забол. гол.")]
+        [Display(Name = "Забол.")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public int? positives { get; set; } = 0;
 
-        [Display(Name = "Пало гол.")]
+        [Display(Name = "Пало")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public int? dead { get; set; } = 0;
 
-        [Display(Name = "Небл. пункт.")]
+        [Display(Name = "Небл.пункт")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public int? end_pos_units { get; set; } = 0;
 
