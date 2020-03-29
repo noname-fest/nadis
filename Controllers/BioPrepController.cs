@@ -84,6 +84,8 @@ namespace nadis.Controllers
             ViewBag.EdIzmList = spDAL.EdIzmList();
 
             ViewBag.Page = "BioPrep";
+            if(tmp.ByloPredMonth!=tmp.Bylo)
+                TempData["EM"] = "Остаток на нач. месяца не совпадает с введенными ранее данными";
             return View(tmp);
         }
 
@@ -99,7 +101,7 @@ namespace nadis.Controllers
             if (ModelState.IsValid)
             {
                 //if(BioPrepDAL.IsUniqueRecord(objBioPrep))
-                    BioPrepDAL.Update_BioPrep(objBioPrep);
+                BioPrepDAL.Update_BioPrep(objBioPrep);
                 return RedirectToAction("Index");
             }
             ViewBag.Page = "BioPrep";

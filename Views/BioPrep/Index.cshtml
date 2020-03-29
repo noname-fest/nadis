@@ -3,7 +3,7 @@
     ViewData["Title"] = "BioPrep";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<font color="red" size=18>@TempData["EM"]</font>
+<font color="red" size=14>@TempData["EM"]</font>
 <p>
     <a asp-action="Create">Создать новый</a>
 </p>
@@ -54,7 +54,14 @@
                     @Html.DisplayFor(modelItem => tmp.EdIzmDisplay)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => tmp.Bylo)
+                    @if(tmp.Bylo!=tmp.ByloPredMonth){
+                        @Html.DisplayFor(modelItem => tmp.Bylo)
+                        <font color='red'>
+                            (@Html.DisplayFor(modelItem => tmp.ByloPredMonth))
+                        </font>
+                    } else {
+                        @Html.DisplayFor(modelItem => tmp.Bylo)
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => tmp.PostupiloVsego)

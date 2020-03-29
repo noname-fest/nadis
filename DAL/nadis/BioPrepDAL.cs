@@ -24,10 +24,26 @@ namespace nadis.DAL.nadis
                                                   eDt = new DateTime(DateTime.Today.Year, DateTime.Today.Month,1) 
                                                 });
             _conn.Close();
+            string q = "SELECT TOP 1 (Bylo+PostupiloVsego+PostupiloRazn-IzrashodVsego-IzrashodDrugoe) "
+                        +"as ByloPredMonth FROM BioPrep WHERE (" +
+                        "KIDro=@KIDro and VetPrep=@VetPrep and EdIzm=@EdIzm and "+
+                        "repMO < @dt) ORDER BY repMO DESC";
+                        //"MONTH(repMO)=@M and YEAR(repMO)=@Y )";
             foreach (var tmp in tmpList)
             {
                 tmp.VetPrepDisplay = spDAL.VetPrepName(tmp.VetPrep);
                 tmp.EdIzmDisplay = spDAL.EdIzmName(tmp.EdIzm);
+                var param = new 
+                    {
+                        KIDro = tmp.KIDro,
+                        VetPrep = tmp.VetPrep,
+                        EdIzm = tmp.EdIzm,
+                        dt = tmp.RepMO
+                        //M = tmp.RepMO.AddMonths(-1).Month,
+                        //Y = tmp.RepMO.AddMonths(-1).Year
+                    };
+                tmp.ByloPredMonth = _conn.QueryFirstOrDefault<long?>(q,param);
+                if(tmp.ByloPredMonth == null) tmp.ByloPredMonth=0;
             };
             return tmpList;
         }
@@ -40,11 +56,25 @@ namespace nadis.DAL.nadis
             SqlConnection _conn = new SqlConnection(connectionString);
 
             BioPrep tmp = _conn.QueryFirst<BioPrep>(
-                "SELECT * FROM BioPrep WHERE ID=@IDv",
-                 new { IDv = Id });
+                "SELECT * FROM BioPrep WHERE ID=@IDv",new { IDv = Id });
+
+            string q = "SELECT TOP 1 (Bylo+PostupiloVsego+PostupiloRazn-IzrashodVsego-IzrashodDrugoe) "
+                        +"as ByloPredMonth FROM BioPrep WHERE (" +
+                        "KIDro=@KIDro and VetPrep=@VetPrep and EdIzm=@EdIzm and "+
+                        "repMO < @dt) ORDER BY repMO DESC";
+            var param = new 
+                {
+                    KIDro = tmp.KIDro,
+                    VetPrep = tmp.VetPrep,
+                    EdIzm = tmp.EdIzm,
+                    dt = tmp.RepMO
+                };
+            tmp.ByloPredMonth = _conn.QueryFirstOrDefault<long?>(q,param);
+            if(tmp.ByloPredMonth == null) tmp.ByloPredMonth=0;
+            
             _conn.Close();
-            tmp.VetPrepDisplay = spDAL.VetPrepName(tmp.VetPrep);
-            tmp.EdIzmDisplay = spDAL.EdIzmName(tmp.EdIzm);
+                tmp.VetPrepDisplay = spDAL.VetPrepName(tmp.VetPrep);
+                tmp.EdIzmDisplay = spDAL.EdIzmName(tmp.EdIzm);
 
             return tmp;
         }
@@ -87,6 +117,7 @@ namespace nadis.DAL.nadis
                 "repMO=@repMOP," +
                 "VetPrep=@VetPrepP," +
                 "EdIzm=@EdIzmP," +
+                "Bylo=@Bylo,"+
                 "PostupiloVsego=@PostupiloVsegoP," +
                 "PostupiloRazn=@PostupiloRaznP," +
                 "IzrashodVsego=@IzrashodVsegoP," +
@@ -99,6 +130,7 @@ namespace nadis.DAL.nadis
                     repMOP = tmp.RepMO,
                     VetPrepP = tmp.VetPrep,
                     EdIzmP = tmp.EdIzm,
+                    Bylo = tmp.Bylo,
                     PostupiloVsegoP = tmp.PostupiloVsego,
                     PostupiloRaznP = tmp.PostupiloRazn,
                     IzrashodDrugoeP = tmp.IzrashodDrugoe,

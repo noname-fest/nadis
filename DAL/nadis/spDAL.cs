@@ -51,7 +51,7 @@ namespace nadis.DAL.nadis
             {
                 string rez = _conn.QueryFirst<string>(
                         "SELECT TOP 1 [Measure] FROM [d3PREVMEASURES] WHERE [KID]=@val", new { val = KIDtrt});
-                return rez;
+                return rez.Trim();
             }
         }
 
@@ -63,7 +63,7 @@ namespace nadis.DAL.nadis
             {
                 string rez = _conn.QueryFirst<string>(
                         "SELECT TOP 1 [Disease] FROM [d2DISEASES] WHERE [KID]=@val", new { val = KIDdis});
-                return rez;
+                return rez.Trim();
             }
         }
 
@@ -88,7 +88,7 @@ namespace nadis.DAL.nadis
             {
                 string rez = _conn.QueryFirst<string>(
                         "SELECT TOP 1 [Species] FROM [d2SPECIES] WHERE KID=@val", new { val = KIDspc});
-                return rez;
+                return rez.Trim();
             }
         }
 
@@ -125,7 +125,7 @@ namespace nadis.DAL.nadis
             {
                 string VetUnit = _conn.QueryFirst<string>(
                         "SELECT TOP 1 PrepType FROM [VetPrep] WHERE KID=@VetPP", new { VetPP = KIDVetPrep});
-                return VetUnit;
+                return VetUnit.Trim();
             }
         }
 
@@ -136,7 +136,7 @@ namespace nadis.DAL.nadis
             using (SqlConnection _conn = new SqlConnection(connectionString))
             {
                 return _conn.QueryFirst<string>(
-                        "SELECT TOP 1 EdIzm FROM [EdIzm] WHERE KID=@VetPP", new { VetPP = KIDEdIzm });
+                        "SELECT TOP 1 EdIzm FROM [EdIzm] WHERE KID=@VetPP", new { VetPP = KIDEdIzm }).Trim();
             }
         }
 
@@ -150,8 +150,8 @@ namespace nadis.DAL.nadis
             {
                 sp_values tmp_sp = new sp_values
                 {
-                    ID = dtB.ToString(),
-                    Text = dtB.ToString("MMMyyyy")
+                    ID = dtB.ToString().Trim(),
+                    Text = dtB.ToString("MMMyyyy").Trim()
                 };
                 dtB = dtB.AddMonths(1);
                 tmpList.Add(tmp_sp);
@@ -180,7 +180,7 @@ namespace nadis.DAL.nadis
                 {
                     sp_values tmp = new sp_values();
                     {
-                        tmp.ID = dr["KID"].ToString();
+                        tmp.ID = dr["KID"].ToString().Trim();
                         tmp.Text = dr["Socunit"].ToString().Replace("АИЛЬНЫЙ ОКРУГ","").Trim();
                     }
                     tmpList.Add(tmp);
@@ -209,7 +209,7 @@ namespace nadis.DAL.nadis
                 {
                     sp_values tmp = new sp_values();
                     {
-                        tmp.ID = dr["KID"].ToString();
+                        tmp.ID = dr["KID"].ToString().Trim();
                         tmp.Text = dr["Species"].ToString().Trim();
                     }
                     tmpList.Add(tmp);
@@ -236,7 +236,7 @@ namespace nadis.DAL.nadis
                 {
                     sp_values tmp = new sp_values();
                     {
-                        tmp.ID = dr["KID"].ToString();
+                        tmp.ID = dr["KID"].ToString().Trim();
                         tmp.Text = dr["Disease"].ToString().Trim();
                     }
                     tmpList.Add(tmp);
@@ -263,7 +263,7 @@ namespace nadis.DAL.nadis
                 {
                     sp_values tmp = new sp_values();
                     {
-                        tmp.ID = dr["KID"].ToString();
+                        tmp.ID = dr["KID"].ToString().Trim();
                         tmp.Text = dr["Testname"].ToString().Trim();
                     }
                     tmpList.Add(tmp);
@@ -282,7 +282,7 @@ namespace nadis.DAL.nadis
             {
                 string t = _conn.QueryFirstOrDefault<string>(
                         "SELECT TOP 1 Testname FROM [d2TESTS] WHERE KID=@tt", new { tt = tst});
-                return t;
+                return t.Trim();
             }
         }        
 

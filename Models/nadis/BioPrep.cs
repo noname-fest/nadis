@@ -32,7 +32,13 @@ public class BioPrep
         [Display(Name="Ед.изм")]
         public string EdIzmDisplay {get; set;}
 
-        [Display(Name = "Было на нач.")]
+
+        //Остаток с пред. месяца
+        //Вычисляемое при загрузке данных
+        public long? ByloPredMonth {get; set;} = 0;
+
+
+        [Display(Name = "Было на нач. периуда")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public long? Bylo { get; set; } = 0;
 
@@ -56,7 +62,7 @@ public class BioPrep
         [Required(ErrorMessage = "Только целое число > 0")]
         public long? IzrashodDrugoe { get; set; } = 0;
 
-        [Display(Name = "Остаток за месяц")]
+        [Display(Name = "Остаток на конец периуда")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public long? Ostatok_za_mesyac { get; set; } = 0;
 

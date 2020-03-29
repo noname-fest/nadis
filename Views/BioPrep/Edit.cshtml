@@ -3,14 +3,15 @@
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<font color="red" size=8>@TempData["EM"]</font>
     <h3>Редактирование Биопрепараты></h3>
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ID" />
             <input type="hidden" asp-for="KIDro" />
-            <input type="hidden" asp-for="Bylo"/>
+            <!--<input type="hidden" asp-for="Bylo"/>-->
             <div class="form-group">
                 <label asp-for="RepMO" class="control-label"></label>
                 @Html.DropDownList("RepMO", ViewBag.RepMoList as SelectList, new { @class = "form-control" })
@@ -18,21 +19,26 @@
             </div>
             <div class="form-group">
                 <label asp-for="VetPrepDisplay" class="control-label"></label>
-                <!--<input asp-for="KIDdiv" class="form-control" />-->
                 @Html.DropDownList("VetPrep", ViewBag.VetPrepList as SelectList, new { @class = "form-control" })
                 <span asp-validation-for="VetPrep" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="EdIzmDisplay" class="control-label"></label>
-                <!--<input asp-for="KIDspc" class="form-control" />-->
                 @Html.DropDownList("EdIzm", ViewBag.EdIzmList as SelectList, new { @class = "form-control" })
                 <span asp-validation-for="EdIzm" class="text-danger"></span>
             </div>
+            
+            
             <div class="form-group">
                 <label asp-for="Bylo" class="control-label"></label>
-                <!--<input asp-for="Bylo" class="form-control" type="number" min="0" step="1" />-->
-                @Html.DisplayFor(model => model.Bylo)
-                <!--<span asp-validation-for="Bylo" class="text-danger"></span>-->
+                <label class="control-label">
+                    <font color="red">
+                        @Html.DisplayFor(model => model.ByloPredMonth)
+                    </font> ) 
+                </label>
+                
+                <input asp-for="Bylo" class="form-control" type="number" min="0" step="1" />
+                <span asp-validation-for="Bylo" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PostupiloVsego" class="control-label"></label>
