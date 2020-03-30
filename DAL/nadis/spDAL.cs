@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using nadis.Models.sp;
 using nadis.tools;
 using Dapper;
+using System.Globalization;
 
 namespace nadis.DAL.nadis
 {
@@ -186,6 +187,12 @@ namespace nadis.DAL.nadis
                     tmpList.Add(tmp);
                 }
                 _conn.Close();
+                /*
+                var tmp = _conn.Query<sp_values>("SELECT gAID as KID,Socunit FROM[73GEO3] " +
+                    "INNER JOIN[1VETUNITS] ON[1VETUNITS].KIDray =[73GEO3].gRID " +
+                        "WHERE[1VETUNITS].KID = @KID", new {KID = KIDro});
+                */
+
             }
 
             return new SelectList(tmpList, "ID", "Text",tmpList[0].ID);

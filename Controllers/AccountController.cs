@@ -102,8 +102,9 @@ namespace AuthSample.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]  
-        public IActionResult Edit(int id, [Bind] User objUsr)
+        public IActionResult Edit([Bind] User objUsr)
         {
+            if(objUsr==null) return NotFound();
             if (ModelState.IsValid)
             {
                 //if(BioPrepDAL.IsUniqueRecord(objBioPrep))
@@ -181,28 +182,14 @@ namespace AuthSample.Controllers
             if (registerModel != null)
             if (ModelState.IsValid)
             {
-                //var user = await _userContext.Users
-                //    .FirstOrDefaultAsync(u => u.username == registerModel.username).ConfigureAwait(false);
                 var appSettingsJson = AppSettingJSON.GetAppSettings();
                 var connectionString = appSettingsJson["DefaultConnection"];
 
                 SqlConnection _conn = new SqlConnection(connectionString);
                 int usr_count = await _conn.QueryFirstOrDefaultAsync<int>("SELECT COUNT(*) FROM Users WHERE username=@usr_name",
-                                                    new{usr_name = registerModel.username});
+                                                    new{usr_name = registerModel.username}).ConfigureAwait(false);
                 if (usr_count == 0)
                 {
-                        /*
-                        _userContext.Users.Add(new User
-                        {
-                            username = registerModel.username,
-                            userpassword = registerModel.userpassword,
-                            KIDro = registerModel.KIDro,
-                            Role  = registerModel.Role,
-                            reportDt = new DateTime(registerModel.reportDt.Year,registerModel.reportDt.Month,1) 
-                        });
-                        await _userContext.SaveChangesAsync().ConfigureAwait(false);
-                        await Authenticate(registerModel.username).ConfigureAwait(false);
-                        */
                         var param = new
                         {
                             UsrFN = registerModel.UserFullname,
@@ -235,41 +222,41 @@ namespace AuthSample.Controllers
 
         private async Task Authenticate(string username)
         {
-            //var U = await _userContext.Users
-            //        .FirstOrDefaultAsync(u => u.username == username).ConfigureAwait(false);
-
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
 
-            SqlConnection _conn = new SqlConnection(connectionString);
-            User usr = _conn.QueryFirst<User>("SELECT * FROM Users WHERE username=@usr_name",new{usr_name = username});
-            string usrFullName;
-            string roleP;
-            string KIDro;
-            DateTime rDt; 
-
-            if(usr.Role!=null) roleP = usr.Role; else roleP ="";
-            if(usr.KIDro!=null) KIDro =usr.KIDro; else KIDro = "";
-            if(usr.reportDt!=null) rDt = usr.reportDt; else rDt = new DateTime(DateTime.Today.Year,DateTime.Today.Month-1,1);
-            if(usr.UserFullname!=null) usrFullName = usr.UserFullname; else usrFullName = "";
-
-            int Y = rDt.Year;
-            int M = rDt.Month;
-            var claims = new List<Claim>
+            using(SqlConnection _conn = new SqlConnection(connectionString))
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, username),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, roleP),
-                new Claim("KIDro", KIDro),
-                new Claim("Role", roleP),
-                new Claim("reportDtYear", Y.ToString()),
-                new Claim("reportDtMonth", M.ToString()),
-                new Claim("UserFullName", usrFullName)
-            };
+                User usr = _conn.QueryFirstOrDefault<User>("SELECT * FROM Users WHERE username=@usr_name",
+                                                            new{usr_name = username});
+                string usrFullName;
+                string roleP;
+                string KIDro;
+                DateTime rDt; 
 
-            var id = new ClaimsIdentity(claims, "ApplicationCookie",
-                ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+                if(usr.Role!=null) roleP = usr.Role; else roleP ="";
+                if(usr.KIDro!=null) KIDro =usr.KIDro; else KIDro = "";
+                if(usr.reportDt!=null) rDt = usr.reportDt; else rDt = new DateTime(DateTime.Today.Year,DateTime.Today.Month-1,1);
+                if(usr.UserFullname!=null) usrFullName = usr.UserFullname; else usrFullName = "";
 
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id)).ConfigureAwait(false);
+                int Y = rDt.Year;
+                int M = rDt.Month;
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimsIdentity.DefaultNameClaimType, username),
+                    new Claim(ClaimsIdentity.DefaultRoleClaimType, roleP),
+                    new Claim("KIDro", KIDro),
+                    new Claim("Role", roleP),
+                    new Claim("reportDtYear", Y.ToString()),
+                    new Claim("reportDtMonth", M.ToString()),
+                    new Claim("UserFullName", usrFullName)
+                };
+
+                var id = new ClaimsIdentity(claims, "ApplicationCookie",
+                    ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id)).ConfigureAwait(false);
+                }
         }
      }
 }
