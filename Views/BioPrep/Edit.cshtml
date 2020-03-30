@@ -27,19 +27,15 @@
                 @Html.DropDownList("EdIzm", ViewBag.EdIzmList as SelectList, new { @class = "form-control" })
                 <span asp-validation-for="EdIzm" class="text-danger"></span>
             </div>
-            
-            
-            <div class="form-group">
+
+            <div  class="form-group">
                 <label asp-for="Bylo" class="control-label"></label>
-                <label class="control-label">
-                    <font color="red">
-                        @Html.DisplayFor(model => model.ByloPredMonth)
-                    </font> ) 
-                </label>
-                
-                <input asp-for="Bylo" class="form-control" type="number" min="0" step="1" />
+                <!--<input asp-for="Bylo" class="form-control" type="number" min="0" step="1" />-->
+                @Html.DisplayFor(model => model.Bylo)
                 <span asp-validation-for="Bylo" class="text-danger"></span>
             </div>
+
+
             <div class="form-group">
                 <label asp-for="PostupiloVsego" class="control-label"></label>
                 <input asp-for="PostupiloVsego" class="form-control" type="number" min="0" step="1" />

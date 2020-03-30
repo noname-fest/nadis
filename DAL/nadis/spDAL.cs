@@ -282,9 +282,8 @@ namespace nadis.DAL.nadis
             {
                 string t = _conn.QueryFirstOrDefault<string>(
                         "SELECT TOP 1 Testname FROM [d2TESTS] WHERE KID=@tt", new { tt = tst});
-                return t.Trim();
+                if(t==null) return ""; else return t.Trim();
             }
         }        
-
     }
 }
