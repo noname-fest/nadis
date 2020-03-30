@@ -24,26 +24,28 @@ namespace nadis.DAL.nadis
                                                   eDt = new DateTime(DateTime.Today.Year, DateTime.Today.Month,1) 
                                                 });
             _conn.Close();
+            /*
             string q = "SELECT TOP 1 (Bylo+PostupiloVsego+PostupiloRazn-IzrashodVsego-IzrashodDrugoe) "
                         +"as ByloPredMonth FROM BioPrep WHERE (" +
                         "KIDro=@KIDro and VetPrep=@VetPrep and EdIzm=@EdIzm and "+
                         "repMO < @dt) ORDER BY repMO DESC";
                         //"MONTH(repMO)=@M and YEAR(repMO)=@Y )";
+                        */
             foreach (var tmp in tmpList)
             {
                 tmp.VetPrepDisplay = spDAL.VetPrepName(tmp.VetPrep);
                 tmp.EdIzmDisplay = spDAL.EdIzmName(tmp.EdIzm);
+                /*
                 var param = new 
                     {
                         KIDro = tmp.KIDro,
                         VetPrep = tmp.VetPrep,
                         EdIzm = tmp.EdIzm,
                         dt = tmp.RepMO
-                        //M = tmp.RepMO.AddMonths(-1).Month,
-                        //Y = tmp.RepMO.AddMonths(-1).Year
                     };
-                tmp.ByloPredMonth = _conn.QueryFirstOrDefault<long?>(q,param);
-                if(tmp.ByloPredMonth == null) tmp.ByloPredMonth=0;
+                tmp.Bylo = _conn.QueryFirstOrDefault<long?>(q,param);
+                if(tmp.Bylo == null) tmp.Bylo=0;
+                */
             };
             return tmpList;
         }
@@ -67,14 +69,18 @@ namespace nadis.DAL.nadis
                     KIDro = tmp.KIDro,
                     VetPrep = tmp.VetPrep,
                     EdIzm = tmp.EdIzm,
-                    dt = tmp.RepMO
+                    dt = tmp.RepMO,
                 };
-            tmp.ByloPredMonth = _conn.QueryFirstOrDefault<long?>(q,param);
-            if(tmp.ByloPredMonth == null) tmp.ByloPredMonth=0;
-            
+            tmp.Bylo = _conn.QueryFirstOrDefault<long?>(q,param);
+            if(tmp.Bylo == null) tmp.Bylo=0;
             _conn.Close();
+
                 tmp.VetPrepDisplay = spDAL.VetPrepName(tmp.VetPrep);
                 tmp.EdIzmDisplay = spDAL.EdIzmName(tmp.EdIzm);
+                tmp.Ostatok_za_mesyac = tmp.Bylo + tmp.PostupiloVsego +
+                                        tmp.PostupiloRazn - 
+                                        tmp.IzrashodVsego-
+                                        tmp.IzrashodDrugoe;
 
             return tmp;
         }
@@ -85,10 +91,24 @@ namespace nadis.DAL.nadis
             var connectionString = appSettingsJson["DefaultConnection"];
 
             SqlConnection _conn = new SqlConnection(connectionString);
+            string q = "SELECT TOP 1 (Bylo+PostupiloVsego+PostupiloRazn-IzrashodVsego-IzrashodDrugoe) "
+                        +"as ByloPredMonth FROM BioPrep WHERE (" +
+                        "KIDro=@KIDro and VetPrep=@VetPrep and EdIzm=@EdIzm and "+
+                        "repMO < @dt) ORDER BY repMO DESC";
+            var param = new 
+                {
+                    KIDro = tmp.KIDro,
+                    VetPrep = tmp.VetPrep,
+                    EdIzm = tmp.EdIzm,
+                    dt = tmp.RepMO,
+                };
+            tmp.Bylo = _conn.QueryFirstOrDefault<long?>(q,param);
+            if(tmp.Bylo == null) tmp.Bylo=0;
+
             _conn.Execute("INSERT INTO BioPrep (KIDro, repMO,VetPrep,EdIzm,Bylo,"
-                + "PostupiloVsego,PostupiloRazn,IzrashodVsego,IzrashodDrugoe) VALUES (" +
+                + "PostupiloVsego,PostupiloRazn,IzrashodVsego,IzrashodDrugoe,Ostatok_za_mesyac) VALUES (" +
                 "@KIDroP,@repMOP,@VetPrepP,@EdIzmP,@ByloP,"
-                + "@PostupiloVsegoP,@PostupiloRaznP,@IzrashodVsegoP,@IzrashodDrugoeP)",
+                + "@PostupiloVsegoP,@PostupiloRaznP,@IzrashodVsegoP,@IzrashodDrugoeP,@Ostatok_za_mesyac)",
                 new
                 {
                     KIDroP = tmp.KIDro,
@@ -99,7 +119,11 @@ namespace nadis.DAL.nadis
                     PostupiloVsegoP = tmp.PostupiloVsego,
                     PostupiloRaznP = tmp.PostupiloRazn,
                     IzrashodDrugoeP = tmp.IzrashodDrugoe,
-                    IzrashodVsegoP = tmp.IzrashodVsego
+                    IzrashodVsegoP = tmp.IzrashodVsego,
+                    Ostatok_za_mesyac = tmp.Bylo + tmp.PostupiloVsego +
+                                        tmp.PostupiloRazn - 
+                                        tmp.IzrashodVsego-
+                                        tmp.IzrashodDrugoe
                 }
                 );
             _conn.Close();
@@ -112,6 +136,22 @@ namespace nadis.DAL.nadis
             var connectionString = appSettingsJson["DefaultConnection"];
 
             SqlConnection _conn = new SqlConnection(connectionString);
+            /*
+            string qb = "SELECT TOP 1 (Bylo+PostupiloVsego+PostupiloRazn-IzrashodVsego-IzrashodDrugoe) "
+                        +"as ByloPredMonth FROM BioPrep WHERE (" +
+                        "KIDro=@KIDro and VetPrep=@VetPrep and EdIzm=@EdIzm and "+
+                        "repMO < @dt) ORDER BY repMO DESC";
+            var paramb = new 
+                {
+                    KIDro = tmp.KIDro,
+                    VetPrep = tmp.VetPrep,
+                    EdIzm = tmp.EdIzm,
+                    dt = tmp.RepMO,
+                };
+            long? bb = _conn.QueryFirstOrDefault(qb,paramb);
+            if(bb==null)bb=0;
+            */
+
             string q = 
                 "UPDATE BioPrep SET KIDro=@KIDroP," +
                 "repMO=@repMOP," +

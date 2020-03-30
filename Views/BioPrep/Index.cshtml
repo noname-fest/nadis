@@ -51,9 +51,10 @@
                     @Html.DisplayFor(modelItem => tmp.VetPrepDisplay)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => tmp.EdIzmDisplay)
+                   @Html.DisplayFor(modelItem => tmp.EdIzmDisplay)
                 </td>
                 <td>
+                    <!--
                     @if(tmp.Bylo!=tmp.ByloPredMonth){
                         @Html.DisplayFor(modelItem => tmp.Bylo)
                         <font color='red'>
@@ -62,6 +63,8 @@
                     } else {
                         @Html.DisplayFor(modelItem => tmp.Bylo)
                     }
+                    -->
+                    @Html.DisplayFor(modelItem => tmp.Bylo)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => tmp.PostupiloVsego)

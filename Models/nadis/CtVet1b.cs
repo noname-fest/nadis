@@ -49,19 +49,19 @@ namespace nadis.Models
         //public int? pos_tot { get; set; } fage1_pos + fage2_pos
         //public int? test_tot { get; set; } femage_1 + femage_2
 
-        [Display(Name = "Молодняк")]
+        [Display(Name = "Мол.")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public int? femage_1 { get; set; } = 0;
 
-        [Display(Name = "Взрослые")]
+        [Display(Name = "Взр.")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public int? femage_2 { get; set; } = 0;
 
-        [Display(Name = "Молодняк")]
+        [Display(Name = "Мол.")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public int? fage1_pos { get; set; } = 0;
 
-        [Display(Name = "Взрослые")]
+        [Display(Name = "Взр.")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public int? fage2_pos { get; set; } = 0;
 

@@ -11,7 +11,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ID" />
             <input type="hidden" asp-for="KIDro" />
-            <!--<input type="hidden" asp-for="Bylo"/>-->
+            <input type="hidden" asp-for="Bylo"/>
             <div class="form-group">
                 <label asp-for="RepMO" class="control-label"></label>
                 @Html.DropDownList("RepMO", ViewBag.RepMoList as SelectList, new { @class = "form-control" })
@@ -34,7 +34,6 @@
                 @Html.DisplayFor(model => model.Bylo)
                 <span asp-validation-for="Bylo" class="text-danger"></span>
             </div>
-
 
             <div class="form-group">
                 <label asp-for="PostupiloVsego" class="control-label"></label>

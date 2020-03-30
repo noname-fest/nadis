@@ -84,8 +84,8 @@ namespace nadis.Controllers
             ViewBag.EdIzmList = spDAL.EdIzmList();
 
             ViewBag.Page = "BioPrep";
-            if(tmp.ByloPredMonth!=tmp.Bylo)
-                TempData["EM"] = "Остаток на нач. месяца не совпадает с введенными ранее данными";
+            //if(tmp.ByloPredMonth!=tmp.Bylo)
+            //    TempData["EM"] = "Остаток на нач. месяца не совпадает с введенными ранее данными";
             return View(tmp);
         }
 

@@ -9,6 +9,7 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="KIDro" />
+            <input type="hidden" asp-for="Bylo">
             <div class="form-group">
                 <label asp-for="KIDro" class="control-label"></label>
                 <span asp-validation-for="KIDro" class="text-danger"></span>
@@ -28,12 +29,13 @@
                 @Html.DropDownList("EdIzm", ViewBag.EdIzmList as SelectList, new { @class = "form-control" })
                 <span asp-validation-for="EdIzm" class="text-danger"></span>
             </div>
-
+            <!--
             <div class="form-group">
                 <label asp-for="Bylo" class="control-label"></label>
                 <input asp-for="Bylo" class="form-control" type="number" min="0" step="1" />
                 <span asp-validation-for="Bylo" class="text-danger"></span>
             </div>
+            -->
             <div class="form-group">
                 <label asp-for="PostupiloVsego" class="control-label"></label>
                 <input asp-for="PostupiloVsego" class="form-control" type="number" min="0" step="1" />
