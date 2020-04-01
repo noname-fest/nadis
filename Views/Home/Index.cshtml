@@ -3,11 +3,11 @@
 }
 
     <div class="text-center">
-        <h1 class="display-4">Welcome @ViewData["UserFullName"]</h1>
-        <div>@ViewData["UserName"]</div>
-        <div>@ViewData["KIDro"]</div>
-        <div>@ViewData["Role"]</div>
-        <div>@ViewData["reportDt"]</div>
+        <h1 class="display-4">Пользователь : @ViewData["UserFullName"]</h1>
+        <div>Логин в системе : @ViewData["UserName"]</div>
+        <div>Код района : @ViewData["KIDro"]</div>
+        <div>Доступ : @ViewData["Role"]</div>
+        <div>Периуд отчета : @ViewData["reportDt"]</div>
 
         @if (@ViewData["Role"].ToString().Trim() == "Admin")
             {

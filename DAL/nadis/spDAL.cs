@@ -15,6 +15,33 @@ namespace nadis.DAL.nadis
 
     public static class spDAL
     {
+        //KIDtyp
+        public static string KIDtypName(string KIDtyp)
+        {
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+            using (SqlConnection _conn = new SqlConnection(connectionString))
+            {
+                string rez = _conn.QueryFirst<string>(
+                        "SELECT TOP 1 [Sanitary] FROM [d3SANITARY] WHERE [KID]=@val", new { val = KIDtyp});
+                return rez.Trim();
+            }
+        }
+
+        public static SelectList KIDtypList()
+        {
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+            using SqlConnection _conn = new SqlConnection(connectionString);
+            var tmp = _conn.Query<sp_values>("SELECT KID as ID, [Sanitary] as Text FROM [d3SANITARY]");
+            List<sp_values> tL = new List<sp_values>();
+            foreach (var tt in tmp)
+            {
+                tL.Add(tt);
+            }
+            return new SelectList(tL, "ID", "Text");
+        }
+
         public static SelectList KIDroList()
         {
             var appSettingsJson = AppSettingJSON.GetAppSettings();
@@ -152,7 +179,7 @@ namespace nadis.DAL.nadis
                 sp_values tmp_sp = new sp_values
                 {
                     ID = dtB.ToString().Trim(),
-                    Text = dtB.ToString("MMMyyyy").Trim()
+                    Text = dtB.ToString("MMMyyyy",new CultureInfo("ru-ru")).Trim()
                 };
                 dtB = dtB.AddMonths(1);
                 tmpList.Add(tmp_sp);
