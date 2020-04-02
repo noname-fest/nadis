@@ -13,7 +13,7 @@ namespace nadis.DAL
 {
     public static class CtVet2DAL
     {
-       public static List<sp_values> __RepPerList(int YY, int MM)
+       static List<sp_values> __RepPerList(int YY, int MM)
         {
 
             List<sp_values> tmpList = new List<sp_values>();
