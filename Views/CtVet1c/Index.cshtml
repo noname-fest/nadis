@@ -2,6 +2,11 @@
 @{
     ViewData["Title"] = "BioPrep";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string[] mmm = new string[]{"янв","фев","мар",
+                    "апр","май","июн",
+                    "июл","авг","сен",
+                    "окт","ноя","дек"
+            };
 }
 
 <font color="red" size=18>@TempData["EM"]</font>
@@ -55,7 +60,8 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => tmp.RepMO)
+                   <!-- @Html.DisplayFor(modelItem => tmp.RepMO) -->
+                    @(mmm[tmp.RepMO.Month-1]+tmp.RepMO.Year)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => tmp.KIDdivDisplay)
