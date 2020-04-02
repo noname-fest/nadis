@@ -9,8 +9,45 @@ using System.Globalization;
 
 namespace nadis.DAL.nadis
 {
+    
     public static class spDAL
     {
+        static string[] mmm = 
+        new string[]{"янв","фев","мар",
+                    "апр","май","июн",
+                    "июл","авг","сен",
+                    "окт","ноя","дек"
+            };
+
+        //d3DISTYPES
+        public static string KIDdtpName(string KIDtyp)
+        {
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+            using (SqlConnection _conn = new SqlConnection(connectionString))
+            {
+                string rez = _conn.QueryFirst<string>(
+                        "SELECT TOP 1 [DisType] FROM [d3DISTYPES] WHERE [KID]=@val", new { val = KIDtyp});
+                if(rez==null)return "";else return rez.Trim();
+            }
+        }
+        public static SelectList KIDdtpList()
+        {
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+            using SqlConnection _conn = new SqlConnection(connectionString);
+            var tmp = _conn.Query<sp_values>("SELECT KID as ID, [DisType] as Text FROM [d3DISTYPES]");
+            List<sp_values> tL = new List<sp_values>();
+            foreach (var tt in tmp)
+            {
+                tL.Add(tt);
+            }
+            return new SelectList(tL, "ID", "Text");
+        }
+
+
+
+
         //KIDtyp
         public static string KIDtypName(string KIDtyp)
         {
@@ -20,7 +57,7 @@ namespace nadis.DAL.nadis
             {
                 string rez = _conn.QueryFirst<string>(
                         "SELECT TOP 1 [Sanitary] FROM [d3SANITARY] WHERE [KID]=@val", new { val = KIDtyp});
-                return rez.Trim();
+                if(rez==null)return "";else return rez.Trim();
             }
         }
 
@@ -175,7 +212,7 @@ namespace nadis.DAL.nadis
                 sp_values tmp_sp = new sp_values
                 {
                     ID = dtB.ToString().Trim(),
-                    Text = dtB.ToString("MMMyyyy",new CultureInfo("ru-ru")).Trim()
+                    Text = mmm[dtB.Month-1] + dtB.Year.ToString()
                 };
                 dtB = dtB.AddMonths(1);
                 tmpList.Add(tmp_sp);
@@ -254,6 +291,7 @@ namespace nadis.DAL.nadis
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
             List<sp_values> tmpList = new List<sp_values>();
+            tmpList.Add(new sp_values{ ID="",Text=""});
             using (SqlConnection _conn = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand("SELECT KID, Disease FROM [d2DISEASES]", _conn);
