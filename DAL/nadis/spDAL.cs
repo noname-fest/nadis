@@ -75,7 +75,7 @@ namespace nadis.DAL.nadis
             {
                 string rez = _conn.QueryFirst<string>(
                         "SELECT TOP 1 [Measure] FROM [d3PREVMEASURES] WHERE [KID]=@val", new { val = KIDtrt});
-                return rez.Trim();
+                if(rez==null)return "";else return rez.Trim();
             }
         }
 
@@ -85,9 +85,9 @@ namespace nadis.DAL.nadis
             var connectionString = appSettingsJson["DefaultConnection"];
             using (SqlConnection _conn = new SqlConnection(connectionString))
             {
-                string rez = _conn.QueryFirst<string>(
+                string rez = _conn.QueryFirstOrDefault<string>(
                         "SELECT TOP 1 [Disease] FROM [d2DISEASES] WHERE [KID]=@val", new { val = KIDdis});
-                return rez.Trim();
+                if(rez==null)return "";else return rez.Trim();
             }
         }
 
@@ -100,7 +100,7 @@ namespace nadis.DAL.nadis
             {
                 string rez = _conn.QueryFirst<string>(
                         "SELECT TOP 1 [Socunit] FROM [73GEO3] WHERE [gAID]=@val", new { val = KIDdiv});
-                return rez.Replace("АИЛЬНЫЙ ОКРУГ","").Trim();
+                if(rez==null)return "";else return rez.Replace("АИЛЬНЫЙ ОКРУГ","").Trim();
             }
         }
         
@@ -112,7 +112,7 @@ namespace nadis.DAL.nadis
             {
                 string rez = _conn.QueryFirst<string>(
                         "SELECT TOP 1 [Species] FROM [d2SPECIES] WHERE KID=@val", new { val = KIDspc});
-                return rez.Trim();
+                if(rez==null)return "";else return rez.Trim();
             }
         }
 
@@ -149,7 +149,7 @@ namespace nadis.DAL.nadis
             {
                 string VetUnit = _conn.QueryFirst<string>(
                         "SELECT TOP 1 PrepType FROM [VetPrep] WHERE KID=@VetPP", new { VetPP = KIDVetPrep});
-                return VetUnit.Trim();
+                if(VetUnit==null)return "";else return VetUnit.Trim();
             }
         }
 

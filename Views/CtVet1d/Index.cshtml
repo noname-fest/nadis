@@ -1,0 +1,75 @@
+@model IEnumerable<nadis.Models.CtVet1d>
+@{
+    ViewData["Title"] = "CtVet1d";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<font color="red" size=14>@TempData["EM"]</font>
+<p>
+    <a asp-action="Create">Создать новый</a>
+</p>
+
+<table class="table table-striped table-responsive-sm">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.repMO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KIDdiv)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dtObs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KIDdis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KIDtyp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.area)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.m2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.measure)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tmp in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.repMO)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.KIDdivDisplay)
+                </td>
+                <td>
+                   @Html.DisplayFor(modelItem => tmp.dtObs)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.KIDdisDisplay)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.KIDtypDisplay)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.area)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.m2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.measure)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@tmp.ID">Редак.</a>
+                    <a asp-action="Delete" asp-route-id="@tmp.ID">Удал.</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

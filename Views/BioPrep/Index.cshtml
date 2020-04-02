@@ -82,7 +82,8 @@
                     @Html.DisplayFor(modelItem => tmp.Ostatok_za_mesyac)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@tmp.ID">Редак.</a>&nbsp;&nbsp;<a asp-action="Delete" asp-route-id="@tmp.ID">Удал.</a>
+                    <a asp-action="Edit" asp-route-id="@tmp.ID">Редак.</a>
+                    <a asp-action="Delete" asp-route-id="@tmp.ID">Удал.</a>
                 </td>
             </tr>
         }

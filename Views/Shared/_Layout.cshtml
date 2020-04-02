@@ -62,6 +62,16 @@
                             }
                         </li>
                         <li class="nav-item">
+                             @if(@ViewBag.Page=="CtVet1d"){
+                                <b>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="CtVet1d" asp-action="Index">
+                                    <font color="blue">Санитария</font></a>
+                                </b>
+                            } else{
+                                <a class="nav-link text-dark" asp-area="" asp-controller="CtVet1d" asp-action="Index">Санитария</a>
+                            }                       
+                        </li>
+                        <li class="nav-item">
                              @if(@ViewBag.Page=="BioPrep"){
                                 <b>
                                 <a class="nav-link text-dark" asp-area="" asp-controller="BioPrep" asp-action="Index">
