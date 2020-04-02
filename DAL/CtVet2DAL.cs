@@ -21,11 +21,6 @@ namespace nadis.DAL
             DateTime dtE =  DateTime.Today;
             while(dtB <= dtE)
             {
-                //sp_values tmp_sp = new sp_values
-                //{
-                //    ID = dtB.ToString().Trim(),
-                //    Text = mmm[dtB.Month-1] + dtB.Year.ToString()
-                //};
                 sp_values tmp_sp = new sp_values();
                 if (dtB.Month > 6) tmp_sp.ID = dtB.Year.ToString() + "/2";
                 else tmp_sp.ID = dtB.Year.ToString() + "/1";
@@ -49,14 +44,11 @@ namespace nadis.DAL
             using(SqlConnection _conn = new SqlConnection(connectionString))
             {
                 string q = "SELECT * FROM ctVet2 WHERE "+
-                        "(KIDro=@KIDroP and repMO between @bDt and @eDt) ORDER BY repMO DESC";
+                        "(KIDro=@KIDroP and LEFT(repPer,4)=@bDt) ORDER BY repPer DESC";
                 var p = new 
                     {
                         KIDroP = KIDro, 
-                        bDt = new DateTime(Y,M,1),
-                        eDt = new DateTime(DateTime.Today.Year,
-                                            DateTime.Today.Month+1,
-                                            1) 
+                        bDt = Y
                     };
                 IEnumerable<CtVet2> tmpList = _conn.Query<CtVet2>(q,p);
                 foreach(var tmp in tmpList)
@@ -124,6 +116,70 @@ namespace nadis.DAL
                 };
                 _conn.Execute(q,param);
                 _conn.Close();
+            }
+        }
+
+
+        public static void Update(CtVet2 tmp)
+        {
+            if (tmp is null) { return; }
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+
+            using(SqlConnection _conn = new SqlConnection(connectionString))
+            {
+                string q = "UPDATE ctVET2 SET "+ 
+                            "KIDro=@KIDro,"+
+                            "repPer=@repPer,"+
+                            "KIDdiv=@KIDdiv,"+
+                            "KIDspc=@KIDspc,"+
+                            "KIDdtp=@KIDdtp,"+
+                            "dtObs=@dtObs,"+
+                            "nA=@nA,"+
+                            "nD=@nD,"+
+                            "Notes=@Notes  "+
+                            "WHERE ID=@ID";
+                var param = new
+                {
+                    KIDro = tmp.KIDro,
+                    repPer = tmp.repPer,
+                    KIDdiv = tmp.KIDdiv,
+                    KIDspc = tmp.KIDspc,
+                    KIDdtp = tmp.KIDdtp,
+                    dtObs = tmp.dtObs,
+                    nA = tmp.nA,
+                    nD = tmp.nD,
+                    Notes = tmp.Notes,
+                    ID=tmp.ID
+                };
+                _conn.Execute(q,param);
+                _conn.Close();
+            }
+        }
+
+        public static bool IsUniqueRecord(CtVet2 tmp)
+        {
+            if (tmp == null) return false;
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+
+            using(SqlConnection _conn = new SqlConnection(connectionString))
+            {
+                string q = "SELECT COUNT(ID) as kolvo FROM ctVET2 "+
+	                       "WHERE (repPer = @repPer and KIDdiv=@KIDDiv "+
+                           "and KIDspc=@KIDspc and KIDdtp=@KIDdtp and "+
+                           "KIDro=@KIDro and dtObs=@dtObs)";
+                var param = new 
+                {
+                    KIDro = tmp.KIDro,
+                    repPer = tmp.repPer,
+                    KIDdiv = tmp.KIDdiv,
+                    KIDspc = tmp.KIDspc,
+                    KIDdtp = tmp.KIDdtp,
+                    dtObs = tmp.dtObs,
+                };
+                int count = _conn.QueryFirstOrDefault<int>(q,param);
+                if (count == 0) { return true; } else { return false; }
             }
         }
 

@@ -19,7 +19,7 @@ namespace nadis.Models
         [StringLength(7)]
         public string KIDro { get; set; }     //code пользователя RD02525
 
-        [Display(Name = "     Айыл Аймак     ")]
+        [Display(Name = "Айыл Аймак")]
         public string KIDdivDisplay { get; set; } = "";
         [StringLength(10)]
         //public string KIDdiv { get; set; }  //raion a/a 
@@ -35,7 +35,7 @@ namespace nadis.Models
         [StringLength(4)]
         public string KIDdis { get; set; } = ""; // bolezn
 
-        [Display(Name="Дата наблюдения")]
+        [Display(Name="Дата наблюд.")]
         [Column(TypeName = "date")]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}")]
         public DateTime dtObs { get; set; } = DateTime.Today;

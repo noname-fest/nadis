@@ -63,7 +63,7 @@
                    <!-- @Html.DisplayFor(modelItem => tmp.RepMO) -->
                     @(mmm[tmp.RepMO.Month-1]+tmp.RepMO.Year)
                 </td>
-                <td>
+                <td class="col-2.6">
                     @Html.DisplayFor(modelItem => tmp.KIDdivDisplay)
                 </td>
                 <td>
@@ -72,10 +72,10 @@
                 <td>
                     @Html.DisplayFor(modelItem => tmp.KIDspcDisplay)
                 </td>
-                <td>
+                <td class="col-1.8">
                     @Html.DisplayFor(modelItem => tmp.KIDdisDisplay)
                 </td>
-                <td>
+                <td class="col-2">
                     @Html.DisplayFor(modelItem => tmp.KIDtrtDisplay)
                 </td>
                 <td>
@@ -94,8 +94,7 @@
                     @(tmp.tmalage1 + tmp.tmalage2 + tmp.tfemage1 + tmp.tfemage2)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@tmp.ID">Редак.</a>
-                    <a asp-action="Delete" asp-route-id="@tmp.ID">Удал.</a>
+                    <a asp-action="Edit" asp-route-id="@tmp.ID">Редак.</a><a asp-action="Delete" asp-route-id="@tmp.ID">Удал.</a>
                 </td>
             </tr>
         }

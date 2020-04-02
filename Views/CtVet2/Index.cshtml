@@ -1,0 +1,75 @@
+@model IEnumerable<nadis.Models.CtVet2>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<font color="red" size=14>@TempData["EM"]</font>
+<p>
+    <a asp-action="Create">Создать новый</a>
+</p>
+
+<table class="table table-sm table-striped table-responsive-sm table-bordered">
+     <thead align="center">
+         <tr>
+             <th>
+                @Html.DisplayNameFor(model => model.repPer)
+             </th>
+             <th>
+                 @Html.DisplayNameFor(model => model.KIDdiv)
+             </th>
+             <th>
+                 @Html.DisplayNameFor(model => model.dtObs)
+             </th>
+             <th>
+                 @Html.DisplayNameFor(model => model.KIDspc)
+             </th>
+             <th>
+                 @Html.DisplayNameFor(model => model.KIDdtp)
+             </th>
+             <th>
+                 @Html.DisplayNameFor(model => model.nA)
+             </th>
+             <th>
+                 @Html.DisplayNameFor(model => model.nD)
+             </th>
+             <th>
+                 @Html.DisplayNameFor(model => model.Notes)
+             </th>
+         </tr>
+     </thead>
+    <tbody>
+        @foreach (var tmp in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.repPer)
+                </td>
+                <td class="col-3">
+                    @Html.DisplayFor(modelItem => tmp.KIDdivDisplay)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.dtObs)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.KIDspcDisplay)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.KIDdtpDisplay)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.nA)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.nD)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.Notes)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@tmp.ID">Редак.</a><a asp-action="Delete" asp-route-id="@tmp.ID">Удал.</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

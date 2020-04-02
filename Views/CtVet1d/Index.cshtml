@@ -50,7 +50,7 @@
                     <!-- @Html.DisplayFor(modelItem => tmp.repMO) -->
                     @(mmm[tmp.repMO.Month-1]+tmp.repMO.Year)
                 </td>
-                <td>
+                <td class="col-2.7">
                     @Html.DisplayFor(modelItem => tmp.KIDdivDisplay)
                 </td>
                 <td>
@@ -72,8 +72,7 @@
                     @Html.DisplayFor(modelItem => tmp.measure)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@tmp.ID">Редак.</a>
-                    <a asp-action="Delete" asp-route-id="@tmp.ID">Удал.</a>
+                    <a asp-action="Edit" asp-route-id="@tmp.ID">Редак.</a><a asp-action="Delete" asp-route-id="@tmp.ID">Удал.</a>
                 </td>
             </tr>
         }

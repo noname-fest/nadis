@@ -11,7 +11,6 @@ namespace nadis.Models
         public Guid ID { get; set; }
 
         [Display(Name = "Периуд")]
-        [DisplayFormat(DataFormatString = "{0:MMMyyyy}")]
         public DateTime repPer { get; set; } = DateTime.Today;//periud dannix
 
         //[ScaffoldColumn(false)]
