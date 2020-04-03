@@ -11,7 +11,7 @@ namespace nadis.Models
         public Guid ID { get; set; }
 
         [Display(Name = "Периуд")]
-        public DateTime repPer { get; set; } = DateTime.Today;//periud dannix
+        public string repPer { get; set; } = "";//periud dannix
 
         //[ScaffoldColumn(false)]
         [StringLength(7)]

@@ -1,0 +1,51 @@
+@model nadis.Models.CtVet2
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Удаление</h1>
+<div>
+    <h4>Information</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.repPer)
+        </dt>
+                <dd>@Html.DisplayFor(model => model.repPer)</dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.KIDdiv)
+        </dt>
+                <dd>@Html.DisplayFor(model => model.KIDdivDisplay)</dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.dtObs)
+        </dt>
+                <dd>@Html.DisplayFor(model => model.dtObs)</dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.KIDspc)
+        </dt>
+                <dd>@Html.DisplayFor(model => model.KIDspcDisplay)</dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.KIDdtp)
+        </dt>
+                <dd>@Html.DisplayFor(model => model.KIDdtpDisplay)</dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.nA)
+        </dt>
+                <dd>@Html.DisplayFor(model => model.nA)</dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.nD)
+        </dt>
+                <dd>@Html.DisplayFor(model => model.nD)</dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+                <dd>@Html.DisplayFor(model => model.Notes)</dd>
+    </dl>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ID" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-action="Index">К списку</a>
+    </form>
+</div>
+

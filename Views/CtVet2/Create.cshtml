@@ -1,0 +1,65 @@
+@model nadis.Models.CtVet2
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <input type="hidden" asp-for="KIDro" />
+            <div class="form-group">
+                <label asp-for="repPer" class="control-label"></label>
+                @Html.DropDownList("repPer", ViewBag.repPerList as SelectList, new { @class = "form-control" })
+                <span asp-validation-for="repPer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KIDdiv" class="control-label"></label>
+                @Html.DropDownList("KIDdiv", ViewBag.KIDdivList as SelectList, new { @class = "form-control" })
+                <span asp-validation-for="KIDdiv" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="dtObs" class="control-label"></label>
+                <input asp-for="dtObs" class="form-control" type="date"/>
+                <span asp-validation-for="dtObs" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KIDspc" class="control-label"></label>
+                @Html.DropDownList("KIDspc", ViewBag.KIDspcList as SelectList, new { @class = "form-control" })
+                <span asp-validation-for="KIDspc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KIDdtp" class="control-label"></label>
+                @Html.DropDownList("KIDdtp", ViewBag.KIDdtpList as SelectList, new { @class = "form-control" })
+                <span asp-validation-for="KIDdtp" class="text-danger"></span>
+            </div>
+                <div class="form-group">
+                    <label asp-for="nA" class="control-label"></label>
+                    <input asp-for="nA" class="form-control"   type="text"/>
+                    <span asp-validation-for="nA" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="nD" class="control-label"></label>
+                    <input asp-for="nD" class="form-control"   type="text"/>
+                    <span asp-validation-for="nD" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Notes" class="control-label"></label>
+                    <input asp-for="Notes" class="form-control"  type="text"/>
+                    <span asp-validation-for="Notes" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Сохранить" asp-route-id="@Model.ID" class="btn btn-success" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <div>
+        <a asp-action="Index">Назад к списку</a>
+    </div>
+    @*
+        @section Script{
+            @{ await Html.RenderPartialAsync("_ValudationScriptPartial");}
+        }
+    *@

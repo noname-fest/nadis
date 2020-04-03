@@ -23,7 +23,7 @@ namespace nadis.DAL
             {
                 sp_values tmp_sp = new sp_values();
                 if (dtB.Month > 6) tmp_sp.ID = dtB.Year.ToString() + "/2";
-                else tmp_sp.ID = dtB.Year.ToString() + "/1";
+                else tmp_sp.ID = dtB.Year.ToString() + "/1";   
                 tmp_sp.Text = tmp_sp.ID;
                 dtB = dtB.AddMonths(6);
                 tmpList.Add(tmp_sp);
@@ -41,14 +41,21 @@ namespace nadis.DAL
         {
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             var connectionString = appSettingsJson["DefaultConnection"];
+            string bstr;
+            if (M > 6) bstr = Y.ToString() + "/2";
+            else bstr = Y.ToString() + "/1";   
+
             using(SqlConnection _conn = new SqlConnection(connectionString))
             {
                 string q = "SELECT * FROM ctVet2 WHERE "+
-                        "(KIDro=@KIDroP and LEFT(repPer,4)=@bDt) ORDER BY repPer DESC";
+                            "(KIDro=@KIDroP and repPer >= @dd) ORDER BY repPer DESC";
+                        //"(KIDro=@KIDroP and LEFT(repPer,4)<=@bDt and LEFT(repPer,4)>=@LY) ORDER BY repPer DESC";
                 var p = new 
                     {
                         KIDroP = KIDro, 
-                        bDt = Y
+                        //bDt = Y+1,
+                        //LY = Y-1
+                        dd = bstr
                     };
                 IEnumerable<CtVet2> tmpList = _conn.Query<CtVet2>(q,p);
                 foreach(var tmp in tmpList)
@@ -56,6 +63,8 @@ namespace nadis.DAL
                         tmp.KIDdivDisplay = spDAL.KIDdivName(tmp.KIDdiv);
                         tmp.KIDdtpDisplay = spDAL.KIDdtpName(tmp.KIDdtp);
                         tmp.KIDspcDisplay = spDAL.KIDspcName(tmp.KIDspc);
+
+                        tmp.repPer = tmp.repPer.Trim();
                     };
                 return tmpList;
             }
@@ -71,7 +80,8 @@ namespace nadis.DAL
                                 new {idd = id});
                 tmp.KIDdivDisplay = spDAL.KIDdivName(tmp.KIDdiv);
                 tmp.KIDspcDisplay = spDAL.KIDspcName(tmp.KIDspc);
-                tmp.KIDspcDisplay = spDAL.KIDspcName(tmp.KIDspc);
+                tmp.KIDdtpDisplay = spDAL.KIDdtpName(tmp.KIDdtp);
+                tmp.repPer = tmp.repPer.Trim();
                 return tmp;
             }
             
