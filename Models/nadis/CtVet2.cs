@@ -4,8 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace nadis.Models
 {
+    [Table ("ctVet2")]
     public class CtVet2
     {
+        [Key]
         [Display(Name = "guid Записи")]
         //[ScaffoldColumn(false)]
         public Guid ID { get; set; }

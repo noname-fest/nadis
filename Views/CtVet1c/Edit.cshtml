@@ -47,27 +47,30 @@
                 <span asp-validation-for="KIDtrt" class="text-danger"></span>
             </div>
 
-
-            <div class="form-group">
-                <label asp-for="tfemage1" class="control-label"></label>
-                <input asp-for="tfemage1" class="form-control" type="number" min="0" step="1" />
-                <span asp-validation-for="tfemage1" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="tfemage2" class="control-label"></label>
-                <input asp-for="tfemage2" class="form-control" type="number" min="0" step="1" />
-                <span asp-validation-for="tfemage2" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+             <p>Молодняк</p>
+            <div class="form-group pl-5">
                 <label asp-for="tmalage1" class="control-label"></label>
                 <input asp-for="tmalage1" class="form-control" type="number" min="0" step="1" />
                 <span asp-validation-for="tmalage1" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group pl-5">
+                <label asp-for="tfemage1" class="control-label"></label>
+                <input asp-for="tfemage1" class="form-control" type="number" min="0" step="1" />
+                <span asp-validation-for="tfemage1" class="text-danger"></span>
+            </div>
+
+            <p>Взрослые особи</p>
+            <div class="form-group pl-5">
                 <label asp-for="tmalage2" class="control-label"></label>
                 <input asp-for="tmalage2" class="form-control" type="number" min="0" step="1" />
                 <span asp-validation-for="tmalage2" class="text-danger"></span>
             </div>
+            <div class="form-group pl-5">
+                <label asp-for="tfemage2" class="control-label"></label>
+                <input asp-for="tfemage2" class="form-control" type="number" min="0" step="1" />
+                <span asp-validation-for="tfemage2" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Сохранить" asp-route-id="@Model.ID" class="btn btn-success" />
             </div>

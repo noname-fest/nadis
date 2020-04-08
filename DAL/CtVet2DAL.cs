@@ -4,22 +4,23 @@ using nadis.tools;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using Dapper;
 using nadis.DAL.nadis;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using nadis.Models.sp;
+using Dapper.Contrib.Extensions;
 
 namespace nadis.DAL
 {
     public static class CtVet2DAL
     {
+
        static List<sp_values> __RepPerList(int YY, int MM)
         {
 
             List<sp_values> tmpList = new List<sp_values>();
             DateTime dtB = new DateTime(YY,MM,1);
             DateTime dtE =  DateTime.Today;
-            while(dtB <= dtE)
+            while((dtB.Year*12+dtB.Month%6) <= (dtE.Year*12+dtE.Month%6))
             {
                 sp_values tmp_sp = new sp_values();
                 if (dtB.Month > 6) tmp_sp.ID = dtB.Year.ToString() + "/2";
@@ -58,6 +59,7 @@ namespace nadis.DAL
                         dd = bstr
                     };
                 IEnumerable<CtVet2> tmpList = _conn.Query<CtVet2>(q,p);
+                //tmpList = _conn.GetAll()
                 foreach(var tmp in tmpList)
                     {
                         tmp.KIDdivDisplay = spDAL.KIDdivName(tmp.KIDdiv);
@@ -76,8 +78,10 @@ namespace nadis.DAL
             var connectionString = appSettingsJson["DefaultConnection"];
             using(SqlConnection _conn = new SqlConnection(connectionString))
             {
-                CtVet2 tmp = _conn.QueryFirstOrDefault<CtVet2>("SELECT * FROM ctVet2 WHERE ID=@idd",
-                                new {idd = id});
+                //CtVet2 tmp = _conn.QueryFirstOrDefault<CtVet2>("SELECT * FROM ctVet2 WHERE ID=@idd",
+                //                new {idd = id});
+                var idd = id;
+                CtVet2 tmp = _conn.Get<CtVet2>(idd);
                 tmp.KIDdivDisplay = spDAL.KIDdivName(tmp.KIDdiv);
                 tmp.KIDspcDisplay = spDAL.KIDspcName(tmp.KIDspc);
                 tmp.KIDdtpDisplay = spDAL.KIDdtpName(tmp.KIDdtp);
