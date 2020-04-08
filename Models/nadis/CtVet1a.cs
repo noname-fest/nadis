@@ -14,9 +14,9 @@ namespace nadis.Models
         //[ScaffoldColumn(false)]
         public Guid ID { get; set; }
 
-        [Display(Name = "Периуд")]
+        [Display(Name = "repMO")]
         [DisplayFormat(DataFormatString = "{0:MMMyyyy}")]
-        public DateTime RepMO { get; set; } = DateTime.Today;//periud dannix
+        public DateTime repMO { get; set; } = DateTime.Today;//periud dannix
 
         //[ScaffoldColumn(false)]
         [StringLength(7)]
@@ -26,42 +26,50 @@ namespace nadis.Models
         //[StringLength(30)]
         public string KIDdivDisplay { get; set; } = "";
 
+        [Display(Name = "KIDdiv")]
         [StringLength(10)]
-        //public string KIDdiv { get; set; }  //raion a/a 
         public string KIDdiv { get; set; } = "";
 
         [Display(Name = "Вид")]
         public string KIDspcDisplay { get; set; } = "";
 
+        [Display(Name = "KIDspc")]
         [StringLength(4)]
         public string KIDspc { get; set; } = ""; // vid jivotnogo
 
         [Display(Name = "Болезнь")]
         public string KIDdisDisplay { get; set; } = "";
+        [Display(Name = "KIDdis")]
         [StringLength(4)]
         public string KIDdis { get; set; } = ""; // bolezn
 
-        [Display(Name = "Небл.пункт")]
+        //[Display(Name = "Небл.пункт")]
+        [Display(Name = "pos_units")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public int? pos_units { get; set; } = 0;
 
-        [Display(Name = "Забол.")]
+        //[Display(Name = "Забол.")]
+        [Display(Name = "positives")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public int? positives { get; set; } = 0;
 
-        [Display(Name = "Пало")]
+        //[Display(Name = "Пало")]
+        [Display(Name = "dead")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public int? dead { get; set; } = 0;
 
-        [Display(Name = "Небл.пункт")]
+        //[Display(Name = "Небл.пункт")]
+        [Display(Name = "end_pos_units")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public int? end_pos_units { get; set; } = 0;
 
-        [Display(Name = "Больных")]
+        //[Display(Name = "Больных")]
+        [Display(Name = "end_pos_animals")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public int? end_pos_animals { get; set; } = 0;
 
-        [Display(Name = "Забито")]
+        //[Display(Name = "Забито")]
+        [Display(Name = "culled")]
         [Required(ErrorMessage = "Только целое число > 0")]
         public int? culled { get; set; } = 0;
     }

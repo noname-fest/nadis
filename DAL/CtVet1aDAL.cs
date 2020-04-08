@@ -54,7 +54,7 @@ namespace nadis.DAL.nadis
                 var param = new
                 {
                     KIDro = tmp.KIDro,
-                    repMO = tmp.RepMO,
+                    repMO = tmp.repMO,
                     KIDdiv= tmp.KIDdiv,
                     KIDspc= tmp.KIDspc,
                     KIDdis= tmp.KIDdis,
@@ -94,7 +94,7 @@ namespace nadis.DAL.nadis
                 var param = new
                 {
                     KIDro=tmp.KIDro,
-                    repMO=tmp.RepMO,
+                    repMO=tmp.repMO,
                     KIDdiv=tmp.KIDdiv,
                     KIDspc=tmp.KIDspc,
                     KIDdis=tmp.KIDdis,
@@ -152,7 +152,7 @@ namespace nadis.DAL.nadis
                            "and KIDspc=@KIDspc and KIDdis=@KIDdis and KIDro=@KIDro)";
                 var param = new 
                 {
-                    repMO = tmp.RepMO,
+                    repMO = tmp.repMO,
                     KIDdiv = tmp.KIDdiv,
                     KIDspc = tmp.KIDspc,
                     KIDdis = tmp.KIDdis,

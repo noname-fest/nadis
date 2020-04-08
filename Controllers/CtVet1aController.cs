@@ -52,7 +52,7 @@ namespace nadis.Controllers
             CtVet1a tmp = new CtVet1a
             {
                 KIDro =  User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value,
-                RepMO = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)
+                repMO = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)
             };
             ViewBag.Page = "CtVet1a";
             return View(tmp);

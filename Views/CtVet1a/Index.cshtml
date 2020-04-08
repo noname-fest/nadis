@@ -18,7 +18,7 @@
      <thead align="center">
          <tr>
              <th rowspan="2">
-                @Html.DisplayNameFor(model => model.RepMO)
+                @Html.DisplayNameFor(model => model.repMO)
              </th>
              <th rowspan="2">
                  @Html.DisplayNameFor(model => model.KIDdivDisplay)
@@ -78,8 +78,8 @@
         {
             <tr>
                 <td>
-                    <!-- @Html.DisplayFor(modelItem => tmp.RepMO)-->
-                    @(mmm[tmp.RepMO.Month-1]+tmp.RepMO.Year)
+                    <!-- @Html.DisplayFor(modelItem => tmp.repMO)-->
+                    @(mmm[tmp.repMO.Month-1]+tmp.repMO.Year)
                 </td>
                 <td class="col-2.5">
                     @Html.DisplayFor(modelItem => tmp.KIDdivDisplay)

@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using nadis.Models;
-
+using System.Globalization;
+using Microsoft.Extensions.Localization;
 namespace nadis.Controllers
 {
     public class HomeController : Controller
@@ -32,6 +33,8 @@ namespace nadis.Controllers
                                         FirstOrDefault(x => x.Type == "reportDtYear").Value),
                                    Convert.ToInt32(User.Claims.ToList().
                                         FirstOrDefault(x => x.Type == "reportDtMonth").Value), 1)).ToString("MMMM yyyy") ;
+            ViewBag.CurrentL = CultureInfo.CurrentCulture.ToString();
+            ViewBag.CurrentUIL = CultureInfo.CurrentUICulture.ToString();
             ViewBag.Page = "Home";
             return View();
         }

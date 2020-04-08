@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using nadis.tools;
 using Microsoft.AspNetCore.Localization;
 using nadis.DAL.nadis;
+using System.Globalization;
 
 namespace nadis
 {
@@ -33,6 +34,8 @@ namespace nadis
             services.Configure<RequestLocalizationOptions>(options =>
             {
                 options.DefaultRequestCulture = new RequestCulture("ru-RU");
+                //SupportedCultures = supportedCultures,
+                //SupportedUICultures = supportedCultures                
             } );
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
@@ -47,12 +50,23 @@ namespace nadis
             //            });
 
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-            services.AddControllersWithViews();
+
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            //services.AddControllersWithViews
+            services.AddControllersWithViews()
+                    .AddDataAnnotationsLocalization()
+                    .AddViewLocalization();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var supportedCultures = new[]
+                {
+                    new CultureInfo("ru-RU"),
+                    new CultureInfo("ru"),
+                };            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -63,7 +77,12 @@ namespace nadis
                 app.UseHsts();
 
             }
-            app.UseRequestLocalization();
+            app.UseRequestLocalization( new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("ru-RU"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
             app.UseStaticFiles();
 
             app.UseRouting();
