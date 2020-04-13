@@ -3,14 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using nadis.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using nadis.tools;
-using Microsoft.AspNetCore.Localization;
-using nadis.DAL.nadis;
 using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace nadis
 {
@@ -31,45 +27,30 @@ namespace nadis
                 {
                     options.LoginPath = new PathString("/Account/Login");
                 });
-            //            services.Configure<CookiePolicyOptions>(options =>
-            //            {
-            //                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-            //                options.CheckConsentNeeded = context => true;
-            //                options.MinimumSameSitePolicy = SameSiteMode.None;
-            //            });
-            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-
             services.AddLocalization(options => options.ResourcesPath = "Resources");
-            //services.AddControllersWithViews
             services.AddControllersWithViews()
                     .AddDataAnnotationsLocalization()
                     .AddViewLocalization();
+
             services.Configure<RequestLocalizationOptions>(options =>
             {
                 var supportedCultures = new[]
                 {
-                    new CultureInfo("ru"),
-                    new CultureInfo("ky")
+                    //new CultureInfo("en"),
+                    new CultureInfo("ky"),
+                    new CultureInfo("ru")
                 };
  
                 options.DefaultRequestCulture = new RequestCulture("ru");
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
-            });                    
+            });
+            //services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            /*
-            var supportedCultures = new[]
-                {
-                    new CultureInfo("ru-RU"),
-                    new CultureInfo("ru"),
-                    new CultureInfo("ky-KG"),
-                    new CultureInfo("ky")
-                };            
-            */
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -80,7 +61,7 @@ namespace nadis
                 app.UseHsts();
 
             }
-
+            app.UseRequestLocalization();
             app.UseStaticFiles();
 
             app.UseRouting();

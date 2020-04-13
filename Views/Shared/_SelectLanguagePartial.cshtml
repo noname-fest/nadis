@@ -2,17 +2,21 @@
 @using Microsoft.AspNetCore.Localization
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Microsoft.Extensions.Options
-@inject IViewLocalizer Localizer
+
 @inject IOptions<RequestLocalizationOptions> LocOptions
  
 @{
     // получаем сервис IRequestCultureFeature
-    //var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     // получаем список поддерживаемых культур
     var cultureItems = LocOptions.Value.SupportedUICultures
         .Select(c => new SelectListItem { Value = c.Name, Text = c.NativeName })
         .ToList();
-    //var cultureItem = new List(){};
+    //List<SelectListItem> tmp = new List<SelectListItem>();
+    //tmp.Add(new SelectListItem() { Text = "кыргыз тили", Value = "ky" });
+    //tmp.Add(new SelectListItem() { Text = "русский язык", Value = "ru" });
+
+    //var cultureItems = new SelectList(tmp, "Value", "Text");
 }
  
 <form asp-controller="Home" asp-action="SetLanguage" style="margin-top:20px;"

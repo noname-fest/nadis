@@ -13,6 +13,7 @@ using Dapper;
 using Dapper.Contrib;
 using nadis.DAL.nadis;
 using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace AuthSample.Controllers
 {
@@ -253,7 +254,14 @@ namespace AuthSample.Controllers
                     new Claim("UserFullName", usrFullName)
                 };
                 CultureInfo.CurrentCulture = new CultureInfo("ky-KG");
-                CultureInfo.CurrentUICulture = new CultureInfo("ky-KG");
+                CultureInfo.CurrentUICulture = new CultureInfo("ky");
+
+                Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture("ky")),
+                new Microsoft.AspNetCore.Http.CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+                );
+
 
                 var id = new ClaimsIdentity(claims, "ApplicationCookie",
                     ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);

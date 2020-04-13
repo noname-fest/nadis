@@ -11,17 +11,16 @@
         <div>Lang : @ViewBag.CurrentL</div>
         <div>LangUI : @ViewBag.CurrentUIL</div>
         <p></p>
-        <!--@await Html.PartialAsync("_SelectLanguagePartial")
-        <p></p> -->
+        <div>
+            @await Html.PartialAsync("_SelectLanguagePartial")
+        </div>
         <p></p>
         @if (@ViewData["Role"].ToString().Trim() == "Admin")
             {
-                //<a asp-action="Register" asp-controller="Account">Регистрация</a>
                 <a asp-action="UsersEdit" asp-controller="Account">Список пользователей</a>
             }
         <p></p>
         <form asp-action="Logout" asp-controller="Account">
             <input type="submit" value="Выйти из системы">
         </form>
-
     </div>
