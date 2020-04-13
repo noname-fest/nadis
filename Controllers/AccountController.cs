@@ -12,6 +12,7 @@ using System.Data.SqlClient;
 using Dapper;
 using Dapper.Contrib;
 using nadis.DAL.nadis;
+using System.Globalization;
 
 namespace AuthSample.Controllers
 {
@@ -251,11 +252,14 @@ namespace AuthSample.Controllers
                     new Claim("reportDtMonth", M.ToString()),
                     new Claim("UserFullName", usrFullName)
                 };
+                CultureInfo.CurrentCulture = new CultureInfo("ky-KG");
+                CultureInfo.CurrentUICulture = new CultureInfo("ky-KG");
 
                 var id = new ClaimsIdentity(claims, "ApplicationCookie",
                     ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
 
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id)).ConfigureAwait(false);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                                                new ClaimsPrincipal(id)).ConfigureAwait(false);
                 }
         }
      }

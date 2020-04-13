@@ -8,6 +8,8 @@ using Microsoft.Extensions.Logging;
 using nadis.Models;
 using System.Globalization;
 using Microsoft.Extensions.Localization;
+using Microsoft.AspNetCore.Localization;
+
 namespace nadis.Controllers
 {
     public class HomeController : Controller
@@ -17,6 +19,18 @@ namespace nadis.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new Microsoft.AspNetCore.Http.CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+            );
+            return LocalRedirect(returnUrl);
         }
 
         [Authorize]

@@ -26,17 +26,6 @@ namespace nadis
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //var appSettingsJson = AppSettingJSON.GetAppSettings();
-            //var connection = AppSettingJSON.GetAppSettings()["DefaultConnection"];
-
-            //var connection = Configuration.GetConnectionString("DefaultConnection");
-            //services.AddDbContext<UserContext>(options => options.UseSqlServer(connection));
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                options.DefaultRequestCulture = new RequestCulture("ru-RU");
-                //SupportedCultures = supportedCultures,
-                //SupportedUICultures = supportedCultures                
-            } );
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
@@ -48,7 +37,6 @@ namespace nadis
             //                options.CheckConsentNeeded = context => true;
             //                options.MinimumSameSitePolicy = SameSiteMode.None;
             //            });
-
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
@@ -56,17 +44,32 @@ namespace nadis
             services.AddControllersWithViews()
                     .AddDataAnnotationsLocalization()
                     .AddViewLocalization();
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("ru"),
+                    new CultureInfo("ky")
+                };
+ 
+                options.DefaultRequestCulture = new RequestCulture("ru");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });                    
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            /*
             var supportedCultures = new[]
                 {
                     new CultureInfo("ru-RU"),
                     new CultureInfo("ru"),
+                    new CultureInfo("ky-KG"),
+                    new CultureInfo("ky")
                 };            
-
+            */
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -77,12 +80,7 @@ namespace nadis
                 app.UseHsts();
 
             }
-            app.UseRequestLocalization( new RequestLocalizationOptions
-            {
-                DefaultRequestCulture = new RequestCulture("ru-RU"),
-                SupportedCultures = supportedCultures,
-                SupportedUICultures = supportedCultures
-            });
+
             app.UseStaticFiles();
 
             app.UseRouting();
