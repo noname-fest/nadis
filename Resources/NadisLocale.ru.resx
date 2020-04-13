@@ -118,33 +118,40 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="culled" xml:space="preserve">
-    <value>Забито KG</value>
+    <value>Забито</value>
   </data>
   <data name="dead" xml:space="preserve">
-    <value>Пало KG</value>
+    <value>Пало</value>
   </data>
   <data name="end_pos_animals" xml:space="preserve">
-    <value>Больных KG</value>
+    <value>Больных</value>
   </data>
   <data name="end_pos_units" xml:space="preserve">
-    <value>Небл.пункт KG</value>
+    <value>Небл.пункт</value>
   </data>
   <data name="KIDdis" xml:space="preserve">
-    <value>Болезнь KG</value>
+    <value>Болезнь</value>
   </data>
   <data name="KIDdiv" xml:space="preserve">
-    <value>Айыл Аймак KG</value>
+    <value>Айыл Аймак</value>
   </data>
   <data name="KIDspc" xml:space="preserve">
-    <value>Вид животного KG</value>
+    <value>Вид животного</value>
   </data>
   <data name="positives" xml:space="preserve">
-    <value>Небл.пункт KG</value>
+    <value>Небл.пункт</value>
   </data>
   <data name="pos_units" xml:space="preserve">
-    <value>Забол.v</value>
+    <value>Забол.</value>
   </data>
   <data name="repMO" xml:space="preserve">
-    <value>Периуд KG</value>
+    <value>Периуд</value>
   </data>
+  <data name="Za_otch_periud" xml:space="preserve">
+    <value>За отчетный периуд</value>
+  </data>
+  <data name="Na_kon_periuda" xml:space="preserve">
+    <value>На кон. отч. периода</value>
+  </data>
+
 </root>

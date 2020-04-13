@@ -8,12 +8,14 @@
                     "окт","ноя","дек"
             };
 }
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<NadisLocale> _locale
 
 <font color="red" size=18>@TempData["EM"]</font>
 <p>
     <a asp-action="Create">Создать новый</a>
 </p>
-
 <table class="table table-sm table-striped table-responsive-sm table-bordered">
      <thead align="center">
          <tr>
@@ -29,28 +31,8 @@
              <th rowspan="2">
                  @Html.DisplayNameFor(model => model.KIDdisDisplay)
              </th>
-             <!--
-             <th rowspan="2">
-                 @Html.DisplayNameFor(model => model.pos_units)
-             </th>
-             <th rowspan="2">
-                 @Html.DisplayNameFor(model => model.positives)
-             </th>
-             <th rowspan="2">
-                 @Html.DisplayNameFor(model => model.dead)
-             </th>
-             <th rowspan="2">
-                 @Html.DisplayNameFor(model => model.culled)
-             </th>
-             <th>
-                 @Html.DisplayNameFor(model => model.end_pos_units)
-             </th>
-             <th>
-                 @Html.DisplayNameFor(model => model.end_pos_animals)
-             </th>
-             -->
-             <th colspan="4">За отчетный период</th>
-             <th colspan="2">На кон. отч. периода</th>
+             <th colspan="4">@_locale["Za_otch_periud"]</th>
+             <th colspan="2">@_locale["Na_kon_periuda"]</th>
          </tr>
          <tr>
              <th>

@@ -118,33 +118,33 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="culled" xml:space="preserve">
-    <value>Забито</value>
+    <value>Забито KG</value>
   </data>
   <data name="dead" xml:space="preserve">
-    <value>Пало</value>
+    <value>Пало KG</value>
   </data>
   <data name="end_pos_animals" xml:space="preserve">
-    <value>Больных</value>
+    <value>Больных KG</value>
   </data>
   <data name="end_pos_units" xml:space="preserve">
-    <value>Небл.пункт</value>
+    <value>Небл.пункт KG</value>
   </data>
   <data name="KIDdis" xml:space="preserve">
-    <value>Болезнь</value>
+    <value>Болезнь KG</value>
   </data>
   <data name="KIDdiv" xml:space="preserve">
     <value>Айыл Аймак</value>
   </data>
   <data name="KIDspc" xml:space="preserve">
-    <value>Вид животного</value>
+    <value>Туру</value>
   </data>
   <data name="positives" xml:space="preserve">
-    <value>Небл.пункт</value>
+    <value>Небл.пункт KG</value>
   </data>
   <data name="pos_units" xml:space="preserve">
-    <value>Забол.</value>
+    <value>Забол.v</value>
   </data>
   <data name="repMO" xml:space="preserve">
-    <value>Периуд</value>
+    <value>Периуд KG</value>
   </data>
 </root>

@@ -29,14 +29,16 @@ namespace nadis
                 });
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddControllersWithViews()
-                    .AddDataAnnotationsLocalization()
+                    .AddDataAnnotationsLocalization(options => {
+                    options.DataAnnotationLocalizerProvider = (type, factory) =>
+                        factory.Create(typeof(NadisLocale));
+                }) 
                     .AddViewLocalization();
-
+            
             services.Configure<RequestLocalizationOptions>(options =>
             {
                 var supportedCultures = new[]
                 {
-                    //new CultureInfo("en"),
                     new CultureInfo("ky"),
                     new CultureInfo("ru")
                 };
@@ -45,7 +47,6 @@ namespace nadis
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
             });
-            //services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
