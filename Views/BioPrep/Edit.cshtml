@@ -3,61 +3,66 @@
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<font color="red" size=8>@TempData["EM"]</font>
+<font color="red" size=8 id="errmsg">@TempData["EM"]</font>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ID" />
-            <input type="hidden" asp-for="KIDro" />
-            <input type="hidden" asp-for="Bylo"/>
+            <input type="hidden" asp-for="ID"/>
+            <input type="hidden" asp-for="KIDro"  id="_kidro"/>
+            <input type="hidden" asp-for="Bylo" id="bylo_val"/>
             <div class="form-group">
                 <label asp-for="RepMO" class="control-label"></label>
-                @Html.DropDownList("RepMO", ViewBag.RepMoList as SelectList, new { @class = "form-control" })
+                @Html.DropDownList("RepMO", ViewBag.RepMoList as SelectList,
+                                new { @class = "form-control", @id="_repmo" })
                 <span asp-validation-for="RepMO" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="VetPrepDisplay" class="control-label"></label>
-                @Html.DropDownList("VetPrep", ViewBag.VetPrepList as SelectList, new { @class = "form-control" })
+                @Html.DropDownList("VetPrep", ViewBag.VetPrepList as SelectList,
+                                new { @class = "form-control",@id="_prep" })
                 <span asp-validation-for="VetPrep" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="EdIzmDisplay" class="control-label"></label>
-                @Html.DropDownList("EdIzm", ViewBag.EdIzmList as SelectList, new { @class = "form-control" })
+                @Html.DropDownList("EdIzm", ViewBag.EdIzmList as SelectList, 
+                                new { @class = "form-control",@id="_edizm"})
                 <span asp-validation-for="EdIzm" class="text-danger"></span>
             </div>
 
             <div  class="form-group">
                 <label asp-for="Bylo" class="control-label"></label>
-                <!--<input asp-for="Bylo" class="form-control" type="number" min="0" step="1" />-->
-                @Html.DisplayFor(model => model.Bylo)
+                <label id="_bylo" class="text-info">
+                    @Html.DisplayFor(model => model.Bylo)
+                </label>
                 <span asp-validation-for="Bylo" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="PostupiloVsego" class="control-label"></label>
-                <input asp-for="PostupiloVsego" class="form-control" type="number" min="0" step="1" />
+                <input asp-for="PostupiloVsego" class="form-control" type="number" min="0" step="1" id="_v1"/>
                 <span asp-validation-for="PostupiloVsego" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PostupiloRazn" class="control-label"></label>
-                <input asp-for="PostupiloRazn" class="form-control" type="number" min="0" step="1" />
+                <input asp-for="PostupiloRazn" class="form-control" type="number" min="0" step="1" id="_v2"/>
                 <span asp-validation-for="PostupiloRazn" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="IzrashodVsego" class="control-label"></label>
-                <input asp-for="IzrashodVsego" class="form-control" type="number" min="0" step="1" />
+                <input asp-for="IzrashodVsego" class="form-control" type="number" min="0" step="1" id="_v3"/>
                 <span asp-validation-for="IzrashodVsego" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="IzrashodDrugoe" class="control-label"></label>
-                <input asp-for="IzrashodDrugoe" class="form-control" type="number" min="0" step="1" />
+                <input asp-for="IzrashodDrugoe" class="form-control" type="number" min="0" step="1" id="_v4"/>
                 <span asp-validation-for="IzrashodDrugoe" class="text-danger"></span>
             </div>
             <div>
                 <label asp-for="Ostatok_za_mesyac" class="control-label"></label>
-                <!--<input asp-for="Bylo" class="form-control" type="number" min="0" step="1" />-->
-                @Html.DisplayFor(model => model.Ostatok_za_mesyac)
+                <label id="_ostatok" class="text-info">
+                    @Html.DisplayFor(model => model.Ostatok_za_mesyac)
+                </label>
                 <span asp-validation-for="Ostatok_za_mesyac" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -69,4 +74,39 @@
 <div>
     <a asp-action="Index">Назад к списку</a>
 </div>
+@section scripts{
+<script type="text/javascript">
+    $(function () {
+        $('#_repmo,#_prep,#_edizm').change(function()
+        {
+            var id1 = $("#_kidro").val();
+            var id2 = $("#_repmo").val();
+            var id3 = $("#_prep").val();
+            var id4 = $("#_edizm").val();
+            $.ajax({
+                type: 'POST',
+                url: "@Url.Action("GetByloById")",
+                data: {IDro: id1, repMo: id2, VetPrep: id3, e: id4},
+                success: function (data) {
+                    // заменяем содержимое присланным частичным представлением
+                    $('#_bylo').text(data); // изменить текст
+                    $('#bylo_val').val(data); // изменить input с привязкой к Field    
+                    $('#_v1,#_v2,#_v3,#_v4').change();
+                }
+            });
+        });
+        $('#_v1,#_v2,#_v3,#_v4').change(function()
+        {
+            var a1 = $("#_v1").val();
+            var a2 = $("#_v2").val();
+            var a3 = $("#_v3").val();
+            var a4 = $("#_v4").val();
+            var rez = parseInt($("#bylo_val").val())
+                    + parseInt(a1) + parseInt(a2) 
+                    - parseInt(a3) - parseInt(a4);
+            $('#_ostatok').text(rez);
+        });
+    })
+</script>
+}
 

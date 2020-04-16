@@ -3,39 +3,42 @@
     ViewData["Title"] = "Create";
 }
 
-<h3>Создать BioPrep</h3>
+<h3>Создать Биопрепарат></h3>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="KIDro" />
-            <input type="hidden" asp-for="Bylo">
+            <input type="hidden" asp-for="KIDro" id="_kidro"/>
+            <input type="hidden" asp-for="Bylo" id="bylo_val">
             <div class="form-group">
                 <label asp-for="KIDro" class="control-label"></label>
                 <span asp-validation-for="KIDro" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="RepMO" class="control-label"></label>
-                @Html.DropDownList("RepMO", ViewBag.RepMoList as SelectList, new { @class = "form-control" })
+                @Html.DropDownList("RepMO", ViewBag.RepMoList as SelectList,
+                                    new {@class = "form-control",@id="_repmo"})
                 <span asp-validation-for="RepMO" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="VetPrepDisplay" class="control-label"></label>
-                @Html.DropDownList("VetPrep", ViewBag.VetPrepList as SelectList, new { @class = "form-control" })
+                @Html.DropDownList("VetPrep", ViewBag.VetPrepList as SelectList,
+                                    new { @class = "form-control",@id="_prep"})
                 <span asp-validation-for="VetPrep" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="EdIzmDisplay" class="control-label"></label>
-                @Html.DropDownList("EdIzm", ViewBag.EdIzmList as SelectList, new { @class = "form-control" })
+                @Html.DropDownList("EdIzm", ViewBag.EdIzmList as SelectList,
+                                    new { @class = "form-control",@id="_edizm"})
                 <span asp-validation-for="EdIzm" class="text-danger"></span>
             </div>
-            <!--
-            <div class="form-group">
+
+            <div  class="form-group">
                 <label asp-for="Bylo" class="control-label"></label>
-                <input asp-for="Bylo" class="form-control" type="number" min="0" step="1" />
+                <label id="_bylo">@Html.DisplayFor(model => model.Bylo)</label>
                 <span asp-validation-for="Bylo" class="text-danger"></span>
             </div>
-            -->
+
             <div class="form-group">
                 <label asp-for="PostupiloVsego" class="control-label"></label>
                 <input asp-for="PostupiloVsego" class="form-control" type="number" min="0" step="1" />
@@ -66,8 +69,27 @@
 <div>
     <a asp-action="Index">Назад к списку</a>
 </div>
-@*
-@section Script{
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
- }
-*@
+
+@section scripts{
+<script type="text/javascript">
+    $(function () {
+        $('#_repmo,#_prep,#_edizm').change(function()
+        {
+            var id1 = $("#_kidro").val();
+            var id2 = $("#_repmo").val();
+            var id3 = $("#_prep").val();
+            var id4 = $("#_edizm").val();
+            $.ajax({
+                type: 'POST',
+                url: "@Url.Action("GetByloById")",
+                data: {IDro: id1, repMo: id2, VetPrep: id3, e: id4},
+                success: function (data) {
+                    // заменяем содержимое присланным частичным представлением
+                    $('#_bylo').text(data);
+                    $('#bylo_val').val(data);
+                }
+            });
+        });
+    })
+</script>
+}

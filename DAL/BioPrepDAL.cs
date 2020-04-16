@@ -3,13 +3,39 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using nadis.Models;
 using nadis.tools;
-using nadis.Models.sp;
 using System;
+using System.Data.SqlTypes;
 
 namespace nadis.DAL.nadis
 {
     public static class BioPrepDAL
     {
+        public static long? GetByloById(string _KIDro, DateTime _repMo, string _prep,string _edizm)
+        {
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+            long? _bylo = 0;
+            int y = _repMo.Year;
+            int m = _repMo.Month;
+            using(SqlConnection _conn = new SqlConnection(connectionString))
+            {
+                string q = "SELECT TOP 1 (Bylo+PostupiloVsego+PostupiloRazn-IzrashodVsego-IzrashodDrugoe) "
+                +"as ByloPredMonth FROM BioPrep WHERE (" +
+                "KIDro=@KIDro and VetPrep=@VetPrep and EdIzm=@EdIzm and "+
+                "repMO < @dt) ORDER BY repMO DESC";
+                var param = new 
+                    {
+                        KIDro   = _KIDro,
+                        VetPrep = _prep,
+                        EdIzm   = _edizm,
+                        dt      = _repMo
+                    };
+                _bylo = _conn.QueryFirstOrDefault<long?>(q,param);
+                if(_bylo == null) _bylo=0;
+            }
+            return _bylo;
+        }
+
         public static IEnumerable<BioPrep> GetAll_BioPrep(string KIDro, int rpDtYear, int rpDtMonth)
         {
             var appSettingsJson = AppSettingJSON.GetAppSettings();
@@ -35,17 +61,6 @@ namespace nadis.DAL.nadis
             {
                 tmp.VetPrepDisplay = spDAL.VetPrepName(tmp.VetPrep);
                 tmp.EdIzmDisplay = spDAL.EdIzmName(tmp.EdIzm);
-                /*
-                var param = new 
-                    {
-                        KIDro = tmp.KIDro,
-                        VetPrep = tmp.VetPrep,
-                        EdIzm = tmp.EdIzm,
-                        dt = tmp.RepMO
-                    };
-                tmp.Bylo = _conn.QueryFirstOrDefault<long?>(q,param);
-                if(tmp.Bylo == null) tmp.Bylo=0;
-                */
             };
             return tmpList;
         }
@@ -59,7 +74,7 @@ namespace nadis.DAL.nadis
 
             BioPrep tmp = _conn.QueryFirst<BioPrep>(
                 "SELECT * FROM BioPrep WHERE ID=@IDv",new { IDv = Id });
-
+            
             string q = "SELECT TOP 1 (Bylo+PostupiloVsego+PostupiloRazn-IzrashodVsego-IzrashodDrugoe) "
                         +"as ByloPredMonth FROM BioPrep WHERE (" +
                         "KIDro=@KIDro and VetPrep=@VetPrep and EdIzm=@EdIzm and "+

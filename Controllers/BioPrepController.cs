@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -11,6 +12,13 @@ namespace nadis.Controllers
 {
     public class BioPrepController : Controller
     {
+        [Authorize]
+        [HttpPost]
+        public long? GetByloById(string IDro, DateTime repMo,string VetPrep,string e)
+        {
+            return BioPrepDAL.GetByloById(IDro,repMo,VetPrep,e);
+        }
+
         [Authorize]
         public IActionResult Index()
         {
