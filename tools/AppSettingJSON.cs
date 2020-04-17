@@ -9,6 +9,7 @@ namespace nadis.tools
 {
     public static class AppSettingJSON
     {
+
             public static string ApplicationExeDirectory()
             {
                 var location = System.Reflection.Assembly.GetExecutingAssembly().Location;

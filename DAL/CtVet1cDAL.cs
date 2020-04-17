@@ -11,10 +11,7 @@ namespace nadis.DAL.nadis
     {
         public static IEnumerable<CtVet1c> GetAll_CtVet1c(string KIDro, int Y, int M)
             {
-                var appSettingsJson = AppSettingJSON.GetAppSettings();
-                var connectionString = appSettingsJson["DefaultConnection"];
-
-                using (SqlConnection _conn = new SqlConnection(connectionString))
+                using (SqlConnection _conn = new SqlConnection(spDAL.connStr))
                 {
                     IEnumerable<CtVet1c> tmpList = 
                     _conn.Query<CtVet1c>("SELECT * FROM ctVet1c WHERE (KIDro=@KIDroP and repMo between @bDt and @eDt)"
@@ -38,30 +35,25 @@ namespace nadis.DAL.nadis
             }
         public static CtVet1c GetById_CtVet1c(Guid Id)
         {
-                var appSettingsJson = AppSettingJSON.GetAppSettings();
-                var connectionString = appSettingsJson["DefaultConnection"];
-
-                using (SqlConnection _conn = new SqlConnection(connectionString))
-                {
-                    CtVet1c tmp = 
-                    _conn.QueryFirstOrDefault<CtVet1c>("SELECT * FROM ctVet1c WHERE ID=@KID",
-                                              new { KID = Id });
-                    _conn.Close();
-                        tmp.KIDdivDisplay = spDAL.KIDdivName(tmp.KIDdiv);
-                        tmp.KIDspcDisplay = spDAL.KIDspcName(tmp.KIDspc);
-                        tmp.KIDdisDisplay = spDAL.KIDdisName(tmp.KIDdis);
-                        tmp.KIDtrtDisplay = spDAL.KIDtrtName(tmp.KIDtrt);
-                    return tmp;
-                }
+            using (SqlConnection _conn = new SqlConnection(spDAL.connStr))
+            {
+                CtVet1c tmp = 
+                _conn.QueryFirstOrDefault<CtVet1c>("SELECT * FROM ctVet1c WHERE ID=@KID",
+                                          new { KID = Id });
+                _conn.Close();
+                    tmp.KIDdivDisplay = spDAL.KIDdivName(tmp.KIDdiv);
+                    tmp.KIDspcDisplay = spDAL.KIDspcName(tmp.KIDspc);
+                    tmp.KIDdisDisplay = spDAL.KIDdisName(tmp.KIDdis);
+                    tmp.KIDtrtDisplay = spDAL.KIDtrtName(tmp.KIDtrt);
+                return tmp;
+            }
         }
 
 
         public static bool IsUniqueRecord(CtVet1c tmp)
         {
             if (tmp == null) return false;
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-            using (SqlConnection _conn = new SqlConnection(connectionString))
+            using (SqlConnection _conn = new SqlConnection(spDAL.connStr))
             {
                 int count = _conn.QueryFirstOrDefault<int>("SELECT COUNT(*) FROM CtVet1c WHERE ("
                     + "repMO=@repMOP and KIDro=@KIDroP and KIDdiv=@KIDdivP and KIDspc=@KIDspcP "+
@@ -80,9 +72,7 @@ namespace nadis.DAL.nadis
         public static void Delete_CtVet1c(Guid Id)
         {
             if (Id == null) return;
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-            using (SqlConnection _conn = new SqlConnection(connectionString))
+            using (SqlConnection _conn = new SqlConnection(spDAL.connStr))
             {
                 _conn.Execute("DELETE FROM CtVet1c WHERE ID=@IDR", new { IDR = Id });
             }
@@ -91,10 +81,7 @@ namespace nadis.DAL.nadis
 
         public static void Add_CtVet1c(CtVet1c tmp)
         {
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-
-            SqlConnection _conn = new SqlConnection(connectionString);
+            SqlConnection _conn = new SqlConnection(spDAL.connStr);
             _conn.Execute("INSERT INTO CtVet1c (repMO,KIDro,dtObs,KIDdiv,"
                 + "KIDspc,KIDdis,KIDtrt,"+
                 "tfemage1,tfemage2,tmalage1,tmalage2,nVT) VALUES (" +
@@ -114,8 +101,7 @@ namespace nadis.DAL.nadis
                     tmalage1P = tmp.tfemage1,
                     tmalage2P = tmp.tfemage2,
                     nVT = tmp.tfemage1+tmp.tfemage2+tmp.tfemage1+tmp.tfemage2
-                }
-                );
+                });
             _conn.Close();
         }
 
@@ -123,10 +109,7 @@ namespace nadis.DAL.nadis
         public static void Update_CtVet1c(CtVet1c tmp)
         {
             if (tmp == null) return;
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-
-            SqlConnection _conn = new SqlConnection(connectionString);
+            SqlConnection _conn = new SqlConnection(spDAL.connStr);
             _conn.Execute("UPDATE CtVet1c SET KIDro=@KIDroP," +
                 "repMo=@repMoP, dtObs=@dtObsP, KIDdiv=@KIDdivP, KIDspc=@KIDspcP,"+
                 "KIDdis=@KIDdisP, KIDtrt=@KIDtrtP, "+

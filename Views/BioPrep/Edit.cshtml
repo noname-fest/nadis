@@ -32,9 +32,11 @@
 
             <div  class="form-group">
                 <label asp-for="Bylo" class="control-label"></label>
-                <label id="_bylo" class="text-info">
-                    @Html.DisplayFor(model => model.Bylo)
-                </label>
+                <strong class="h4">
+                    <label id="_bylo" class="text-info">
+                        @Html.DisplayFor(model => model.Bylo)
+                    </label>
+                </strong>
                 <span asp-validation-for="Bylo" class="text-danger"></span>
             </div>
 
@@ -60,9 +62,11 @@
             </div>
             <div>
                 <label asp-for="Ostatok_za_mesyac" class="control-label"></label>
-                <label id="_ostatok" class="text-info">
-                    @Html.DisplayFor(model => model.Ostatok_za_mesyac)
-                </label>
+                <strong class="h4">
+                    <label id="_ostatok" class="text-info">
+                        @Html.DisplayFor(model => model.Ostatok_za_mesyac)
+                    </label>
+                </strong>
                 <span asp-validation-for="Ostatok_za_mesyac" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -102,9 +106,10 @@
             var a3 = $("#_v3").val();
             var a4 = $("#_v4").val();
             var rez = parseInt($("#bylo_val").val())
-                    + parseInt(a1) + parseInt(a2) 
-                    - parseInt(a3) - parseInt(a4);
+                    + parseInt(a1) //+ parseInt(a2) 
+                    - parseInt(a3); //- parseInt(a4);
             $('#_ostatok').text(rez);
+            if(parseInt(a2)>parseInt(a1)) $('#_v2').val(a1);
         });
     })
 </script>

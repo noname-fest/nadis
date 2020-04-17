@@ -40,13 +40,11 @@ namespace nadis.DAL
 
         public static IEnumerable<CtVet2> GetAll(string KIDro,int Y,int M)
         {
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
             string bstr;
             if (M > 6) bstr = Y.ToString() + "/2";
             else bstr = Y.ToString() + "/1";   
 
-            using(SqlConnection _conn = new SqlConnection(connectionString))
+            using(SqlConnection _conn = new SqlConnection(spDAL.connStr))
             {
                 string q = "SELECT * FROM ctVet2 WHERE "+
                             "(KIDro=@KIDroP and repPer >= @dd) ORDER BY repPer DESC";
@@ -74,9 +72,7 @@ namespace nadis.DAL
 
         public static CtVet2 GetById(Guid id)
         {
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-            using(SqlConnection _conn = new SqlConnection(connectionString))
+            using(SqlConnection _conn = new SqlConnection(spDAL.connStr))
             {
                 //CtVet2 tmp = _conn.QueryFirstOrDefault<CtVet2>("SELECT * FROM ctVet2 WHERE ID=@idd",
                 //                new {idd = id});
@@ -93,10 +89,7 @@ namespace nadis.DAL
 
         public static void Delete(Guid id)
         {
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-
-            using(SqlConnection _conn = new SqlConnection(connectionString))
+            using(SqlConnection _conn = new SqlConnection(spDAL.connStr))
             {
                 _conn.Execute("DELETE FROM ctVet2 WHERE ID=@idd",new{idd = id});
             }
@@ -105,10 +98,7 @@ namespace nadis.DAL
         public static void Add(CtVet2 tmp)
         {
             if(tmp==null)return;
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-
-            using(SqlConnection _conn = new SqlConnection(connectionString))
+            using(SqlConnection _conn = new SqlConnection(spDAL.connStr))
             {
                 string q = "INSERT INTO ctVet2 "+ 
 	                "(KIDro,repPer,KIDdiv,KIDspc,KIDdtp,"+
@@ -137,10 +127,7 @@ namespace nadis.DAL
         public static void Update(CtVet2 tmp)
         {
             if (tmp is null) { return; }
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-
-            using(SqlConnection _conn = new SqlConnection(connectionString))
+            using(SqlConnection _conn = new SqlConnection(spDAL.connStr))
             {
                 string q = "UPDATE ctVET2 SET "+ 
                             "KIDro=@KIDro,"+
@@ -174,10 +161,7 @@ namespace nadis.DAL
         public static bool IsUniqueRecord(CtVet2 tmp)
         {
             if (tmp == null) return false;
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-
-            using(SqlConnection _conn = new SqlConnection(connectionString))
+            using(SqlConnection _conn = new SqlConnection(spDAL.connStr))
             {
                 string q = "SELECT COUNT(ID) as kolvo FROM ctVET2 "+
 	                       "WHERE (repPer = @repPer and KIDdiv=@KIDDiv "+
@@ -196,8 +180,5 @@ namespace nadis.DAL
                 if (count == 0) { return true; } else { return false; }
             }
         }
-
-
-
     }
 }

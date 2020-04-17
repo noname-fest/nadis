@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Create";
 }
-
+<font color="red" size=8 id="errmsg">@TempData["EM"]</font>
 <h3>Создать Биопрепарат></h3>
 <div class="row">
     <div class="col-md-4">
@@ -35,7 +35,11 @@
 
             <div  class="form-group">
                 <label asp-for="Bylo" class="control-label"></label>
-                <label id="_bylo">@Html.DisplayFor(model => model.Bylo)</label>
+                <strong class="h4">
+                    <label id="_bylo"  class="text-info">
+                        @Html.DisplayFor(model => model.Bylo)
+                    </label>
+                </strong>
                 <span asp-validation-for="Bylo" class="text-danger"></span>
             </div>
 

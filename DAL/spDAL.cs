@@ -19,12 +19,17 @@ namespace nadis.DAL.nadis
                     "окт","ноя","дек"
             };
 
+        public static string connStr{get;}
+
+        static spDAL()
+        {
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            connStr = appSettingsJson["DefaultConnection"];
+        }
         //d3DISTYPES
         public static string KIDdtpName(string KIDtyp)
         {
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-            using (SqlConnection _conn = new SqlConnection(connectionString))
+            using (SqlConnection _conn = new SqlConnection(connStr))
             {
                 string rez = _conn.QueryFirst<string>(
                         "SELECT TOP 1 [DisType] FROM [d3DISTYPES] WHERE [KID]=@val", new { val = KIDtyp});
@@ -33,27 +38,21 @@ namespace nadis.DAL.nadis
         }
         public static SelectList KIDdtpList()
         {
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-            using SqlConnection _conn = new SqlConnection(connectionString);
-            var tmp = _conn.Query<sp_values>("SELECT KID as ID, [DisType] as Text FROM [d3DISTYPES]");
-            List<sp_values> tL = new List<sp_values>();
-            foreach (var tt in tmp)
+            using(SqlConnection _conn = new SqlConnection(connStr))
             {
-                tL.Add(tt);
+                var tmp = _conn.Query<sp_values>("SELECT KID as ID, [DisType] as Text FROM [d3DISTYPES]");
+                List<sp_values> tL = new List<sp_values>();
+                foreach (var tt in tmp)
+                {
+                    tL.Add(tt);
+                }
+                return new SelectList(tL, "ID", "Text");
             }
-            return new SelectList(tL, "ID", "Text");
         }
-
-
-
-
         //KIDtyp
         public static string KIDtypName(string KIDtyp)
         {
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-            using (SqlConnection _conn = new SqlConnection(connectionString))
+            using (SqlConnection _conn = new SqlConnection(connStr))
             {
                 string rez = _conn.QueryFirst<string>(
                         "SELECT TOP 1 [Sanitary] FROM [d3SANITARY] WHERE [KID]=@val", new { val = KIDtyp});
@@ -63,23 +62,21 @@ namespace nadis.DAL.nadis
 
         public static SelectList KIDtypList()
         {
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-            using SqlConnection _conn = new SqlConnection(connectionString);
-            var tmp = _conn.Query<sp_values>("SELECT KID as ID, [Sanitary] as Text FROM [d3SANITARY]");
-            List<sp_values> tL = new List<sp_values>();
-            foreach (var tt in tmp)
+            using(SqlConnection _conn = new SqlConnection(connStr))
             {
-                tL.Add(tt);
-            }
+                var tmp = _conn.Query<sp_values>("SELECT KID as ID, [Sanitary] as Text FROM [d3SANITARY]");
+                List<sp_values> tL = new List<sp_values>();
+                foreach (var tt in tmp)
+                {
+                    tL.Add(tt);
+                }
             return new SelectList(tL, "ID", "Text");
+            }
         }
 
         public static SelectList KIDroList()
         {
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-            using SqlConnection _conn = new SqlConnection(connectionString);
+            using SqlConnection _conn = new SqlConnection(connStr);
             var tmp = _conn.Query<sp_values>("SELECT KID as ID, [VetUnit] as Text FROM [1VETUNITS]");
             List<sp_values> tL = new List<sp_values>();
             foreach (var tt in tmp)
@@ -92,9 +89,7 @@ namespace nadis.DAL.nadis
         //d3PREVMEASURES
         public static SelectList KIDtrtList()
         {
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-            using SqlConnection _conn = new SqlConnection(connectionString);
+            using SqlConnection _conn = new SqlConnection(connStr);
             var tmp = _conn.Query<sp_values>("SELECT KID as ID, [Measure] as Text FROM [d3PREVMEASURES]");
             List<sp_values> tL = new List<sp_values>();
             foreach (var tt in tmp)
@@ -106,9 +101,7 @@ namespace nadis.DAL.nadis
         
         public static string KIDtrtName(string KIDtrt)
         {
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-            using (SqlConnection _conn = new SqlConnection(connectionString))
+            using (SqlConnection _conn = new SqlConnection(connStr))
             {
                 string rez = _conn.QueryFirst<string>(
                         "SELECT TOP 1 [Measure] FROM [d3PREVMEASURES] WHERE [KID]=@val", new { val = KIDtrt});
@@ -118,9 +111,7 @@ namespace nadis.DAL.nadis
 
         public static string KIDdisName(string KIDdis)
         {
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-            using (SqlConnection _conn = new SqlConnection(connectionString))
+            using (SqlConnection _conn = new SqlConnection(connStr))
             {
                 string rez = _conn.QueryFirstOrDefault<string>(
                         "SELECT TOP 1 [Disease] FROM [d2DISEASES] WHERE [KID]=@val", new { val = KIDdis});
@@ -131,9 +122,7 @@ namespace nadis.DAL.nadis
 
         public static string KIDdivName(string KIDdiv)
         {
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-            using (SqlConnection _conn = new SqlConnection(connectionString))
+            using (SqlConnection _conn = new SqlConnection(connStr))
             {
                 string rez = _conn.QueryFirst<string>(
                         "SELECT TOP 1 [Socunit] FROM [73GEO3] WHERE [gAID]=@val", new { val = KIDdiv});
@@ -143,9 +132,7 @@ namespace nadis.DAL.nadis
         
         public static string KIDspcName(string KIDspc)
         {
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-            using (SqlConnection _conn = new SqlConnection(connectionString))
+            using (SqlConnection _conn = new SqlConnection(connStr))
             {
                 string rez = _conn.QueryFirst<string>(
                         "SELECT TOP 1 [Species] FROM [d2SPECIES] WHERE KID=@val", new { val = KIDspc});
@@ -155,9 +142,7 @@ namespace nadis.DAL.nadis
 
         public static SelectList VetPrepList()
         {
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-            using SqlConnection _conn = new SqlConnection(connectionString);
+            using SqlConnection _conn = new SqlConnection(connStr);
             var tmp = _conn.Query<sp_values>("SELECT KID as ID, PrepType as Text FROM VetPrep");
             List<sp_values> tL = new List<sp_values>();
             foreach (var tt in tmp)
@@ -169,9 +154,7 @@ namespace nadis.DAL.nadis
 
         public static SelectList EdIzmList()
         {
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-            using SqlConnection _conn = new SqlConnection(connectionString);
+            using SqlConnection _conn = new SqlConnection(connStr);
             var tmp = _conn.Query<sp_values>("SELECT KID as ID, EdIzm as Text FROM EdIzm");
             List<sp_values> tL = new List<sp_values>();
             foreach (var tt in tmp) tL.Add(tt);
@@ -180,9 +163,7 @@ namespace nadis.DAL.nadis
 
         public static string VetPrepName(string KIDVetPrep)
         {
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-            using (SqlConnection _conn = new SqlConnection(connectionString))
+            using (SqlConnection _conn = new SqlConnection(connStr))
             {
                 string VetUnit = _conn.QueryFirst<string>(
                         "SELECT TOP 1 PrepType FROM [VetPrep] WHERE KID=@VetPP", new { VetPP = KIDVetPrep});
@@ -192,9 +173,7 @@ namespace nadis.DAL.nadis
 
         public static string EdIzmName(string KIDEdIzm)
         {
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-            using (SqlConnection _conn = new SqlConnection(connectionString))
+            using (SqlConnection _conn = new SqlConnection(connStr))
             {
                 return _conn.QueryFirst<string>(
                         "SELECT TOP 1 EdIzm FROM [EdIzm] WHERE KID=@VetPP", new { VetPP = KIDEdIzm }).Trim();
@@ -203,7 +182,6 @@ namespace nadis.DAL.nadis
 
         public static List<sp_values> __RepMO1YearList(int YY, int MM)
         {
-
             List<sp_values> tmpList = new List<sp_values>();
             DateTime dtB = new DateTime(YY,MM,1);
             DateTime dtE =  DateTime.Today;
@@ -226,11 +204,8 @@ namespace nadis.DAL.nadis
 
         public static SelectList KIDdivList(string KIDro)
         {
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-
             List<sp_values> tmpList = new List<sp_values>();
-            using (SqlConnection _conn = new SqlConnection(connectionString))
+            using (SqlConnection _conn = new SqlConnection(connStr))
             {
                 SqlCommand cmd = new SqlCommand("SELECT gAID as KID,Socunit FROM[73GEO3] " +
                     "INNER JOIN[1VETUNITS] ON[1VETUNITS].KIDray =[73GEO3].gRID " +
@@ -247,29 +222,16 @@ namespace nadis.DAL.nadis
                     tmpList.Add(tmp);
                 }
                 _conn.Close();
-                /*
-                var tmp = _conn.Query<sp_values>("SELECT gAID as KID,Socunit FROM[73GEO3] " +
-                    "INNER JOIN[1VETUNITS] ON[1VETUNITS].KIDray =[73GEO3].gRID " +
-                        "WHERE[1VETUNITS].KID = @KID", new {KID = KIDro});
-                */
-
             }
-
             return new SelectList(tmpList, "ID", "Text",tmpList[0].ID);
         }
         
-
         public static SelectList KIDspcList()
         {
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
             List<sp_values> tmpList = new List<sp_values>();
-            using (SqlConnection _conn = new SqlConnection(connectionString))
+            using (SqlConnection _conn = new SqlConnection(connStr))
             {
                 SqlCommand cmd = new SqlCommand("SELECT KID, Species FROM [d2SPECIES]", _conn);
-                //{
-                //    CommandType = CommandType.StoredProcedure
-                //};
                 _conn.Open();
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
@@ -288,16 +250,11 @@ namespace nadis.DAL.nadis
 
         public static SelectList KIDdisList()
         {
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
             List<sp_values> tmpList = new List<sp_values>();
             tmpList.Add(new sp_values{ ID="",Text=""});
-            using (SqlConnection _conn = new SqlConnection(connectionString))
+            using (SqlConnection _conn = new SqlConnection(connStr))
             {
                 SqlCommand cmd = new SqlCommand("SELECT KID, Disease FROM [d2DISEASES]", _conn);
-                //{
-                //    CommandType = CommandType.StoredProcedure
-                //};
                 _conn.Open();
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
@@ -314,15 +271,10 @@ namespace nadis.DAL.nadis
             return new SelectList(tmpList, "ID", "Text");
         }
 
-
-
         public static SelectList testList()
         {
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-
             List<sp_values> tmpList = new List<sp_values>();
-            using (SqlConnection _conn = new SqlConnection(connectionString))
+            using (SqlConnection _conn = new SqlConnection(connStr))
             {
                 SqlCommand cmd = new SqlCommand(@"SELECT KID,Testname FROM [d2TESTS]", _conn);
                 _conn.Open();
@@ -338,15 +290,12 @@ namespace nadis.DAL.nadis
                 }
                 _conn.Close();
             }
-
             return new SelectList(tmpList, "ID", "Text", tmpList[0].ID);
         }
 
         public static string testName(string tst)
         {
-            var appSettingsJson = AppSettingJSON.GetAppSettings();
-            var connectionString = appSettingsJson["DefaultConnection"];
-            using (SqlConnection _conn = new SqlConnection(connectionString))
+            using (SqlConnection _conn = new SqlConnection(connStr))
             {
                 string t = _conn.QueryFirstOrDefault<string>(
                         "SELECT TOP 1 Testname FROM [d2TESTS] WHERE KID=@tt", new { tt = tst});
