@@ -2,9 +2,10 @@
 @{
     ViewData["Title"] = "Create";
 }
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<NadisLocale> _locale
 
-<h1>Создать</h1>
-<h3>ctVet1a</h3>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -20,22 +21,22 @@
                 <span asp-validation-for="repMO" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="KIDdivDisplay" class="control-label"></label>
+                <label asp-for="KIDdiv" class="control-label"></label>
                 @Html.DropDownList("KIDdiv", ViewBag.KIDdivList as SelectList, new { @class = "form-control" })
                 <span asp-validation-for="KIDdiv" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="KIDspcDisplay" class="control-label"></label>
+                <label asp-for="KIDspc" class="control-label"></label>
                 @Html.DropDownList("KIDspc", ViewBag.KIDspcList as SelectList, new { @class = "form-control" })
                 <span asp-validation-for="KIDspc" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="KIDdisDisplay" class="control-label"></label>
+                <label asp-for="KIDdis" class="control-label"></label>
                 @Html.DropDownList("KIDdis", ViewBag.KIDdisList as SelectList, new { @class = "form-control" })
                 <span asp-validation-for="KIDdis" class="text-danger"></span>
             </div>
 
-            <p>За отчетный период</p>
+            <p>@_locale["Za_otch_periud"]</p>
             <div class="form-group pl-5">
                 <label asp-for="pos_units" class="control-label"></label>
                 <input asp-for="pos_units" class="form-control" type="number" min="0" step="1" />
@@ -56,7 +57,8 @@
                 <input asp-for="culled" class="form-control" type="number" min="0" step="1" />
                 <span asp-validation-for="culled" class="text-danger"></span>
             </div>            
-            <p>Осталось на конец отчетного периода</p>
+            <!--Осталось на конец отчетного периода-->
+            <p>@_locale["Na_kon_periuda"]</p>
             <div class="form-group pl-5">
                 <label asp-for="end_pos_units" class="control-label"></label>
                 <input asp-for="end_pos_units" class="form-control" type="number" min="0" step="1" />

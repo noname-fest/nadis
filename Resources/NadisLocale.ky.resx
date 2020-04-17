@@ -118,33 +118,42 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="culled" xml:space="preserve">
-    <value>Забито KG</value>
+    <value>Союлду</value>
   </data>
   <data name="dead" xml:space="preserve">
-    <value>Пало KG</value>
+    <value>Өлгөн</value>
   </data>
   <data name="end_pos_animals" xml:space="preserve">
-    <value>Больных KG</value>
+    <value>Оорулуу</value>
   </data>
   <data name="end_pos_units" xml:space="preserve">
-    <value>Небл.пункт KG</value>
+    <value>Коопсуз пункт</value>
   </data>
   <data name="KIDdis" xml:space="preserve">
-    <value>Болезнь KG</value>
+    <value>Оору</value>
   </data>
   <data name="KIDdiv" xml:space="preserve">
     <value>Айыл Аймак</value>
   </data>
   <data name="KIDspc" xml:space="preserve">
-    <value>Туру</value>
+    <value>Түрү</value>
   </data>
   <data name="positives" xml:space="preserve">
-    <value>Небл.пункт KG</value>
+    <value>Коопсуз пункт</value>
   </data>
   <data name="pos_units" xml:space="preserve">
-    <value>Забол.v</value>
+    <value>Ооруп калган</value>
   </data>
   <data name="repMO" xml:space="preserve">
-    <value>Периуд KG</value>
+    <value>Мезгил</value>
+  </data>
+  <data name="Za_otch_periud" xml:space="preserve">
+    <value>Отчеттук мезгилде</value>
+  </data>
+  <data name="Na_kon_periuda" xml:space="preserve">
+    <value>Отчеттук мезгилдин акырына</value>
+  </data>
+  <data name="OnlyPositiveNumber" xml:space="preserve">
+    <value>Только целое число > 0</value>
   </data>
 </root>

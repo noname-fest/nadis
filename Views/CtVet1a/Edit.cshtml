@@ -15,19 +15,19 @@
                 <span asp-validation-for="repMO" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="KIDdivDisplay" class="control-label"></label>
+                <label asp-for="KIDdiv" class="control-label"></label>
                 <!--<input asp-for="KIDdiv" class="form-control" />-->
                 @Html.DropDownList("KIDdiv", ViewBag.KIDdivList as SelectList, new { @class = "form-control" })
                 <span asp-validation-for="KIDdiv" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="KIDspcDisplay" class="control-label"></label>
+                <label asp-for="KIDspc" class="control-label"></label>
                 <!--<input asp-for="KIDspc" class="form-control" />-->
                 @Html.DropDownList("KIDspc", ViewBag.KIDspcList as SelectList, new { @class = "form-control" })
                 <span asp-validation-for="KIDspc" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="KIDdisDisplay" class="control-label"></label>
+                <label asp-for="KIDdis" class="control-label"></label>
                 <!--<input asp-for="KIDdis" class="form-control" />-->
                 @Html.DropDownList("KIDdis", ViewBag.KIDdisList as SelectList, new { @class = "form-control" })
                 <span asp-validation-for="KIDdis" class="text-danger"></span>

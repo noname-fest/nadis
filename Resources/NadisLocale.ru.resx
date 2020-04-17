@@ -153,5 +153,8 @@
   <data name="Na_kon_periuda" xml:space="preserve">
     <value>На кон. отч. периода</value>
   </data>
+  <data name="OnlyPositiveNumber" xml:space="preserve">
+    <value>Только целое число > 0</value>
+  </data>
 
 </root>

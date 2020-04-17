@@ -45,27 +45,38 @@
 
             <div class="form-group">
                 <label asp-for="PostupiloVsego" class="control-label"></label>
-                <input asp-for="PostupiloVsego" class="form-control" type="number" min="0" step="1" />
+                <input asp-for="PostupiloVsego" class="form-control" type="number" min="0" step="1" id="_v1"/>
                 <span asp-validation-for="PostupiloVsego" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PostupiloRazn" class="control-label"></label>
-                <input asp-for="PostupiloRazn" class="form-control" type="number" min="0" step="1" />
+                <input asp-for="PostupiloRazn" class="form-control" type="number" min="0" step="1" id="_v2"/>
                 <span asp-validation-for="PostupiloRazn" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="IzrashodVsego" class="control-label"></label>
-                <input asp-for="IzrashodVsego" class="form-control" type="number" min="0" step="1" />
+                <input asp-for="IzrashodVsego" class="form-control" type="number" min="0" step="1" id="_v3"/>
                 <span asp-validation-for="IzrashodVsego" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="IzrashodDrugoe" class="control-label"></label>
-                <input asp-for="IzrashodDrugoe" class="form-control" type="number" min="0" step="1" />
+                <input asp-for="IzrashodDrugoe" class="form-control" type="number" min="0" step="1" id="_v4"/>
                 <span asp-validation-for="IzrashodDrugoe" class="text-danger"></span>
             </div>
 
+            <div>
+                <label asp-for="Ostatok_za_mesyac" class="control-label"></label>
+                <strong class="h4">
+                    <label id="_ostatok" class="text-info">
+                        @Html.DisplayFor(model => model.Ostatok_za_mesyac)
+                    </label>
+                </strong>
+                <span asp-validation-for="Ostatok_za_mesyac" class="text-danger"></span>
+            </div>
+
+
             <div class="form-group">
-                <input type="submit" value="Создать" class="btn btn-success" />
+                <input type="submit" value="Создать" class="btn btn-success"  id="btnCreate"/>
             </div>
         </form>
     </div>
@@ -79,6 +90,7 @@
     $(function () {
         $('#_repmo,#_prep,#_edizm').change(function()
         {
+            var idR  = $("#id_r").val();
             var id1 = $("#_kidro").val();
             var id2 = $("#_repmo").val();
             var id3 = $("#_prep").val();
@@ -89,10 +101,40 @@
                 data: {IDro: id1, repMo: id2, VetPrep: id3, e: id4},
                 success: function (data) {
                     // заменяем содержимое присланным частичным представлением
-                    $('#_bylo').text(data);
-                    $('#bylo_val').val(data);
+                    $('#_bylo').text(data); // изменить текст
+                    $('#bylo_val').val(data); // изменить input с привязкой к Field    
+                    $('#_v1,#_v2,#_v3,#_v4').change();
                 }
             });
+            $.ajax({
+                type: 'POST',
+                url: "@Url.Action("IsUniqRecord")",
+                data: {_id: idR, IDro: id1, repMo: id2, VetPrep: id3, e: id4},
+                success: function (data) {
+                    if(!data)
+                        {
+                            $('#errmsg').text("Такая запись уже существует");
+                            $('#btnCreate').attr("disabled",true);
+                        }
+                        else 
+                        {
+                            $('#errmsg').text("");
+                            $('#btnCreate').attr("disabled",false);
+                        }
+                }
+            });
+        });
+        $('#_v1,#_v2,#_v3,#_v4').change(function()
+        {
+            var a1 = $("#_v1").val();
+            var a2 = $("#_v2").val();
+            var a3 = $("#_v3").val();
+            var a4 = $("#_v4").val();
+            var rez = parseInt($("#bylo_val").val())
+                    + parseInt(a1) //+ parseInt(a2) 
+                    - parseInt(a3); //- parseInt(a4);
+            $('#_ostatok').text(rez);
+            if(parseInt(a2)>parseInt(a1)) $('#_v2').val(a1);
         });
     })
 </script>

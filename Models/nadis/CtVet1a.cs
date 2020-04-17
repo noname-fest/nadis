@@ -45,32 +45,32 @@ namespace nadis.Models
 
         //[Display(Name = "Небл.пункт")]
         [Display(Name = "pos_units")]
-        [Required(ErrorMessage = "Только целое число > 0")]
+        [Required(ErrorMessage = "OnlyPositiveNumber")]
         public int? pos_units { get; set; } = 0;
 
         //[Display(Name = "Забол.")]
         [Display(Name = "positives")]
-        [Required(ErrorMessage = "Только целое число > 0")]
+        [Required(ErrorMessage = "OnlyPositiveNumber")]
         public int? positives { get; set; } = 0;
 
         //[Display(Name = "Пало")]
         [Display(Name = "dead")]
-        [Required(ErrorMessage = "Только целое число > 0")]
+        [Required(ErrorMessage = "OnlyPositiveNumber")]
         public int? dead { get; set; } = 0;
 
         //[Display(Name = "Небл.пункт")]
         [Display(Name = "end_pos_units")]
-        [Required(ErrorMessage = "Только целое число > 0")]
+        [Required(ErrorMessage = "OnlyPositiveNumber")]
         public int? end_pos_units { get; set; } = 0;
 
         //[Display(Name = "Больных")]
         [Display(Name = "end_pos_animals")]
-        [Required(ErrorMessage = "Только целое число > 0")]
+        [Required(ErrorMessage = "OnlyPositiveNumber")]
         public int? end_pos_animals { get; set; } = 0;
 
         //[Display(Name = "Забито")]
         [Display(Name = "culled")]
-        [Required(ErrorMessage = "Только целое число > 0")]
+        [Required(ErrorMessage = "OnlyPositiveNumber")]
         public int? culled { get; set; } = 0;
     }
 }
