@@ -8,7 +8,7 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ID"/>
+            <input type="hidden" asp-for="ID" id="id_r"/>
             <input type="hidden" asp-for="KIDro"  id="_kidro"/>
             <input type="hidden" asp-for="Bylo" id="bylo_val"/>
             <div class="form-group">
@@ -70,7 +70,7 @@
                 <span asp-validation-for="Ostatok_za_mesyac" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Сохранить" asp-route-id="@Model.ID" class="btn btn-success" />
+                <input type="submit" value="Сохранить" asp-route-id="@Model.ID" class="btn btn-success" id="btnSave"/>
             </div>
         </form>
     </div>
@@ -83,6 +83,7 @@
     $(function () {
         $('#_repmo,#_prep,#_edizm').change(function()
         {
+            var idR  = $("#id_r").val();
             var id1 = $("#_kidro").val();
             var id2 = $("#_repmo").val();
             var id3 = $("#_prep").val();
@@ -98,6 +99,24 @@
                     $('#_v1,#_v2,#_v3,#_v4').change();
                 }
             });
+            $.ajax({
+                type: 'POST',
+                url: "@Url.Action("IsUniqRecord")",
+                data: {_id: idR, IDro: id1, repMo: id2, VetPrep: id3, e: id4},
+                success: function (data) {
+                    if(!data)
+                        {
+                            $('#errmsg').text("Такая запись уже существует");
+                            $('#btnSave').attr("disabled",true);
+                        }
+                        else 
+                        {
+                            $('#errmsg').text("");
+                            $('#btnSave').attr("disabled",false);
+                        }
+                }
+            });
+
         });
         $('#_v1,#_v2,#_v3,#_v4').change(function()
         {

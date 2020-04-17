@@ -10,6 +10,20 @@ namespace nadis.DAL.nadis
 {
     public static class BioPrepDAL
     {
+        public static bool IsUniqueRecord(Guid id, string _KIDro, DateTime _repMo, string _prep,string _edizm)
+        {
+            using (SqlConnection _conn = new SqlConnection(spDAL.connStr))
+            {
+                int count = _conn.QueryFirst<int>("SELECT COUNT(*) FROM BioPrep WHERE ("
+                    + "repMO=@repMOP and KIDro=@KIDroP and VetPrep=@VetPrepP and EdIzm=@EdIzmP"
+                    + " and ID<>@idd)",
+                    new {   repMOP = _repMo, KIDroP = _KIDro,
+                            VetPrepP = _prep, EdIzmP = _edizm,
+                            idd = id });
+                _conn.Close();
+                if (count == 0) { return true; } else { return false; }
+            }
+        }
         public static long? GetByloById(string _KIDro, DateTime _repMo, string _prep,string _edizm)
         {
             long? _bylo = 0;

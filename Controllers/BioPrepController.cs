@@ -14,10 +14,13 @@ namespace nadis.Controllers
     {
         [Authorize]
         [HttpPost]
-        public long? GetByloById(string IDro, DateTime repMo,string VetPrep,string e)
-        {
-            return BioPrepDAL.GetByloById(IDro,repMo,VetPrep,e);
-        }
+        public bool IsUniqRecord(Guid _id,string IDro, DateTime repMo, string VetPrep, string e) 
+            => BioPrepDAL.IsUniqueRecord(_id,IDro, repMo, VetPrep, e);
+
+        [Authorize]
+        [HttpPost]
+        public long? GetByloById(string IDro, DateTime repMo, string VetPrep, string e) 
+            => BioPrepDAL.GetByloById(IDro, repMo, VetPrep, e);
 
         [Authorize]
         public IActionResult Index()
