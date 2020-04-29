@@ -16,6 +16,16 @@
 <p>
     <a asp-action="Create">Создать новый</a>
 </p>
+<p>
+    <div>
+       <form> 
+                @Html.DropDownList("m",ViewBag.RepList as SelectList)
+                <input type="submit" value="Отчет" asp-controller="CtVet1a"
+                    asp-action="GetReport" method="GET"
+                    asp-route-m="m" class="btn btn-success"/>
+       </form>
+    </div>
+</p>
 <table class="table table-sm table-striped table-responsive-sm table-bordered">
      <thead align="center">
          <tr>

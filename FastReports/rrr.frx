@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="04/24/2020 15:42:17" ReportInfo.Modified="04/24/2020 15:44:48" ReportInfo.CreatorVersion="2020.1.0.0">
+  <Dictionary>
+      <TableDataSource Name="Table" Alias="v1" DataType="System.Int32" Enabled="true">
+        <Column Name="Периуд" DataType="System.String"/>
+        <Column Name="Вид" DataType="System.String"/>
+        <Column Name="Болезнь" DataType="System.String"/>
+        <Column Name="Район" DataType="System.String"/>
+        <Column Name="Область" DataType="System.String"/>
+        <Column Name="Положед" DataType="System.Int32"/>
+        <Column Name="Положжив" DataType="System.Int32"/>
+        <Column Name="Забито" DataType="System.Int32"/>
+        <Column Name="Итогоположед" DataType="System.Int32"/>
+        <Column Name="Итогоположжив" DataType="System.Int32"/>
+        <Column Name="AA" DataType="System.String"/>
+        <Column Name="Датаобслед" DataType="System.DateTime"/>
+        <Column Name="KIDdiv" DataType="System.String"/>
+        <Column Name="KIDspc" DataType="System.String"/>
+        <Column Name="KIDdis" DataType="System.String"/>
+        <Column Name="KIDro" DataType="System.String"/>
+        <Column Name="culled" DataType="System.Int32"/>
+        <Column Name="ID" DataType="System.Guid"/>
+        <Column Name="GID" DataType="System.String"/>
+        <Column Name="repMO" DataType="System.DateTime"/>
+        <CommandParameter Name="Y" DataType="22" DefaultValue="2019"/>
+        <CommandParameter Name="M" DataType="22" DefaultValue="1"/>
+        <CommandParameter Name="roID" DataType="22" DefaultValue="RD08223"/>
+      </TableDataSource>
+
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="122.85"/>
+    <PageHeaderBand Name="PageHeader1" Top="126.85" Width="718.2" Height="28.35"/>
+    <DataBand Name="Data1" Top="159.2" Width="718.2" Height="75.6">
+      <TextObject Name="Text1" Width="94.5" Height="18.9" Text="repMO" Font="Arial, 10pt"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="238.8" Width="718.2" Height="18.9"/>
+  </ReportPage>
+</Report>

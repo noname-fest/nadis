@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
+using FastReport;
+using FastReport.Web;
 
 namespace nadis
 {
@@ -64,6 +66,7 @@ namespace nadis
             }
             app.UseRequestLocalization();
             app.UseStaticFiles();
+            app.UseFastReport();
 
             app.UseRouting();
 

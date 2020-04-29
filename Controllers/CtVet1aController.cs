@@ -5,14 +5,73 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using nadis.Models;
 using nadis.DAL.nadis;
-using Dapper.Contrib;
-using nadis.tools;
-using System.Data.SqlClient;
+using FastReport.Web;
+using FastReport.Data;
+using FastReport.Utils;
+using System.IO;
+using FastReport.Export.PdfSimple;
 
 namespace nadis.Controllers
 {
     public class CtVet1aController : Controller
     {
+
+        [Authorize]
+        public IActionResult GetReportInPdf()
+        {
+            RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
+            WebReport webR = new WebReport();
+
+            MsSqlDataConnection _con = new MsSqlDataConnection();
+            _con.ConnectionString = spDAL.connStr;
+            _con.CreateAllTables();
+            webR.Report.Dictionary.Connections.Add(_con);
+            string _path = System.IO.Directory.GetCurrentDirectory();
+            _path = _path +  "\\FastReports\\ctVet1a-v2.frx";
+            
+            webR.Report.Load(_path);
+            webR.Report.SetParameterValue("yyyy","2020");
+            webR.Report.SetParameterValue("mm","1");
+            webR.Report.SetParameterValue("idro",
+                User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value);
+            
+            webR.Report.Prepare();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                PDFSimpleExport pdfExport = new PDFSimpleExport();
+                pdfExport.Export(webR.Report, ms);
+                ms.Flush();
+                return File(ms.ToArray(),
+                            "application/pdf",
+                            Path.GetFileNameWithoutExtension("ctVet1a-v2") + ".pdf");
+            }              
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult GetReport(int m)
+        {
+            RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
+            Reports webR = new Reports();
+            webR.report = new WebReport();
+
+            MsSqlDataConnection _con = new MsSqlDataConnection();
+            _con.ConnectionString = spDAL.connStr;
+            _con.CreateAllTables();
+            webR.report.Report.Dictionary.Connections.Add(_con);
+            string _path = System.IO.Directory.GetCurrentDirectory();
+            _path = _path +  "\\FastReports\\ctVet1a-v2.frx";
+            
+            webR.dt = new DateTime(DateTime.Today.Year,m,1);
+            webR.report.Report.Load(_path);
+            webR.report.Report.SetParameterValue("yyyy",DateTime.Today.Year.ToString());//webR.dt.Year.ToString());
+            webR.report.Report.SetParameterValue("mm",m.ToString());//webR.dt.Month.ToString());
+            webR.report.Report.SetParameterValue("idro",
+                User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value);
+            //webR.report.Report.Prepare();
+            return View(webR);
+        }
+
         [Authorize]
         public IActionResult Index()
         {
@@ -35,6 +94,7 @@ namespace nadis.Controllers
                                                 reportDtMonth
                                                 ).ToList();
             ViewBag.Page = "CtVet1a";
+            ViewBag.RepList  = spDAL.ReportToToday();
             return View(vet1aList);
         }
         

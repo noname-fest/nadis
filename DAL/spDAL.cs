@@ -180,6 +180,26 @@ namespace nadis.DAL.nadis
             }
         }
 
+        public static SelectList ReportToToday()
+        {
+            List<sp_values> tmpList = new List<sp_values>();
+            DateTime dtB = new DateTime(DateTime.Today.Year,1,1);
+            DateTime dtE =  DateTime.Today;
+            while(dtB <= dtE)
+            {
+                sp_values tmp_sp = new sp_values
+                {
+                    ID = dtB.Month.ToString(),
+                    Text = mmm[dtB.Month-1] + dtB.Year.ToString()
+                };
+                dtB = dtB.AddMonths(1);
+                tmpList.Add(tmp_sp);
+            }
+            return new SelectList(tmpList,
+                                  "ID",
+                                  "Text");
+        }
+
         public static List<sp_values> __RepMO1YearList(int YY, int MM)
         {
             List<sp_values> tmpList = new List<sp_values>();
