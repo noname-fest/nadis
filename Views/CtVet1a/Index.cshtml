@@ -13,18 +13,18 @@
 @inject IHtmlLocalizer<NadisLocale> _locale
 
 <font color="red" size=18>@TempData["EM"]</font>
-<p>
-    <a asp-action="Create">Создать новый</a>
-</p>
-<p>
+<p><a asp-action="Create">Создать новый</a></p>  
     <div>
-       <form> 
+       <form>
                 @Html.DropDownList("m",ViewBag.RepList as SelectList)
                 <input type="submit" value="Отчет" asp-controller="CtVet1a"
                     asp-action="GetReport" method="GET"
                     asp-route-m="m" class="btn btn-success"/>
        </form>
     </div>
+
+
+<p>
 </p>
 <table class="table table-sm table-striped table-responsive-sm table-bordered">
      <thead align="center">

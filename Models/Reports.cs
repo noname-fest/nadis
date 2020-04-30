@@ -10,7 +10,7 @@ namespace nadis.Models
             public int Id { get; set; }
             // Report File Name
             public string ReportName { get; set; }
-            public DateTime dt {get;set;}
+            public int m {get;set;}
             public WebReport report {get;set;}
         }
 }

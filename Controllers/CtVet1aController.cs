@@ -15,9 +15,9 @@ namespace nadis.Controllers
 {
     public class CtVet1aController : Controller
     {
-
+        //WebReport _r = new WebReport();
         [Authorize]
-        public IActionResult GetReportInPdf()
+        public IActionResult GetReportInPdf(int m)
         {
             RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
             WebReport webR = new WebReport();
@@ -30,8 +30,8 @@ namespace nadis.Controllers
             _path = _path +  "\\FastReports\\ctVet1a-v2.frx";
             
             webR.Report.Load(_path);
-            webR.Report.SetParameterValue("yyyy","2020");
-            webR.Report.SetParameterValue("mm","1");
+            webR.Report.SetParameterValue("yyyy",DateTime.Today.Year.ToString());
+            webR.Report.SetParameterValue("mm",m.ToString());
             webR.Report.SetParameterValue("idro",
                 User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value);
             
@@ -62,13 +62,14 @@ namespace nadis.Controllers
             string _path = System.IO.Directory.GetCurrentDirectory();
             _path = _path +  "\\FastReports\\ctVet1a-v2.frx";
             
-            webR.dt = new DateTime(DateTime.Today.Year,m,1);
+            //webR.dt = new DateTime(DateTime.Today.Year,m,1);
             webR.report.Report.Load(_path);
             webR.report.Report.SetParameterValue("yyyy",DateTime.Today.Year.ToString());//webR.dt.Year.ToString());
             webR.report.Report.SetParameterValue("mm",m.ToString());//webR.dt.Month.ToString());
             webR.report.Report.SetParameterValue("idro",
                 User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value);
             //webR.report.Report.Prepare();
+            webR.m = m;
             return View(webR);
         }
 
