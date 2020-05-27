@@ -11,6 +11,7 @@ namespace nadis.Models
             // Report File Name
             public string ReportName { get; set; }
             public int m {get;set;}
+            public string dt {get;set;}
             public WebReport report {get;set;}
         }
 }
