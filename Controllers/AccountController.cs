@@ -25,7 +25,7 @@ namespace AuthSample.Controllers
         //{
         //    _userContext = userContext;
         //}
-
+        // THIS IS CODE TO USER LOGIN using COOKIES 
         [HttpGet]
         public IActionResult Login() 
         {
