@@ -10,6 +10,7 @@ using FastReport.Data;
 using FastReport.Utils;
 using System.IO;
 using FastReport.Export.PdfSimple;
+using nadis;
 
 namespace nadis.Controllers
 {
@@ -43,6 +44,7 @@ namespace nadis.Controllers
                 PDFSimpleExport pdfExport = new PDFSimpleExport();
                 pdfExport.Export(webR.Report, ms);
                 ms.Flush();
+                pdfExport.Dispose();
                 return File(ms.ToArray(),
                             "application/pdf",
                             Path.GetFileNameWithoutExtension("ctVet1a-v2") + ".pdf");
@@ -53,6 +55,7 @@ namespace nadis.Controllers
         [HttpGet]
         public IActionResult GetReport(string dt) //int m
         {
+            /*
             RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
             Reports webR = new Reports();
             webR.report = new WebReport();
@@ -74,8 +77,12 @@ namespace nadis.Controllers
             //webR.report.Report.Prepare();
             //webR.m = m;
             webR.dt = dt;
+            */
+            //return View(webR);
+            string KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value;
+            ReportGenerator rg = new ReportGenerator();
 
-            return View(webR);
+            return View(rg.GetReport(dt,"ctVet1a-v2",KIDro));
         }
 
         [Authorize]
