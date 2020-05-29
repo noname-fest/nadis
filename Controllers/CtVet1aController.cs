@@ -5,12 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using nadis.Models;
 using nadis.DAL.nadis;
-using FastReport.Web;
-using FastReport.Data;
-using FastReport.Utils;
-using System.IO;
-using FastReport.Export.PdfSimple;
-using nadis;
 
 namespace nadis.Controllers
 {
@@ -19,6 +13,7 @@ namespace nadis.Controllers
         [Authorize]
         public IActionResult GetReportInPdf(string dt)
         {
+            /*
             RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
             WebReport webR = new WebReport();
 
@@ -48,12 +43,18 @@ namespace nadis.Controllers
                 return File(ms.ToArray(),
                             "application/pdf",
                             Path.GetFileNameWithoutExtension("ctVet1a-v2") + ".pdf");
-            }              
+            } 
+            */
+            string reportName = "ctVet1a-v2";
+            string KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value;
+            return File(ReportGenerator.ExportToPDF(dt,reportName,KIDro),"application/pdf",
+                            reportName + ".pdf");
+
         }
 
         [Authorize]
         [HttpGet]
-        public IActionResult GetReport(string dt) //int m
+        public IActionResult GetReportMonth(string dt) //int m
         {
             /*
             RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
@@ -80,9 +81,9 @@ namespace nadis.Controllers
             */
             //return View(webR);
             string KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value;
-            ReportGenerator rg = new ReportGenerator();
+            //ReportGenerator rg = new ReportGenerator();
 
-            return View(rg.GetReport(dt,"ctVet1a-v2",KIDro));
+            return View(ReportGenerator.GetReport(dt,"ctVet1a-v2",KIDro));
         }
 
         [Authorize]

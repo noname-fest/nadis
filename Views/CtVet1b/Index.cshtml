@@ -9,8 +9,24 @@
             };
 }
 <font color="red" size=18>@TempData["EM"]</font>
+
+<table style="border-collapse: collapse;" border="0">
+<tbody>
+<tr>
+<td><a asp-action="Create">Создать новый</a></td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="text-align: right;"><form>
+                @Html.DropDownList("dt",ViewBag.RepList as SelectList)
+                <input type="submit" value="Отчет за месяц" asp-controller="CtVet1b"
+                    asp-action="GetReport" method="GET"
+                    asp-route-dt="dt" class="btn btn-success"/>
+       </form>
+</td>
+</tr>
+</tbody>
+</table>
+
 <p>
-     <a asp-action="Create">Создать новый</a>
 </p>
 <table class="table table-striped table-responsive-sm table-bordered table-sm">
     <thead align="center">
