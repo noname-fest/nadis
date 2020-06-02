@@ -82,7 +82,6 @@
                             }                       
                         </li>
 
-
                         <li class="nav-item">
                              @if(@ViewBag.Page=="BioPrep"){
                                 <b>
@@ -93,6 +92,18 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="BioPrep" asp-action="Index">Биопрепараты</a>
                             }
                         </li>
+
+                        <li class="nav-item">
+                             @if(@ViewBag.Page=="AnalizPEM"){
+                                <b>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Reports" asp-action="AnalizPEM">
+                                    <font color="blue">Анализ ПЭМ</font></a>
+                                </b>
+                            } else{
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Reports" asp-action="AnalizPEM">Анализ ПЭМ</a>
+                            }
+                        </li>
+
                         <li class="nav-item">
                              @if(@ViewBag.Page=="Privacy"){
                                 <b>

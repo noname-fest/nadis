@@ -34,6 +34,7 @@ namespace nadis.Controllers
                                                 reportDtMonth
                                                 ).ToList();
             ViewBag.Page = "BioPrep";
+            ViewBag.RepList  = spDAL.ReportToToday();
             return View(BioPrepList);
         }
 

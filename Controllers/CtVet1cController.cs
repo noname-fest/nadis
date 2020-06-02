@@ -21,6 +21,7 @@ namespace nadis.Controllers
                                                 reportDtMonth
                                                 ).ToList();
             ViewBag.Page = "CtVet1c";
+            ViewBag.RepList  = spDAL.ReportToToday();
             return View(CtVet1cList);
         }
 

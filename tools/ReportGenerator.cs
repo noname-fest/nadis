@@ -56,7 +56,8 @@ namespace nadis
             webR.Report.SetParameterValue("yyyy",y.ToString());
             webR.Report.SetParameterValue("mm",m.ToString());
             webR.Report.SetParameterValue("idro",KIDro);
-            
+            //webR.dt
+            //webR.ReportName = reportName;
             webR.Report.Prepare();
             using (MemoryStream ms = new MemoryStream())
             {

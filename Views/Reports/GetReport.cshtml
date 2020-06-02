@@ -1,0 +1,15 @@
+@model nadis.Models.Reports
+@{
+    ViewData["Title"] = "Report Generator";
+}
+<a class="btn btn-danger"   asp-controller="Reports"
+                            asp-action="GetReportInPdf"
+                            asp-route-dtR="@Model.dt"
+                            asp-route-ReportName="@Model.ReportName"
+                            >PDF</a>
+<p></p>
+<div class="container">
+    <div class="webreport">
+        @await Model.report.Render()
+    </div>
+</div>

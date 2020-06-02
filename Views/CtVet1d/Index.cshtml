@@ -9,8 +9,41 @@
             };
 }
 <font color="red" size=14>@TempData["EM"]</font>
+
+<table style="border-collapse: collapse;" border="0">
+<tbody>
+<tr>
+<td><a asp-action="Create">Создать новый</a></td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="text-align: right;"><form>
+                @Html.DropDownList("dt",ViewBag.RepList as SelectList)
+                <input type="hidden" id="tip" name="tip" value="month">
+                <input type="hidden" id="ReportName" name="ReportName" value="ctVet1d">
+                <input type="submit" value="Отчет за месяц" asp-controller="Reports"
+                    asp-action="GetReport" method="GET"
+                    asp-route-dt="dt" 
+                    asp-route-tip="tip"
+                    asp-route-ReportName="ReportName"
+                    class="btn btn-success"/>
+       </form>
+</td>
+<td><form>
+                @Html.DropDownList("dt",ViewBag.RepList as SelectList)
+                <input type="hidden" id="tip" name="tip" value="inc">
+                <input type="hidden" id="ReportName" name="ReportName" value="ctVet1d">
+                <input type="submit" value="Отчет нарастающий" asp-controller="Reports"
+                    asp-action="GetReport" method="GET"
+                    asp-route-dtInc="dt"
+                    asp-route-tip="tip"
+                    asp-route-ReportName="ReportName"
+                    class="btn btn-success"/>
+    </form>
+</td>
+</tr>
+</tbody>
+</table>
+
 <p>
-    <a asp-action="Create">Создать новый</a>
 </p>
 
 <table class="table table-sm table-striped table-responsive-sm table-bordered">

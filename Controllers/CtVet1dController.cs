@@ -22,6 +22,7 @@ namespace nadis.Controllers
             
             var list = CtVet1dDAL.GetAll_CtVet1d(KIDro,Y,M);
             ViewBag.Page = "CtVet1d";
+            ViewBag.RepList  = spDAL.ReportToToday();
             return View(list);
         }
 

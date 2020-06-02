@@ -10,94 +10,10 @@ namespace nadis.Controllers
 {
     public class CtVet1aController : Controller
     {
-        [Authorize]
-        public IActionResult GetReportInPdf(string dt)
-        {
-            /*
-            RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
-            WebReport webR = new WebReport();
-
-            MsSqlDataConnection _con = new MsSqlDataConnection();
-            _con.ConnectionString = spDAL.connStr;
-            _con.CreateAllTables();
-            webR.Report.Dictionary.Connections.Add(_con);
-            string _path = System.IO.Directory.GetCurrentDirectory();
-            _path = _path +  "\\FastReports\\ctVet1a-v2.frx";
- 
-            int m = Int32.Parse(dt.Substring(0,2));
-            int y = Int32.Parse(dt.Substring(3,4));
-            
-            webR.Report.Load(_path);
-            webR.Report.SetParameterValue("yyyy",y.ToString());
-            webR.Report.SetParameterValue("mm",m.ToString());
-            webR.Report.SetParameterValue("idro",
-                User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value);
-            
-            webR.Report.Prepare();
-            using (MemoryStream ms = new MemoryStream())
-            {
-                PDFSimpleExport pdfExport = new PDFSimpleExport();
-                pdfExport.Export(webR.Report, ms);
-                ms.Flush();
-                pdfExport.Dispose();
-                return File(ms.ToArray(),
-                            "application/pdf",
-                            Path.GetFileNameWithoutExtension("ctVet1a-v2") + ".pdf");
-            } 
-            */
-            string reportName = "ctVet1a-v2";
-            string KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value;
-            return File(ReportGenerator.ExportToPDF(dt,reportName,KIDro),"application/pdf",
-                            reportName + ".pdf");
-
-        }
-
-        [Authorize]
-        [HttpGet]
-        public IActionResult GetReportMonth(string dt) //int m
-        {
-            /*
-            RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
-            Reports webR = new Reports();
-            webR.report = new WebReport();
-
-            MsSqlDataConnection _con = new MsSqlDataConnection();
-            _con.ConnectionString = spDAL.connStr;
-            _con.CreateAllTables();
-            webR.report.Report.Dictionary.Connections.Add(_con);
-            string _path = System.IO.Directory.GetCurrentDirectory();
-            _path = _path +  "\\FastReports\\ctVet1a-v2.frx";
-            
-            int m = Int32.Parse(dt.Substring(0,2));
-            int y = Int32.Parse(dt.Substring(3,4));
-            webR.report.Report.Load(_path);
-            webR.report.Report.SetParameterValue("yyyy",y);//DateTime.Today.Year.ToString());//webR.dt.Year.ToString());
-            webR.report.Report.SetParameterValue("mm",m);//m.ToString());//webR.dt.Month.ToString());
-            webR.report.Report.SetParameterValue("idro",
-                User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value);
-            //webR.report.Report.Prepare();
-            //webR.m = m;
-            webR.dt = dt;
-            */
-            //return View(webR);
-            string KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value;
-            //ReportGenerator rg = new ReportGenerator();
-
-            return View(ReportGenerator.GetReport(dt,"ctVet1a-v2",KIDro));
-        }
 
         [Authorize]
         public IActionResult Index()
         {
-            /*
-                var appSettingsJson = AppSettingJSON.GetAppSettings();
-                var connectionString = appSettingsJson["DefaultConnection"];
-                using(SqlConnection _conn = new SqlConnection(connectionString))
-                {
-                    _conn.Insert()
-                }
-            */
-            //if(!ViewBag.Filter){};
             _ = new List<CtVet1a>();
             int reportDtYear = Convert.ToInt32(User.Claims.ToList().FirstOrDefault(x => x.Type == "reportDtYear").Value);
             int reportDtMonth = Convert.ToInt32(User.Claims.ToList().FirstOrDefault(x => x.Type == "reportDtMonth").Value);
