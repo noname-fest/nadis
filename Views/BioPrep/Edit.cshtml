@@ -23,13 +23,14 @@
                                 new { @class = "form-control",@id="_prep" })
                 <span asp-validation-for="VetPrep" class="text-danger"></span>
             </div>
+            <!--
             <div class="form-group">
                 <label asp-for="EdIzmDisplay" class="control-label"></label>
                 @Html.DropDownList("EdIzm", ViewBag.EdIzmList as SelectList, 
                                 new { @class = "form-control",@id="_edizm"})
                 <span asp-validation-for="EdIzm" class="text-danger"></span>
             </div>
-
+            -->
             <div  class="form-group">
                 <label asp-for="Bylo" class="control-label"></label>
                 <strong class="h4">
@@ -81,17 +82,17 @@
 @section scripts{
 <script type="text/javascript">
     $(function () {
-        $('#_repmo,#_prep,#_edizm').change(function()
+        $('#_repmo,#_prep').change(function()
         {
             var idR  = $("#id_r").val();
             var id1 = $("#_kidro").val();
             var id2 = $("#_repmo").val();
             var id3 = $("#_prep").val();
-            var id4 = $("#_edizm").val();
+            //var id4 = $("#_edizm").val();
             $.ajax({
                 type: 'POST',
                 url: "@Url.Action("GetByloById")",
-                data: {IDro: id1, repMo: id2, VetPrep: id3, e: id4},
+                data: {IDro: id1, repMo: id2, VetPrep: id3},
                 success: function (data) {
                     // заменяем содержимое присланным частичным представлением
                     $('#_bylo').text(data); // изменить текст
@@ -102,7 +103,7 @@
             $.ajax({
                 type: 'POST',
                 url: "@Url.Action("IsUniqRecord")",
-                data: {_id: idR, IDro: id1, repMo: id2, VetPrep: id3, e: id4},
+                data: {_id: idR, IDro: id1, repMo: id2, VetPrep: id3},
                 success: function (data) {
                     if(!data)
                         {

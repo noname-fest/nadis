@@ -57,9 +57,6 @@
                 @Html.DisplayNameFor(model => model.VetPrepDisplay)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EdIzmDisplay)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Bylo)
             </th>
             <th>
@@ -90,9 +87,11 @@
                 <td class="col-3">
                     @Html.DisplayFor(modelItem => tmp.VetPrepDisplay)
                 </td>
+                @{/*<!--
                 <td>
                    @Html.DisplayFor(modelItem => tmp.EdIzmDisplay)
                 </td>
+                -->*/}
                 <td>
                     <!--
                     @if(tmp.Bylo!=tmp.ByloPredMonth){

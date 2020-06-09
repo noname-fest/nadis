@@ -143,7 +143,10 @@ namespace nadis.DAL.nadis
         public static SelectList VetPrepList()
         {
             using SqlConnection _conn = new SqlConnection(connStr);
-            var tmp = _conn.Query<sp_values>("SELECT KID as ID, PrepType as Text FROM VetPrep");
+            string q = "SELECT VetPrep.KID as ID, (VetPrep.PrepType + ' (' + EdIzm.EdIzm + ')') as Text  FROM VetPrep "+
+                       "INNER JOIN  EdIzm ON VetPrep.EdizmID = EdIzm.KID";
+            //"SELECT KID as ID, PrepType as Text FROM VetPrep"
+            var tmp = _conn.Query<sp_values>(q);
             List<sp_values> tL = new List<sp_values>();
             foreach (var tt in tmp)
             {
@@ -165,20 +168,27 @@ namespace nadis.DAL.nadis
         {
             using (SqlConnection _conn = new SqlConnection(connStr))
             {
-                string VetUnit = _conn.QueryFirst<string>(
-                        "SELECT TOP 1 PrepType FROM [VetPrep] WHERE KID=@VetPP", new { VetPP = KIDVetPrep});
+                string q = "SELECT (VetPrep.PrepType + ' ('+EdIzm.EdIzm+')') as Text FROM VetPrep "+
+                            "INNER JOIN  EdIzm ON VetPrep.EdizmID = EdIzm.KID WHERE VetPrep.KID=@VetPP";
+                            //"SELECT TOP 1 PrepType FROM [VetPrep] WHERE KID=@VetPP"
+                string VetUnit = _conn.QueryFirst<string>(q, new { VetPP = KIDVetPrep});
                 if(VetUnit==null)return "";else return VetUnit.Trim();
             }
         }
 
-        public static string EdIzmName(string KIDEdIzm)
+        
+        public static string EdIzmID(string vetP_id)
         {
             using (SqlConnection _conn = new SqlConnection(connStr))
             {
-                return _conn.QueryFirst<string>(
-                        "SELECT TOP 1 EdIzm FROM [EdIzm] WHERE KID=@VetPP", new { VetPP = KIDEdIzm }).Trim();
+                string q = "SELECT EdIzm.KID as ID FROM EdIzm "+
+                            "INNER JOIN  VetPrep ON VetPrep.EdizmID = EdIzm.KID "+
+                            "WHERE VetPrep.KID=@VetPP";
+                //"SELECT TOP 1 EdIzm FROM [EdIzm] WHERE KID=@VetPP"
+                return _conn.QueryFirst<string>(q, new { VetPP = vetP_id}).Trim();
             }
         }
+        
 
         public static SelectList ReportToToday()
         {

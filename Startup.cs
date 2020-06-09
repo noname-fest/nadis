@@ -46,6 +46,7 @@ namespace nadis
                 options.DefaultRequestCulture = new RequestCulture("ru");
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
+                options.DefaultRequestCulture = new RequestCulture("ru");
             });
         }
 

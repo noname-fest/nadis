@@ -10,21 +10,21 @@ namespace nadis.DAL.nadis
 {
     public static class BioPrepDAL
     {
-        public static bool IsUniqueRecord(Guid id, string _KIDro, DateTime _repMo, string _prep,string _edizm)
+        public static bool IsUniqueRecord(Guid id, string _KIDro, DateTime _repMo, string _prep)
         {
             using (SqlConnection _conn = new SqlConnection(spDAL.connStr))
             {
                 int count = _conn.QueryFirst<int>("SELECT COUNT(*) FROM BioPrep WHERE ("
-                    + "repMO=@repMOP and KIDro=@KIDroP and VetPrep=@VetPrepP and EdIzm=@EdIzmP"
+                    + "repMO=@repMOP and KIDro=@KIDroP and VetPrep=@VetPrepP"
                     + " and ID<>@idd)",
                     new {   repMOP = _repMo, KIDroP = _KIDro,
-                            VetPrepP = _prep, EdIzmP = _edizm,
+                            VetPrepP = _prep, ///EdIzmP = _edizm,
                             idd = id });
                 _conn.Close();
                 if (count == 0) { return true; } else { return false; }
             }
         }
-        public static long? GetByloById(string _KIDro, DateTime _repMo, string _prep,string _edizm)
+        public static long? GetByloById(string _KIDro, DateTime _repMo, string _prep)
         {
             long? _bylo = 0;
             int y = _repMo.Year;
@@ -38,13 +38,13 @@ namespace nadis.DAL.nadis
                 "repMO < @dt) ORDER BY repMO DESC";*/
                 string q = "SELECT TOP 1 (Bylo+PostupiloVsego-IzrashodVsego) "
                 +"as ByloPredMonth FROM BioPrep WHERE (" +
-                "KIDro=@KIDro and VetPrep=@VetPrep and EdIzm=@EdIzm and "+
+                "KIDro=@KIDro and VetPrep=@VetPrep and "+
                 "repMO < @dt) ORDER BY repMO DESC";
                 var param = new 
                     {
                         KIDro   = _KIDro,
                         VetPrep = _prep,
-                        EdIzm   = _edizm,
+                        //EdIzm   = _edizm,
                         dt      = _repMo
                     };
                 _bylo = _conn.QueryFirstOrDefault<long?>(q,param);
@@ -69,7 +69,7 @@ namespace nadis.DAL.nadis
                 foreach (var tmp in tmpList)
                 {
                     tmp.VetPrepDisplay = spDAL.VetPrepName(tmp.VetPrep);
-                    tmp.EdIzmDisplay = spDAL.EdIzmName(tmp.EdIzm);
+                    //tmp.EdIzmDisplay = spDAL.EdIzmName(tmp.EdIzm);
                 };
                 return tmpList;
             }
@@ -88,13 +88,13 @@ namespace nadis.DAL.nadis
                             "repMO < @dt) ORDER BY repMO DESC";*/
                 string q = "SELECT TOP 1 (Bylo+PostupiloVsego-IzrashodVsego) "
                             +"as ByloPredMonth FROM BioPrep WHERE (" +
-                            "KIDro=@KIDro and VetPrep=@VetPrep and EdIzm=@EdIzm and "+
+                            "KIDro=@KIDro and VetPrep=@VetPrep and "+
                             "repMO < @dt) ORDER BY repMO DESC";
                 var param = new 
                     {
                         KIDro = tmp.KIDro,
                         VetPrep = tmp.VetPrep,
-                        EdIzm = tmp.EdIzm,
+                        //EdIzm = tmp.EdIzm,
                         dt = tmp.RepMO,
                     };
                 tmp.Bylo = _conn.QueryFirstOrDefault<long?>(q,param);
@@ -102,7 +102,7 @@ namespace nadis.DAL.nadis
                 _conn.Close();
 
                     tmp.VetPrepDisplay = spDAL.VetPrepName(tmp.VetPrep);
-                    tmp.EdIzmDisplay = spDAL.EdIzmName(tmp.EdIzm);
+                    //tmp.EdIzmDisplay = spDAL.EdIzmName(tmp.EdIzm);
                     tmp.Ostatok_za_mesyac = tmp.Bylo + tmp.PostupiloVsego 
                                             //+ tmp.PostupiloRazn
                                             - tmp.IzrashodVsego;
@@ -121,13 +121,13 @@ namespace nadis.DAL.nadis
                         "repMO < @dt) ORDER BY repMO DESC";*/
             string q = "SELECT TOP 1 (Bylo+PostupiloVsego-IzrashodVsego) "
                         +"as ByloPredMonth FROM BioPrep WHERE (" +
-                        "KIDro=@KIDro and VetPrep=@VetPrep and EdIzm=@EdIzm and "+
+                        "KIDro=@KIDro and VetPrep=@VetPrep and "+
                         "repMO < @dt) ORDER BY repMO DESC";
             var param = new 
                 {
                     KIDro = tmp.KIDro,
                     VetPrep = tmp.VetPrep,
-                    EdIzm = tmp.EdIzm,
+                    //EdIzm = spDAL.EdIzmID(tmp.VetPrep),
                     dt = tmp.RepMO,
                 };
             tmp.Bylo = _conn.QueryFirstOrDefault<long?>(q,param);
@@ -142,7 +142,7 @@ namespace nadis.DAL.nadis
                     KIDroP = tmp.KIDro,
                     repMOP = tmp.RepMO,
                     VetPrepP = tmp.VetPrep,
-                    EdIzmP = tmp.EdIzm,
+                    EdIzmP = spDAL.EdIzmID(tmp.VetPrep),
                     ByloP = tmp.Bylo,
                     PostupiloVsegoP = tmp.PostupiloVsego,
                     PostupiloRaznP = tmp.PostupiloRazn,
@@ -178,7 +178,7 @@ namespace nadis.DAL.nadis
                         KIDroP = tmp.KIDro,
                         repMOP = tmp.RepMO,
                         VetPrepP = tmp.VetPrep,
-                        EdIzmP = tmp.EdIzm,
+                        EdIzmP = spDAL.EdIzmID(tmp.VetPrep),
                         Bylo = tmp.Bylo,
                         PostupiloVsegoP = tmp.PostupiloVsego,
                         PostupiloRaznP = tmp.PostupiloRazn,
@@ -201,8 +201,8 @@ namespace nadis.DAL.nadis
             using (SqlConnection _conn = new SqlConnection(spDAL.connStr))
             {
                 int count = _conn.QueryFirst<int>("SELECT COUNT(*) FROM BioPrep WHERE ("
-                    + "repMO=@repMOP and KIDro=@KIDroP and VetPrep=@VetPrepP and EdIzm=@EdIzmP)",
-                    new { repMOP = tmp.RepMO, KIDroP = tmp.KIDro, VetPrepP = tmp.VetPrep, EdIzmP = tmp.EdIzm });
+                    + "repMO=@repMOP and KIDro=@KIDroP and VetPrep=@VetPrepP)",
+                    new { repMOP = tmp.RepMO, KIDroP = tmp.KIDro, VetPrepP = tmp.VetPrep });
                 _conn.Close();
                 if (count == 0) { return true; } else { return false; }
             }

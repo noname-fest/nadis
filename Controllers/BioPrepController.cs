@@ -14,13 +14,13 @@ namespace nadis.Controllers
     {
         [Authorize]
         [HttpPost]
-        public bool IsUniqRecord(Guid _id,string IDro, DateTime repMo, string VetPrep, string e) 
-            => BioPrepDAL.IsUniqueRecord(_id,IDro, repMo, VetPrep, e);
+        public bool IsUniqRecord(Guid _id,string IDro, DateTime repMo, string VetPrep) 
+            => BioPrepDAL.IsUniqueRecord(_id,IDro, repMo, VetPrep);
 
         [Authorize]
         [HttpPost]
-        public long? GetByloById(string IDro, DateTime repMo, string VetPrep, string e) 
-            => BioPrepDAL.GetByloById(IDro, repMo, VetPrep, e);
+        public long? GetByloById(string IDro, DateTime repMo, string VetPrep) 
+            => BioPrepDAL.GetByloById(IDro, repMo, VetPrep);
 
         [Authorize]
         public IActionResult Index()
@@ -47,7 +47,7 @@ namespace nadis.Controllers
             int reportDtMonth = Convert.ToInt32(User.Claims.ToList().FirstOrDefault(x => x.Type == "reportDtMonth").Value);
             ViewBag.RepMoList = spDAL.RepMO1YearList(reportDtYear,reportDtMonth);
             ViewBag.VetPrepList = spDAL.VetPrepList();
-            ViewBag.EdIzmList = spDAL.EdIzmList();
+            //ViewBag.EdIzmList = spDAL.EdIzmList();
 
             BioPrep tmp = new BioPrep
             {

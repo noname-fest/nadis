@@ -3,17 +3,13 @@
     ViewData["Title"] = "Create";
 }
 <font color="red" size=8 id="errmsg">@TempData["EM"]</font>
-<h3>Создать Биопрепарат></h3>
+<!--<h3>Создать Биопрепарат</h3>-->
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="KIDro" id="_kidro"/>
             <input type="hidden" asp-for="Bylo" id="bylo_val">
-            <div class="form-group">
-                <label asp-for="KIDro" class="control-label"></label>
-                <span asp-validation-for="KIDro" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="RepMO" class="control-label"></label>
                 @Html.DropDownList("RepMO", ViewBag.RepMoList as SelectList,
@@ -26,13 +22,6 @@
                                     new { @class = "form-control",@id="_prep"})
                 <span asp-validation-for="VetPrep" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="EdIzmDisplay" class="control-label"></label>
-                @Html.DropDownList("EdIzm", ViewBag.EdIzmList as SelectList,
-                                    new { @class = "form-control",@id="_edizm"})
-                <span asp-validation-for="EdIzm" class="text-danger"></span>
-            </div>
-
             <div  class="form-group">
                 <label asp-for="Bylo" class="control-label"></label>
                 <strong class="h4">

@@ -26,11 +26,11 @@ public class BioPrep
         //[Display(Name = " Вет. препарат ")]
         //public string VetPrepDisplay { get;set; } = "";
 
-        [StringLength(5)]
-        public string EdIzm { get; set; } = "";
+        //[StringLength(5)]
+        //public string EdIzm { get; set; } = "";
 
-        [Display(Name="Ед.изм")]
-        public string EdIzmDisplay {get; set;}
+        //[Display(Name="Ед.изм")]
+        //public string EdIzmDisplay {get; set;}
 
 
         //Остаток с пред. месяца
