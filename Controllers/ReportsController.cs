@@ -25,7 +25,8 @@ namespace nadis.Controllers
         {
             string KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value;
             //string l = User.Claims.ToList().FirstOrDefault(x => x.Type == "lang").Value;
-            string lang = CultureInfo.CurrentCulture.Name;
+            //string lang = CultureInfo.CurrentCulture.Name;
+            string lang = "ru";
             switch(tip)
             {
                 case "inc" : 

@@ -26,6 +26,7 @@ namespace nadis.DAL.nadis
             var appSettingsJson = AppSettingJSON.GetAppSettings();
             connStr = appSettingsJson["DefaultConnection"];
         }
+
         //d3DISTYPES
         public static string KIDdtpName(string KIDtyp)
         {

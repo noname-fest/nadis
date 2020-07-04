@@ -2,9 +2,7 @@ using Dapper;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using nadis.Models;
-using nadis.tools;
 using System;
-using System.Data.SqlTypes;
 
 namespace nadis.DAL.nadis
 {
