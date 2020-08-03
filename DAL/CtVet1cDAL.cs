@@ -98,9 +98,9 @@ namespace nadis.DAL.nadis
                     KIDtrtP = tmp.KIDtrt,
                     tfemage1P = tmp.tfemage1,
                     tfemage2P = tmp.tfemage2,
-                    tmalage1P = tmp.tfemage1,
-                    tmalage2P = tmp.tfemage2,
-                    nVT = tmp.tfemage1+tmp.tfemage2+tmp.tfemage1+tmp.tfemage2
+                    tmalage1P = tmp.tmalage1,
+                    tmalage2P = tmp.tmalage2,
+                    nVT = tmp.tfemage1+tmp.tfemage2+tmp.tmalage2+tmp.tmalage2
                 });
             _conn.Close();
         }

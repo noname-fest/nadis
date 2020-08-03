@@ -132,7 +132,7 @@ namespace nadis.DAL.nadis
                 string q="SELECT COUNT(*) FROM ctVet1b WHERE "+
                 "(repMO=@repMOP and KIDro=@KIDroP and KIDspc=@KIDspcP and "+
                 "KIDdis=@KIDdisP and test=@testP and "+
-                "dtObs=@dtObsP)";
+                "KIDdiv=@KIDdivP)";
                 var param = new 
                 {  
                     repMOP=tmp.repMO,
@@ -140,7 +140,7 @@ namespace nadis.DAL.nadis
                     KIDspcP=tmp.KIDspc,
                     KIDdisP=tmp.KIDdis,
                     testP=tmp.test,
-                    dtObsP=tmp.dtObs
+                    KIDdivP=tmp.KIDdiv
                 };
                 int count = _conn.QueryFirstOrDefault<int>(q,param);
                 if (count == 0) { return true; } else { return false; }
