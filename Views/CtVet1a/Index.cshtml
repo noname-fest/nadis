@@ -97,6 +97,9 @@
              <th>
                  @Html.DisplayNameFor(model => model.end_pos_animals)
              </th>
+             <th>
+                 @Html.DisplayNameFor(model => model.comments)
+             </th>
          </tr>
      </thead>
     <tbody>
@@ -133,6 +136,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => tmp.end_pos_animals)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.comments)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@tmp.ID">Редак.</a><a asp-action="Delete" asp-route-id="@tmp.ID">Удал.</a>

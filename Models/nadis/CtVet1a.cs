@@ -10,6 +10,10 @@ namespace nadis.Models
 {
     public class CtVet1a
     {
+        [Display(Name = "Примечание")]
+        //[ScaffoldColumn(false)]
+        public string comments { get; set; }
+
         [Display(Name = "guid Записи")]
         //[ScaffoldColumn(false)]
         public Guid ID { get; set; }

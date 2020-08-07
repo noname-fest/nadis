@@ -41,10 +41,10 @@ namespace nadis.DAL.nadis
             using(SqlConnection _conn = new SqlConnection(spDAL.connStr))
             {
                 string q = "INSERT INTO ctVet1a (KIDro,repMO,KIDdiv,KIDspc,KIDdis,pos_units,"+
-                            "positives,dead,end_pos_units,end_pos_animals,culled)"+
+                            "positives,dead,end_pos_units,end_pos_animals,culled,comments)"+
                             " VALUES ("+
                             "@KIDro,@repMO,@KIDdiv,@KIDspc,@KIDdis,@pos_units,"+
-                            "@positives,@dead,@end_pos_units,@end_pos_animals,@culled)";
+                            "@positives,@dead,@end_pos_units,@end_pos_animals,@culled,@c)";
                 var param = new
                 {
                     KIDro = tmp.KIDro,
@@ -57,7 +57,8 @@ namespace nadis.DAL.nadis
                     dead = tmp.dead,
                     end_pos_units = tmp.end_pos_units,
                     end_pos_animals = tmp.end_pos_animals,
-                    culled = tmp.culled
+                    culled = tmp.culled,
+                    c = tmp.comments
                 };
                 _conn.Execute(q,param);
                 _conn.Close();
@@ -80,7 +81,8 @@ namespace nadis.DAL.nadis
                             "dead=@dead,"+
                             "end_pos_units=@end_pos_units,"+
                             "end_pos_animals=@end_pos_animals,"+
-                            "culled=@culled "+
+                            "culled=@culled,"+
+                            "comments=@c "+
                             "WHERE ID=@ID";
                 var param = new
                 {
@@ -95,7 +97,8 @@ namespace nadis.DAL.nadis
                     end_pos_units=tmp.end_pos_units,
                     end_pos_animals=tmp.end_pos_animals,
                     culled=tmp.culled,
-                    ID=tmp.ID
+                    ID=tmp.ID,
+                    c = tmp.comments
                 };
                 _conn.Execute(q,param);
                 _conn.Close();

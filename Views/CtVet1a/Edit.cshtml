@@ -64,6 +64,15 @@
                     <input asp-for="end_pos_animals" class="form-control"   type="number" min="0" step="1"/>
                     <span asp-validation-for="end_pos_animals" class="text-danger"></span>
                 </div>
+            <!--comments -->
+            <div class="form-group">
+                <label asp-for="comments" class="control-label"></label>
+                <!--
+                @Html.DropDownList("comments", ViewBag.KIDdivList as SelectList, new { @class = "form-control" })
+                -->
+                @Html.TextBoxFor(m => m.comments, new { @class = "form-control" })
+                <span asp-validation-for="comments" class="text-danger"></span>
+            </div>
 
                 <div class="form-group">
                     <input type="submit" value="Сохранить" asp-route-id="@Model.ID" class="btn btn-success" />
