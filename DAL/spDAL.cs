@@ -249,7 +249,7 @@ namespace nadis.DAL.nadis
                 {
                     sp_values tmp = new sp_values();
                     {
-                        tmp.ID = dr["KID"].ToString().Trim();
+                        tmp.ID = dr["KID"].ToString();
                         tmp.Text = dr["Socunit"].ToString().Replace("АИЛЬНЫЙ ОКРУГ","").Trim();
                     }
                     tmpList.Add(tmp);
@@ -271,7 +271,7 @@ namespace nadis.DAL.nadis
                 {
                     sp_values tmp = new sp_values();
                     {
-                        tmp.ID = dr["KID"].ToString().Trim();
+                        tmp.ID = dr["KID"].ToString();
                         tmp.Text = dr["Species"].ToString().Trim();
                     }
                     tmpList.Add(tmp);
@@ -294,7 +294,7 @@ namespace nadis.DAL.nadis
                 {
                     sp_values tmp = new sp_values();
                     {
-                        tmp.ID = dr["KID"].ToString().Trim();
+                        tmp.ID = dr["KID"].ToString();
                         tmp.Text = dr["Disease"].ToString().Trim();
                     }
                     tmpList.Add(tmp);
@@ -316,14 +316,16 @@ namespace nadis.DAL.nadis
                 {
                     sp_values tmp = new sp_values();
                     {
-                        tmp.ID = dr["KID"].ToString().Trim();
+                        //tmp.ID = dr["KID"].ToString().Trim();
+                        tmp.ID = dr["KID"].ToString();
                         tmp.Text = dr["Testname"].ToString().Trim();
                     }
                     tmpList.Add(tmp);
                 }
                 _conn.Close();
             }
-            return new SelectList(tmpList, "ID", "Text", tmpList[0].ID);
+            //return new SelectList(tmpList, "ID", "Text", tmpList[0].ID);
+            return new SelectList(tmpList, "ID", "Text");
         }
 
         public static string testName(string tst)
