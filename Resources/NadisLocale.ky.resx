@@ -139,10 +139,10 @@
     <value>Түрү</value>
   </data>
   <data name="positives" xml:space="preserve">
-    <value>Коопсуз пункт</value>
+    <value>Ооруп калган</value>
   </data>
   <data name="pos_units" xml:space="preserve">
-    <value>Ооруп калган</value>
+    <value>Коопсуз пункт</value>
   </data>
   <data name="repMO" xml:space="preserve">
     <value>Мезгил</value>

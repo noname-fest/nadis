@@ -139,10 +139,10 @@
     <value>Вид животного</value>
   </data>
   <data name="positives" xml:space="preserve">
-    <value>Небл.пункт</value>
+    <value>Заболело</value>
   </data>
   <data name="pos_units" xml:space="preserve">
-    <value>Забол.</value>
+    <value>Небл.пункт</value>
   </data>
   <data name="repMO" xml:space="preserve">
     <value>Периуд</value>

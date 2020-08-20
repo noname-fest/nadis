@@ -8,7 +8,14 @@ namespace nadis.Controllers
 {
     public class ReportsController : Controller
     {
-
+        [Authorize]
+        [HttpPost]
+        public IActionResult GetReport(string dtR, string RaionID, string OblID,string ReportName)
+        {
+            string KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value;
+            
+            return null;
+        }
         [Authorize]
         [HttpGet]
         public IActionResult GetReportInPdf(string dtR, string ReportName)

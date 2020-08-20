@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using nadis.Models;
 using nadis.DAL.nadis;
 using FastReport.Web;
@@ -34,6 +33,9 @@ namespace nadis
             //webR.report.Report.Prepare();
             webR.dt = dt;
             webR.ReportName = reportName;
+            //TableDataSource table = webR.report.Report.GetDataSource("v1") as TableDataSource;
+            //table.SelectCommand = "";
+
             return webR;
         }
 
