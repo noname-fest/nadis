@@ -80,10 +80,29 @@ namespace AuthSample.Controllers
                 var tmpList = _conn.Query<User>("SELECT * FROM Users");
                 _conn.Close();
                 ViewBag.Page = "Home";
+                ViewBag.DtList = spDAL.ReportToToday();
                 return View(tmpList);
             };
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IActionResult ReportDtToAllUsers(DateTime dt)
+        {
+            var appSettingsJson = AppSettingJSON.GetAppSettings();
+            var connectionString = appSettingsJson["DefaultConnection"];
+
+            using(SqlConnection _conn = new SqlConnection(connectionString))
+            {
+                string q = "UPDATE Users SET ReportDt=@dd WHERE [Role]='Client'";
+                var param = new {dd = dt};
+                _conn.Execute(q,param);
+                _conn.Close();
+            }
+            //ViewBag.Page = "Home";
+            //ViewBag.DtList = spDAL.ReportToToday();
+            return RedirectToAction("UsersEdit");
+        }
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Edit(int id)
@@ -253,12 +272,12 @@ namespace AuthSample.Controllers
                     new Claim("reportDtMonth", M.ToString()),
                     new Claim("UserFullName", usrFullName)
                 };
-                CultureInfo.CurrentCulture = new CultureInfo("ky-KG");
-                CultureInfo.CurrentUICulture = new CultureInfo("ky");
+                CultureInfo.CurrentCulture = new CultureInfo("ru-RU");
+                CultureInfo.CurrentUICulture = new CultureInfo("ru");
 
                 Response.Cookies.Append(
                 CookieRequestCultureProvider.DefaultCookieName,
-                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture("ky")),
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture("ru")),
                 new Microsoft.AspNetCore.Http.CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
                 );
 

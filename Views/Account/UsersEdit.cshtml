@@ -8,6 +8,17 @@
 <p>
     <a asp-action="Register" asp-controller="Account">Регистрация нового пользователя</a>
 </p>
+<p>
+        <form>
+                @Html.DropDownList("dt",ViewBag.DtList as SelectList)
+                <input type="submit" value="Установить для всех пользователей"
+                                    asp-controller="Account"
+                    asp-action="ReportDtToAllUsers" method="GET"
+                    asp-route-dt="dt" 
+                    class="btn btn-success"/>
+       </form>
+</p>
+
 <table class="table table-striped table-responsive-sm">
     <thead>
         <tr>

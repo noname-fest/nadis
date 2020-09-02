@@ -130,7 +130,7 @@ namespace nadis.DAL.nadis
                         tfemage2P = tmp.tfemage2,
                         tmalage1P = tmp.tmalage1,
                         tmalage2P = tmp.tmalage2,
-                        nVT = tmp.tfemage1+tmp.tfemage2+tmp.tfemage1+tmp.tfemage2
+                        nVT = tmp.tfemage1+tmp.tfemage2+tmp.tmalage1+tmp.tmalage2
                     }
             );
             _conn.Close();

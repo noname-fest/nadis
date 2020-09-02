@@ -27,6 +27,89 @@ namespace nadis.DAL.nadis
             connStr = appSettingsJson["DefaultConnection"];
         }
 
+        public static SelectList ReportsList()
+        {
+            List<sp_values> tmpList = new List<sp_values>();
+            tmpList.Add(new sp_values(){ID = "ctvet1a-CA-Raion",
+                                        Text = "Заразные по районам"});
+            tmpList.Add(new sp_values(){ID = "ctvet1a-CA-Obl",
+                                        Text = "Заразные по области"});
+            tmpList.Add(new sp_values(){ID = "ctvet1a-CA-KR",
+                                        Text = "Заразные по КР"});
+
+            tmpList.Add(new sp_values(){ID = "ctvet1b-CA-Raion",
+                                        Text = "Диагностика по районам"});
+            tmpList.Add(new sp_values(){ID = "ctvet1b-CA-Obl",
+                                        Text = "Диагностика по области"});
+            tmpList.Add(new sp_values(){ID = "ctvet1b-CA-KR",
+                                        Text = "Диагностика по КР"});
+
+            tmpList.Add(new sp_values(){ID = "ctvet1c-CA-Raion",
+                                        Text = "Профилактика по районам"});
+            tmpList.Add(new sp_values(){ID = "ctvet1c-CA-Obl",
+                                        Text = "Профилактика по области"});
+            tmpList.Add(new sp_values(){ID = "ctvet1c-CA-KR",
+                                        Text = "Профилактика по КР"});
+
+            tmpList.Add(new sp_values(){ID = "BioPrep-CA-Raion",
+                                        Text = "Биопрепараты по районам"});
+            tmpList.Add(new sp_values(){ID = "BioPrep-CA-Obl",
+                                        Text = "Биопрепараты по области"});
+            tmpList.Add(new sp_values(){ID = "BioPrep-CA-KR",
+                                        Text = "Биопрепараты по КР"});
+
+            return new SelectList(tmpList, "ID", "Text",tmpList[0].ID);
+        }
+        public static SelectList OblastList()
+        {
+            List<sp_values> tmpList = new List<sp_values>();
+            tmpList.Add(new sp_values(){ID = "",Text = "ВСЕ области"});
+            using (SqlConnection _conn = new SqlConnection(connStr))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT SocUnit as ID, SocUnit FROM [71GEO1]" +
+                                                " ORDER BY SocUnit",
+                                                 _conn);
+                _conn.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    sp_values tmp = new sp_values();
+                    {
+                        tmp.ID = dr["ID"].ToString();
+                        tmp.Text = dr["Socunit"].ToString().Trim();
+                    }
+                    tmpList.Add(tmp);
+                }
+                _conn.Close();
+            }
+            return new SelectList(tmpList, "ID", "Text",tmpList[0].ID);
+        }
+
+        public static SelectList RaionsList()
+        {
+            List<sp_values> tmpList = new List<sp_values>();
+            tmpList.Add(new sp_values(){ID = "",Text = "ВСЕ районы"});
+            using (SqlConnection _conn = new SqlConnection(connStr))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT SocUnit as ID, SocUnit FROM [72GEO2]" +
+                                                " ORDER BY SocUnit",
+                                                 _conn);
+                _conn.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    sp_values tmp = new sp_values();
+                    {
+                        tmp.ID = dr["ID"].ToString();
+                        tmp.Text = dr["Socunit"].ToString().Trim();
+                    }
+                    tmpList.Add(tmp);
+                }
+                _conn.Close();
+            }
+            return new SelectList(tmpList, "ID", "Text",tmpList[0].ID);
+        }
+
         //d3DISTYPES
         public static string KIDdtpName(string KIDtyp)
         {
@@ -287,7 +370,7 @@ namespace nadis.DAL.nadis
             tmpList.Add(new sp_values{ ID="",Text=""});
             using (SqlConnection _conn = new SqlConnection(connStr))
             {
-                SqlCommand cmd = new SqlCommand("SELECT KID, Disease FROM [d2DISEASES]", _conn);
+                SqlCommand cmd = new SqlCommand("SELECT KID, Disease FROM [d2DISEASES] order by Disease", _conn);
                 _conn.Open();
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())

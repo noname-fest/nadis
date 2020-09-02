@@ -3,19 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using nadis.DAL.nadis;
 using System.Globalization;
 using System.Linq;
+using System.Security.Claims;
 
 namespace nadis.Controllers
 {
     public class ReportsController : Controller
     {
-        [Authorize]
-        [HttpPost]
-        public IActionResult GetReport(string dtR, string RaionID, string OblID,string ReportName)
-        {
-            string KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value;
-            
-            return null;
-        }
         [Authorize]
         [HttpGet]
         public IActionResult GetReportInPdf(string dtR, string ReportName)
@@ -53,10 +46,49 @@ namespace nadis.Controllers
 
         [Authorize]
         [HttpGet]
+        public IActionResult GetReportCA(string dtR, 
+                                        string RaionID, 
+                                        string OblID,
+                                        string r, 
+                                        string Tip)
+        {
+            string KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value;
+            string Role  = User.Claims.ToList().
+                                        FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
+            //if (Role!="Admin" || Role!="CA")  return null;
+            string lang = "ru";
+            switch(Tip)
+            {
+                case "Inc" : 
+                    return View(ReportGenerator.
+                                GetReportCA(dtR,
+                                    r+"-Inc-"+lang,
+                                    RaionID,
+                                    OblID));
+                case "month" :
+                    return View(ReportGenerator.
+                                GetReportCA(dtR,
+                                    r+"-" + lang,
+                                    RaionID,
+                                    OblID));
+                default :
+                    return View();
+            } 
+        }
+
+        [Authorize]
+        [HttpGet]
         public IActionResult AnalizPEM()
         {
             ViewBag.Page = "AnalizPEM";
             ViewBag.RepList  = spDAL.ReportToToday();
+            ViewBag.RaionList = spDAL.RaionsList();
+            ViewBag.OblList = spDAL.OblastList();
+            ViewBag.ReportsList = spDAL.ReportsList();
+            string Role  = User.Claims.ToList().
+                                        FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
+            //View("Role") = Role;
+            ViewData["Role"] = Role;
             return View();
 
             //string KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value;

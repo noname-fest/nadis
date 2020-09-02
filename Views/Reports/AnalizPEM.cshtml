@@ -6,6 +6,7 @@
 <tbody>
 <tr>
 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
 <td style="text-align: right;"><form>
                 @Html.DropDownList("dt",ViewBag.RepList as SelectList)
                 <input type="hidden" id="tip" name="tip" value="month">
@@ -18,6 +19,31 @@
                     class="btn btn-success"/>
        </form>
 </td>
+
+@if (@ViewData["Role"].ToString().Trim() == "Admin")
+    {
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+<td style="text-align: right;"><form>
+                @Html.DropDownList("dtR",ViewBag.RepList as SelectList)
+                @Html.DropDownList("RaionID",ViewBag.RaionList as SelectList)
+                @Html.DropDownList("OblID",ViewBag.OblList as SelectList)
+                @Html.DropDownList("r",ViewBag.ReportsList as SelectList)
+                <select id="Tip" name="Tip">
+                        <option value="month">за выбранный месяц</option>
+                        <option value="Inc">Нарастающий с нач года</option>
+                </select>
+                <input type="submit" value="Отчет ЦА" asp-controller="Reports"
+                    asp-action="GetReportCA" method="GET"
+                    asp-route-dtR="dtR" 
+                    asp-route-RaionID="RaionID" 
+                    asp-route-OblID="OblID" 
+                    asp-route-r="r"
+                    asp-route-Tip="Tip"
+                    class="btn btn-success"/>
+       </form>
+</td>
+    }
 </tr>
 </tbody>
 </table>
