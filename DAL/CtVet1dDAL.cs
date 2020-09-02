@@ -86,7 +86,7 @@ namespace nadis.DAL.nadis
                 new {   repMOP = tmp.repMO, KIDroP = tmp.KIDro, KIDdivP = tmp.KIDdiv,
                         KIDdisP = tmp.KIDdis, dtObsP= tmp.dtObs, KIDtypP=tmp.KIDtyp });
                 _conn_check.Close();
-                if (count == 0 || count == null) return true;else return false;
+                if (count == 0) return true;else return false;
             }
         }
 
