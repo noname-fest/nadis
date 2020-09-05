@@ -95,7 +95,7 @@ namespace nadis.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Guid id,[Bind] CtVet1a objCtVet1a)
         {
-            if ((id == null)||(CtVet1aDAL.IsUniqueRecord(objCtVet1a)))
+            if ((id == null)||(!CtVet1aDAL.IsUniqueRecord(objCtVet1a)))
             {
                 return NotFound();
             }

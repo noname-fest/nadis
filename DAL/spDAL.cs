@@ -57,6 +57,10 @@ namespace nadis.DAL.nadis
                                         Text = "Биопрепараты по области"});
             tmpList.Add(new sp_values(){ID = "BioPrep-CA-KR",
                                         Text = "Биопрепараты по КР"});
+            tmpList.Add(new sp_values(){ID = "PEM-CA-Obl",
+                                        Text = "Анали ПЭМ по области"});
+            tmpList.Add(new sp_values(){ID = "PEM-CA-KR",
+                                        Text = "Анализ ПЭМ по КР"});
 
             return new SelectList(tmpList, "ID", "Text",tmpList[0].ID);
         }
