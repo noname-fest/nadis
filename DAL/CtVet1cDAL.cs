@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using nadis.Models;
 using Dapper;
 
-namespace nadis.DAL.nadis
+namespace nadis.DAL
 {
     public static class CtVet1cDAL
     {

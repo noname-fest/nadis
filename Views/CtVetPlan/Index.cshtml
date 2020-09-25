@@ -1,0 +1,106 @@
+@model IEnumerable<nadis.Models.CtVetPlan>
+@using nadis.DAL
+@{
+    ViewData["Title"] = "CtVetPlan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string[] mmm = new string[]{"янв","фев","мар",
+                    "апр","май","июн",
+                    "июл","авг","сен",
+                    "окт","ноя","дек"
+            };
+}
+<font color="red" size=18>@TempData["EM"]</font>
+<table style="border-collapse: collapse;" border="0">
+<tbody>
+<tr>
+    <td><a asp-action="Create">Создать новый</a></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+</p>
+
+<table class="table table-striped table-responsive-sm table-bordered table-sm">
+    <thead align="center">
+        <tr>
+            <th rowspan="2">
+                @Html.DisplayNameFor(model => model.PlanYr)
+            </th>
+            <th rowspan="2">
+                @Html.DisplayNameFor(model => model.KIDdiv) 
+            </th>
+            <th rowspan="2">
+                @Html.DisplayNameFor(model => model.KIDtrt)
+            </th>
+            <th rowspan="2">
+                @Html.DisplayNameFor(model => model.KIDspc)
+            </th>
+            <th rowspan="2">
+                @Html.DisplayNameFor(model => model.KIDdis)
+            </th>
+            <th rowspan="2">
+                @Html.DisplayNameFor(model => model.KIDtest)
+            </th>
+            <th rowspan="2">
+                @Html.DisplayNameFor(model => model.nPlan)
+            </th>
+            <th rowspan="2">
+                @Html.DisplayNameFor(model => model.nPlan_I)
+            </th>
+            <th rowspan="2">
+                @Html.DisplayNameFor(model => model.nPlan_II)
+            </th>
+            <th rowspan="2">
+                @Html.DisplayNameFor(model => model.nPlan_III)
+            </th>
+            <th rowspan="2">
+                @Html.DisplayNameFor(model => model.nPlan_IV)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tmp in Model)
+        {
+            <tr>
+                <td>
+                   @Html.DisplayFor(modelItem => tmp.PlanYr)
+                </td>
+                <td class="col-2.6">
+                    @spDAL.KIDdivName(tmp.KIDdiv)
+                </td>
+                <td class="col-2">
+                    @spDAL.KIDtrtName(tmp.KIDtrt)
+                </td>
+                <td>
+                    @spDAL.KIDspcName(tmp.KIDspc)
+                </td>
+                <td class="col-1.8">
+                    @spDAL.KIDdisName(tmp.KIDdis)
+                </td>
+                <td class="col-2">
+                    @spDAL.testName(tmp.KIDtest)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.nPlan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.nPlan_I)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.nPlan_II)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.nPlan_III)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => tmp.nPlan_IV)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@tmp.ID">Редак.</a><a asp-action="Delete" asp-route-id="@tmp.ID">Удал.</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

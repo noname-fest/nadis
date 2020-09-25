@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using nadis.Models;
 using System;
 
-namespace nadis.DAL.nadis
+namespace nadis.DAL
 {
     public static class BioPrepDAL
     {

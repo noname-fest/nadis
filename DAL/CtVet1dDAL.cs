@@ -6,7 +6,7 @@ using nadis.tools;
 using nadis.Models.sp;
 using System;
 
-namespace nadis.DAL.nadis
+namespace nadis.DAL
 {
     public static class CtVet1dDAL
     {

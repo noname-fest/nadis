@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using nadis.DAL.nadis;
+using nadis.DAL;
 using nadis.Models;
 using Dapper;
 using nadis.tools;

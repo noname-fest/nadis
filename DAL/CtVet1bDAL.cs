@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
-namespace nadis.DAL.nadis
+namespace nadis.DAL
 {
     public static class CtVet1bDAL
     {

@@ -11,7 +11,7 @@ using nadis.tools;
 using System.Data.SqlClient;
 using Dapper;
 using Dapper.Contrib;
-using nadis.DAL.nadis;
+using nadis.DAL;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 

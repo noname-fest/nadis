@@ -4,7 +4,6 @@ using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using nadis.Models;
-using nadis.DAL.nadis;
 using nadis.DAL;
 
 namespace nadis.Controllers

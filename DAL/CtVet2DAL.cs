@@ -4,7 +4,7 @@ using nadis.tools;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using nadis.DAL.nadis;
+using nadis.DAL;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using nadis.Models.sp;
 using Dapper.Contrib.Extensions;

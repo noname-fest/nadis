@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using nadis.Models;
-using nadis.DAL.nadis;
+using nadis.DAL;
 
 namespace nadis.Controllers
 {
@@ -95,7 +95,8 @@ namespace nadis.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Guid id,[Bind] CtVet1a objCtVet1a)
         {
-            if ((id == null)||(!CtVet1aDAL.IsUniqueRecord(objCtVet1a)))
+            //if ((id == null)||(!CtVet1aDAL.IsUniqueRecord(objCtVet1a)))
+            if(id==null)
             {
                 return NotFound();
             }

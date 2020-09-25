@@ -1,0 +1,167 @@
+@model nadis.Models.CtVetPlan
+@{
+    ViewData["Title"] = "Edit CtVetPlan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <input type="hidden" asp-for="KIDro"/>
+
+            <div class="form-group">
+                <label asp-for="PlanYr" class="control-label"></label>
+                @Html.DropDownList("PlanYr", ViewBag.PlanYearList as SelectList, new { @class = "form-control" })
+                <span asp-validation-for="PlanYr" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="KIDdiv" class="control-label"></label>
+                <!--<input asp-for="KIDdiv" class="form-control" />-->
+                @Html.DropDownList("KIDdiv", ViewBag.KIDdivList as SelectList, new { @class = "form-control" })
+                <span asp-validation-for="KIDdiv" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="KIDtrt" class="control-label"></label>
+                @Html.DropDownList("KIDtrt", ViewBag.KIDtrtList as SelectList, new { @class = "form-control" })
+                <span asp-validation-for="KIDtrt" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="KIDspc" class="control-label"></label>
+                @Html.DropDownList("KIDspc", ViewBag.KIDspcList as SelectList, new { @class = "form-control" })
+                <span asp-validation-for="KIDspc" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="KIDdis" class="control-label"></label>
+                @Html.DropDownList("KIDdis", ViewBag.KIDdisList as SelectList, new { @class = "form-control" })
+                <span asp-validation-for="KIDdis" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="KIDtest" class="control-label"></label>
+                @Html.DropDownList("KIDtest", ViewBag.KIDtestList as SelectList, new { @class = "form-control" })
+                <span asp-validation-for="KIDtest" class="text-danger"></span>
+            </div>
+
+            <table>
+            <thead align="center">
+            <tr>
+                <th></th>    
+                <th>I</th>
+                <th>II</th>
+                <th>III</th>
+                <th>IV</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Взрослые</td>
+                <td>
+                    <div class="form-group">
+                        <input id="_V1" asp-for="tfemage1_I" class="form-control" type="number" min="0" step="1"/>
+                        <span asp-validation-for="tfemage1_I" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input id="_V2" asp-for="tfemage1_II" class="form-control" type="number" min="0" step="1" />
+                        <span asp-validation-for="tfemage1_II" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input id="_V3" asp-for="tfemage1_III" class="form-control" type="number" min="0" step="1" />
+                        <span asp-validation-for="tfemage1_III" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input id="_V4" asp-for="tfemage1_IV" class="form-control" type="number" min="0" step="1" />
+                        <span asp-validation-for="tfemage1_IV" class="text-danger"></span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Молодняк</td>
+                <td>
+                    <div class="form-group">
+                        <input id="_M1" asp-for="tfemage2_I" class="form-control" type="number" min="0" step="1"/>
+                        <span asp-validation-for="tfemage2_I" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input id="_M2" asp-for="tfemage2_II" class="form-control" type="number" min="0" step="1"/>
+                        <span asp-validation-for="tfemage2_II" class="text-danger"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input id="_M3" asp-for="tfemage2_III" class="form-control" type="number" min="0" step="1"/>
+                        <span asp-validation-for="tfemage2_III" class="text-danger"></span>
+                    </div>                    
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input id="_M4" asp-for="tfemage2_IV" class="form-control" type="number" min="0" step="1"/>
+                        <span asp-validation-for="tfemage2_IV" class="text-danger"></span>
+                    </div>                    
+                </td>
+            </tr>
+            <tr>
+                <td>Подлежащих голов</td>
+                <td><label id="_I1">@Html.DisplayFor(model=> model.nPlan_I)</label></td>
+                <td><label id="_I2">@Html.DisplayFor(model=> model.nPlan_II)</label></td>
+                <td><label id="_I3">@Html.DisplayFor(model=> model.nPlan_III)</label></td>
+                <td><label id="_I4">@Html.DisplayFor(model=> model.nPlan_IV)</label></td>
+            </tr>
+            </tbody>
+            </table>
+            <b>
+            <p id="_I">ИТОГО @Html.DisplayFor(model=> model.nPlan)</p>
+            </b>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" asp-route-id="@Model.ID" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Назад к списку</a>
+</div>
+@section scripts{
+<script type="text/javascript">
+    $(function () {
+        $('#_V1,#_V2,#_V3,#_V4,#_M1,#_M2,#_M3,#_M4').change(function()
+        {
+            var v1  = $("#_V1").val();
+            var v2  = $("#_V2").val();
+            var v3  = $("#_V3").val();
+            var v4  = $("#_V4").val();
+
+            var m1  = $("#_M1").val();
+            var m2  = $("#_M2").val();
+            var m3  = $("#_M3").val();
+            var m4  = $("#_M4").val();
+
+            var i = parseInt(v1)+
+                    parseInt(v2)+
+                    parseInt(v3)+
+                    parseInt(v4)+
+                    parseInt(m1)+
+                    parseInt(m2)+
+                    parseInt(m3)+
+                    parseInt(m4);
+            $('#_I1').text(parseInt(v1)+parseInt(m1));
+            $('#_I2').text(parseInt(v2)+parseInt(m2));
+            $('#_I3').text(parseInt(v3)+parseInt(m3));
+            $('#_I4').text(parseInt(v4)+parseInt(m4));
+            $('#_I').text("ИТОГО " + String(i));
+        });
+    })
+    </script>
+}

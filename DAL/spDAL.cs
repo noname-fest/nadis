@@ -5,11 +5,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using nadis.Models.sp;
 using nadis.tools;
 using Dapper;
-using System.Globalization;
 
-namespace nadis.DAL.nadis
+namespace nadis.DAL
 {
-    
+
     public static class spDAL
     {
         static string[] mmm = 
@@ -27,6 +26,18 @@ namespace nadis.DAL.nadis
             connStr = appSettingsJson["DefaultConnection"];
         }
 
+        public static SelectList PlanYearList()
+        {
+            List<sp_values> tmp = new List<sp_values>();
+            tmp.Add(new sp_values(){ID = (DateTime.Today.Year+1).ToString(),
+                                    Text = (DateTime.Today.Year+1).ToString()});
+            tmp.Add(new sp_values(){ID = (DateTime.Today.Year).ToString(),
+                                    Text = (DateTime.Today.Year).ToString()});
+            tmp.Add(new sp_values(){ID = (DateTime.Today.Year-1).ToString(),
+                                    Text = (DateTime.Today.Year-1).ToString()});
+
+            return new SelectList(tmp, "ID", "Text",tmp[1].ID);        
+        }
         public static SelectList ReportsList()
         {
             List<sp_values> tmpList = new List<sp_values>();
@@ -57,6 +68,8 @@ namespace nadis.DAL.nadis
                                         Text = "Биопрепараты по области"});
             tmpList.Add(new sp_values(){ID = "BioPrep-CA-KR",
                                         Text = "Биопрепараты по КР"});
+            tmpList.Add(new sp_values(){ID = "PEM-CA-Raion",
+                                        Text = "Анали ПЭМ по району"});
             tmpList.Add(new sp_values(){ID = "PEM-CA-Obl",
                                         Text = "Анали ПЭМ по области"});
             tmpList.Add(new sp_values(){ID = "PEM-CA-KR",

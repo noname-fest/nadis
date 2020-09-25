@@ -1,6 +1,6 @@
 using System;
 using nadis.Models;
-using nadis.DAL.nadis;
+using nadis.DAL;
 using FastReport.Web;
 using FastReport.Data;
 using FastReport.Utils;
