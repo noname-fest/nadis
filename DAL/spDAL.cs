@@ -74,9 +74,32 @@ namespace nadis.DAL
                                         Text = "Анали ПЭМ по области"});
             tmpList.Add(new sp_values(){ID = "PEM-CA-KR",
                                         Text = "Анализ ПЭМ по КР"});
+            return new SelectList(tmpList, "ID", "Text",tmpList[0].ID);
+        }
+
+        public static SelectList RaznaryankaReportsList()
+        {
+            List<sp_values> tmpList = new List<sp_values>();
+            tmpList.Add(new sp_values(){ID = "Raznaryadka BrycellezREV-1",
+                                        Text = "Вакцина РЕВ-1"});
+            tmpList.Add(new sp_values(){ID = "Raznaryadka BrycellezSHT19",
+                                        Text = "Вакцина Штамм-19"});
+            tmpList.Add(new sp_values(){ID = "Raznaryadka Chyma",
+                                        Text = "Вакцина против чумы"});
+            tmpList.Add(new sp_values(){ID = "Raznaryadka Ospa",
+                                        Text = "Вакцина против Оспы"});
+            tmpList.Add(new sp_values(){ID = "Raznaryadka Sibir",
+                                        Text = "Вакцина против сибирской язвы"});
+            tmpList.Add(new sp_values(){ID = "Raznaryadka TyberkylinBirds",
+                                        Text = "Туберкулин для птиц"});
+            tmpList.Add(new sp_values(){ID = "Raznaryadka TyberkylinKRS",
+                                        Text = "Туберкулин для млекопитающих"});
+            tmpList.Add(new sp_values(){ID = "Raznaryadka Yashyr",
+                                        Text = "Вакцина против ящура"});
 
             return new SelectList(tmpList, "ID", "Text",tmpList[0].ID);
         }
+
         public static SelectList OblastList()
         {
             List<sp_values> tmpList = new List<sp_values>();

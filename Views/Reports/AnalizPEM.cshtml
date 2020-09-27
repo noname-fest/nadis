@@ -5,7 +5,7 @@
 <table style="border-collapse: collapse;" border="0">
 <tbody>
 <tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 
 <td style="text-align: right;"><form>
                 @Html.DropDownList("dt",ViewBag.RepList as SelectList)
@@ -22,8 +22,7 @@
 
 @if (@ViewData["Role"].ToString().Trim() == "Admin")
     {
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 <td style="text-align: right;"><form>
                 @Html.DropDownList("dtR",ViewBag.RepList as SelectList)
                 @Html.DropDownList("RaionID",ViewBag.RaionList as SelectList)
@@ -41,6 +40,17 @@
                     asp-route-r="r"
                     asp-route-Tip="Tip"
                     class="btn btn-success"/>
+                    <br>
+                @Html.DropDownList("Rr",ViewBag.RaznarydkaList as SelectList)
+                <input type="submit" value="Разнарядка по биопрепаратам" asp-controller="Reports"
+                    asp-action="GetReportRaznarydka" method="GET"
+                    asp-route-dtR="dtR" 
+                    asp-route-RaionID="RaionID" 
+                    asp-route-OblID="OblID" 
+                    asp-route-Rr="Rr"
+                    asp-route-Tip="Tip"
+                    class="btn btn-success"/>
+
        </form>
 </td>
     }

@@ -78,6 +78,38 @@ namespace nadis.Controllers
 
         [Authorize]
         [HttpGet]
+        public IActionResult GetReportRaznarydka(string dtR, 
+                                        string RaionID, 
+                                        string OblID,
+                                        string Rr, 
+                                        string Tip)
+        {
+            string KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value;
+            string Role  = User.Claims.ToList().
+                                        FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
+            //if (Role!="Admin" || Role!="CA")  return null;
+            //string lang = "ru";
+            switch(Tip)
+            {
+                case "Inc" : 
+                    return View(ReportGenerator.
+                                GetReportRaznaryadka(dtR,
+                                    Rr,
+                                    RaionID,
+                                    OblID));
+                case "month" :
+                    return View(ReportGenerator.
+                                GetReportRaznaryadka(dtR,
+                                    Rr,
+                                    RaionID,
+                                    OblID));
+                default :
+                    return View();
+            } 
+        }
+
+        [Authorize]
+        [HttpGet]
         public IActionResult AnalizPEM()
         {
             ViewBag.Page = "AnalizPEM";
@@ -85,6 +117,7 @@ namespace nadis.Controllers
             ViewBag.RaionList = spDAL.RaionsList();
             ViewBag.OblList = spDAL.OblastList();
             ViewBag.ReportsList = spDAL.ReportsList();
+            ViewBag.RaznarydkaList = spDAL.RaznaryankaReportsList();
             string Role  = User.Claims.ToList().
                                         FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
             //View("Role") = Role;
