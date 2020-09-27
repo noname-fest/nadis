@@ -27,5 +27,9 @@ namespace nadis.Models
         [Column(TypeName = "date")]
         [DisplayFormat(DataFormatString = "{0:MMM yyyy}")]
         public DateTime reportDt {get; set;}
+
+        [Display(Name = "Доступ к Вет.плану")]
+        //[Column(TypeName = "boolean")]
+        public bool VetPlan {get;set;} = false;
     }
 }

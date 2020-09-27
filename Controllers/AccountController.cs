@@ -137,7 +137,8 @@ namespace AuthSample.Controllers
                     {
                         _conn.Execute("UPDATE Users SET KIDro=@_kidro,"+
                         "username=@_username, UserFullname=@_UserFullname,"+
-                        "userpassword=@_userpassword, Role=@_Role, reportDt=@_reportDt "+
+                        "userpassword=@_userpassword, Role=@_Role, reportDt=@_reportDt, " +
+                        " VetPlan=@_vetPlan "+
                         "WHERE Id=@_Id",
                         new {
                             _Id = objUsr.Id,
@@ -146,7 +147,8 @@ namespace AuthSample.Controllers
                             _UserFullname = objUsr.UserFullname,
                             _userpassword = objUsr.userpassword,
                             _Role = objUsr.Role,
-                            _reportDt = objUsr.reportDt
+                            _reportDt = objUsr.reportDt,
+                            _vetPlan = objUsr.VetPlan
                         } );   
                         return RedirectToAction("UsersEdit");
                     }
@@ -262,6 +264,9 @@ namespace AuthSample.Controllers
 
                 int Y = rDt.Year;
                 int M = rDt.Month;
+                string v ;
+                if(usr.VetPlan) v = "true" ; else v = "false";
+                //if(vetPlan is BOOL){vetPlan = false};
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimsIdentity.DefaultNameClaimType, username),
@@ -270,7 +275,8 @@ namespace AuthSample.Controllers
                     new Claim("Role", roleP),
                     new Claim("reportDtYear", Y.ToString()),
                     new Claim("reportDtMonth", M.ToString()),
-                    new Claim("UserFullName", usrFullName)
+                    new Claim("UserFullName", usrFullName),
+                    new Claim("VetPlan",v)
                 };
                 CultureInfo.CurrentCulture = new CultureInfo("ru-RU");
                 CultureInfo.CurrentUICulture = new CultureInfo("ru");

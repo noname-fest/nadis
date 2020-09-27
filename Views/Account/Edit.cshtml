@@ -42,6 +42,11 @@
                 <input asp-for="userpassword" class="form-control" type="text"/>
                 <span asp-validation-for="userpassword" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="VetPlan" class="control-label"></label>
+                <input asp-for="VetPlan" class="form-control" type="checkbox"/>
+                <span asp-validation-for="VetPlan" class="text-danger"></span>
+            </div>
 
             <div class="form-group">
                 <input type="submit" value="Сохранить" asp-route-id="@Model.Id" class="btn btn-success" />
