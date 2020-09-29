@@ -21,6 +21,16 @@ namespace nadis.Controllers
 
         [Authorize]
         [HttpGet]
+        public IActionResult GetReportInHTML(string dtR, string ReportName)
+        {
+            string KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value;
+            return File(ReportGenerator.ExportToHTML(dtR,ReportName,KIDro),"application/html",
+                            ReportName + ".html");
+
+        }
+
+        [Authorize]
+        [HttpGet]
         public IActionResult GetReport(string ReportName, string dt, string tip) //int m
         {
             string KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value;

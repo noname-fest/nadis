@@ -50,6 +50,30 @@ namespace nadis.DAL
             }
             return _bylo;
         }
+        public static IEnumerable<BioPrep> GetAll_BioPrepF(string KIDro, int rpDtYear, int rpDtMonth, 
+                                                            string fdt, string fvp)
+        {
+            using(SqlConnection _conn = new SqlConnection(spDAL.connStr))
+            {
+                //if(){};
+                IEnumerable<BioPrep> tmpList =
+                    _conn.Query<BioPrep>("SELECT * FROM BioPrep WHERE "+
+                                           "(KIDro=@KIDroP and repMo between @bDt and @eDt and "+
+                                           " VetPrep=@vp)"
+                                          + " ORDER BY repMO DESC", 
+                                                new { KIDroP = KIDro, 
+                                                      bDt = new DateTime(rpDtYear,rpDtMonth,1),
+                                                      eDt = new DateTime(DateTime.Today.Year, DateTime.Today.Month,1) 
+                                                    });
+                _conn.Close();
+                foreach (var tmp in tmpList)
+                {
+                    tmp.VetPrepDisplay = spDAL.VetPrepName(tmp.VetPrep);
+                    //tmp.EdIzmDisplay = spDAL.EdIzmName(tmp.EdIzm);
+                };
+                return tmpList;
+            }
+        }
 
         public static IEnumerable<BioPrep> GetAll_BioPrep(string KIDro, int rpDtYear, int rpDtMonth)
         {

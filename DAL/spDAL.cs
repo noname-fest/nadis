@@ -258,9 +258,11 @@ namespace nadis.DAL
         {
             using (SqlConnection _conn = new SqlConnection(connStr))
             {
+                if(KIDspc is null) return "";
+                if(KIDspc=="") return "";
                 string rez = _conn.QueryFirst<string>(
                         "SELECT TOP 1 [Species] FROM [d2SPECIES] WHERE KID=@val", new { val = KIDspc});
-                if(rez==null)return "";else return rez.Trim();
+                if(rez==null) return ""; else return rez.Trim();
             }
         }
 

@@ -22,12 +22,18 @@ namespace nadis.Controllers
         public long? GetByloById(string IDro, DateTime repMo, string VetPrep) 
             => BioPrepDAL.GetByloById(IDro, repMo, VetPrep);
 
+
+
         [Authorize]
         public IActionResult Index()
         {
             _ = new List<BioPrep>();
+            //string v = Request.Query.Count
+            //string q = Request.Query.FirstOrDefault(p => p.Key == "repMO").Value.ToString();
+            
             int reportDtYear = Convert.ToInt32(User.Claims.ToList().FirstOrDefault(x => x.Type == "reportDtYear").Value);
             int reportDtMonth = Convert.ToInt32(User.Claims.ToList().FirstOrDefault(x => x.Type == "reportDtMonth").Value);
+            //if(Request.Query.Count==0)
             List<BioPrep> BioPrepList = BioPrepDAL.GetAll_BioPrep(
                                                 User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value,
                                                 reportDtYear,
@@ -35,6 +41,8 @@ namespace nadis.Controllers
                                                 ).ToList();
             ViewBag.Page = "BioPrep";
             ViewBag.RepList  = spDAL.ReportToToday();
+            ViewBag.repMOList = FilterTools.repMOList(reportDtYear,reportDtMonth);
+            ViewBag.VetPrepList = FilterTools.VetPrepList();
             return View(BioPrepList);
         }
 
@@ -49,10 +57,18 @@ namespace nadis.Controllers
             ViewBag.VetPrepList = spDAL.VetPrepList();
             //ViewBag.EdIzmList = spDAL.EdIzmList();
 
+            string _kidro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value;
+            long? b = BioPrepDAL.GetByloById(_kidro,
+                                                    DateTime.Today,
+                                                    "AZIN"
+                                                );
             BioPrep tmp = new BioPrep
             {
-                KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value,
-                RepMO = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)
+                KIDro = _kidro,
+                RepMO = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1),
+                VetPrep = "AZIN",
+                Bylo = b,
+                Ostatok_za_mesyac = b 
             };
             ViewBag.Page = "BioPrep";
             return View(tmp);
