@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using nadis.Models.sp;
 using nadis.tools;
 using Dapper;
+using Microsoft.AspNetCore.Authorization;
+using System.Security;
 
 namespace nadis.DAL
 {
@@ -315,6 +317,27 @@ namespace nadis.DAL
             }
         }
         
+        public static SelectList ReportToTodayAdm()
+        {
+            List<sp_values> tmpList = new List<sp_values>();
+            DateTime dtB = new DateTime(DateTime.Today.Year-1,1,1);
+            DateTime dtE = new DateTime(DateTime.Today.Year,12,31);
+            while(dtB <= dtE)
+            {
+                sp_values tmp_sp = new sp_values
+                {
+                    ID = dtB.ToString("MM yyyy"),//dtB.Month.ToString(),
+                    Text = mmm[dtB.Month-1] + " " + dtB.Year.ToString()
+                };
+                dtB = dtB.AddMonths(1);
+                tmpList.Add(tmp_sp);
+            }
+            SelectList sl = new SelectList(tmpList,"ID","Text");
+            string dv = DateTime.Today.ToString("MM yyyy");
+            foreach(var it in sl)
+                if(it.Value.ToString()== dv) it.Selected = true;
+            return sl;//new SelectList(tmpList,"ID","Text");
+        }
 
         public static SelectList ReportToToday()
         {

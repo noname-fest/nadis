@@ -124,6 +124,7 @@ namespace nadis.Controllers
         {
             ViewBag.Page = "AnalizPEM";
             ViewBag.RepList  = spDAL.ReportToToday();
+            ViewBag.RepListAdm = spDAL.ReportToTodayAdm();
             ViewBag.RaionList = spDAL.RaionsList();
             ViewBag.OblList = spDAL.OblastList();
             ViewBag.ReportsList = spDAL.ReportsList();
