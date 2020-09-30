@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using nadis.DAL;
 using nadis.Models;
 
@@ -29,20 +30,31 @@ namespace nadis.Controllers
         {
             _ = new List<BioPrep>();
             //string v = Request.Query.Count
-            //string q = Request.Query.FirstOrDefault(p => p.Key == "repMO").Value.ToString();
+            string repMoFilter = Request.Query.FirstOrDefault(p => p.Key == "repMO").Value.ToString();
+            string VetPrepFilter = Request.Query.FirstOrDefault(p => p.Key == "VetPrep").Value.ToString();
             
             int reportDtYear = Convert.ToInt32(User.Claims.ToList().FirstOrDefault(x => x.Type == "reportDtYear").Value);
             int reportDtMonth = Convert.ToInt32(User.Claims.ToList().FirstOrDefault(x => x.Type == "reportDtMonth").Value);
             //if(Request.Query.Count==0)
-            List<BioPrep> BioPrepList = BioPrepDAL.GetAll_BioPrep(
+            List<BioPrep> BioPrepList = BioPrepDAL.GetAll_BioPrepF(
                                                 User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value,
                                                 reportDtYear,
-                                                reportDtMonth
+                                                reportDtMonth,
+                                                repMoFilter,
+                                                VetPrepFilter
                                                 ).ToList();
             ViewBag.Page = "BioPrep";
             ViewBag.RepList  = spDAL.ReportToToday();
-            ViewBag.repMOList = FilterTools.repMOList(reportDtYear,reportDtMonth);
-            ViewBag.VetPrepList = FilterTools.VetPrepList();
+            SelectList l = FilterTools.repMOList(reportDtYear,reportDtMonth);
+            foreach(var i in l)
+                if(i.Value == repMoFilter) {i.Selected = true;break;} 
+            
+            ViewBag.repMOList = l;
+
+            SelectList vpl = FilterTools.VetPrepList();
+            foreach(var it in vpl)
+                if(it.Value.Trim() == VetPrepFilter.Trim()){it.Selected = true; break;}
+            ViewBag.VetPrepList = vpl;
             return View(BioPrepList);
         }
 

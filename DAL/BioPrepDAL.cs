@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using nadis.Models;
 using System;
+using Dapper.Contrib.Extensions;
+using Dapper.Contrib;
+using System.Text;
 
 namespace nadis.DAL
 {
@@ -56,14 +59,33 @@ namespace nadis.DAL
             using(SqlConnection _conn = new SqlConnection(spDAL.connStr))
             {
                 //if(){};
+                //int m = Int32.Parse(fdt.Substring(0,2));
+                //int y = Int32.Parse(fdt.Substring(3,4));
+
+                var q = new StringBuilder();
+                q.Append("SELECT * FROM BioPrep WHERE (KIDro=@KIDroP ");
+                if(fdt.Length!=0)
+                    { 
+                        q.Append(" and month(repMO)="+ fdt.Substring(0,2) + 
+                                 " and year(repMO)=" + fdt.Substring(3,4)+" ");
+                    } else
+                    {
+                        q.Append(" and repMo between @bDt and @eDt ");
+                    }
+                if(fvp.Length!=0)
+                    {
+                        q.Append(" and VetPrep='" + fvp + "') ORDER BY repMO DESC");
+                    } else
+                    {
+                        q.Append(" ) ORDER BY repMO DESC");   
+                    }
+
+
                 IEnumerable<BioPrep> tmpList =
-                    _conn.Query<BioPrep>("SELECT * FROM BioPrep WHERE "+
-                                           "(KIDro=@KIDroP and repMo between @bDt and @eDt and "+
-                                           " VetPrep=@vp)"
-                                          + " ORDER BY repMO DESC", 
+                    _conn.Query<BioPrep>(q.ToString(), 
                                                 new { KIDroP = KIDro, 
                                                       bDt = new DateTime(rpDtYear,rpDtMonth,1),
-                                                      eDt = new DateTime(DateTime.Today.Year, DateTime.Today.Month,1) 
+                                                      eDt = new DateTime(DateTime.Today.Year, DateTime.Today.Month,1),
                                                     });
                 _conn.Close();
                 foreach (var tmp in tmpList)

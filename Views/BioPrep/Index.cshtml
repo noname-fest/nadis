@@ -52,17 +52,14 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.RepMO)
-                <!--<p id="ttt">123</p>
+                <p id="ttt">123</p>
                 @Html.DropDownList("repMOfilter",ViewBag.repMOList as SelectList,
                                     new {@id="_fdt" })
-                -->
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.VetPrepDisplay)
-                <!--
                 @Html.DropDownList("VetPrepFilter",ViewBag.VetPrepList as SelectList,
                                     new {@id="_fvp" })
-                -->
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Bylo)
@@ -139,12 +136,12 @@
 @section scripts{
         <script type="text/javascript">
             $(function(){
-                $('#_fdt').change(function(){
-                        //$("#ttt").text = '!!!';
+                $('#_fdt,#_fvp').change(function(){
+                        $("#ttt").text = '!!!';
                         //var f_dt = $('_fdt').val();
-                        //var f_dt = $("#_fdt").val();
-                        //var f_vp = $("#_fvp").val();
-                        //window.location = '/BioPrep?repMO='+f_dt+'&VetPrep='+f_vp;
+                        var f_dt = $("#_fdt").val();
+                        var f_vp = $("#_fvp").val();
+                        window.location = '/BioPrep?repMO='+f_dt+'&VetPrep='+f_vp;
                     });
             })
         </script>
