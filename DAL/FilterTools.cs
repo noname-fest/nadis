@@ -17,7 +17,34 @@ namespace nadis.DAL
                     "окт","ноя","дек"
             };
 
-        public static SelectList repMOList(int y, int m)
+        public static SelectList KIDdivList(string KIDro,string f)
+        {
+            List<SelectListItem> ls = spDAL.KIDdivList(KIDro).AsList();
+            ls.Insert(0,new SelectListItem(){ Value = "", Text = "-все-"});
+            SelectList l = new SelectList(ls,"Value","Text");
+            foreach(var i in l) if(i.Value==f){i.Selected=true;break;}
+            return l;
+        }
+
+        public static SelectList KIDspcList(string f)
+        {
+            List<SelectListItem> ls = spDAL.KIDspcList().AsList();
+            ls.Insert(0,new SelectListItem(){ Value = "", Text = "-все-"});
+            SelectList l = new SelectList(ls,"Value","Text");
+            foreach(var i in l)if(i.Value==f){i.Selected=true;break;}
+            return l;
+        }
+
+        public static SelectList KIDdisList(string f)
+        {
+            List<SelectListItem> ls = spDAL.KIDdisList().AsList();
+            ls.Insert(0,new SelectListItem(){ Value = "", Text = "-все-"});
+            SelectList l = new SelectList(ls,"Value","Text");
+            foreach(var i in l)if(i.Value==f){i.Selected=true;break;}
+            return l;
+        }
+
+        public static SelectList repMOList(int y, int m, string f)
         {
             List<sp_values> tmpList = new List<sp_values>();
             DateTime dtB = new DateTime(y,m,1);
@@ -38,7 +65,7 @@ namespace nadis.DAL
             var sl =  new SelectList(tmpList,"ID","Text");
             foreach (var item in sl)
                 {
-                    if (item.Value == "")
+                    if (item.Value == f)
                         {
                             item.Selected = true;
                             break;
@@ -47,7 +74,7 @@ namespace nadis.DAL
             return sl;//new SelectList(tmpList,"ID","Text");
         }
 
-        public static SelectList VetPrepList()
+        public static SelectList VetPrepList(string f)
         {
             using SqlConnection _conn = new SqlConnection(spDAL.connStr);
             string q = "SELECT VetPrep.KID as ID, (VetPrep.PrepType + ' (' + EdIzm.EdIzm + ')') as Text  FROM VetPrep "+
@@ -65,7 +92,7 @@ namespace nadis.DAL
              var sl =  new SelectList(tL,"ID","Text");
             foreach (var item in sl)
                 {
-                    if (item.Value == "")
+                    if (item.Value.Trim() == f.Trim())
                         {
                             item.Selected = true;
                             break;

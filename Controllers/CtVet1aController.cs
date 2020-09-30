@@ -17,14 +17,32 @@ namespace nadis.Controllers
             _ = new List<CtVet1a>();
             int reportDtYear = Convert.ToInt32(User.Claims.ToList().FirstOrDefault(x => x.Type == "reportDtYear").Value);
             int reportDtMonth = Convert.ToInt32(User.Claims.ToList().FirstOrDefault(x => x.Type == "reportDtMonth").Value);
+            string idRo = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value;
 
-            List<CtVet1a> vet1aList = CtVet1aDAL.GetAll_CtVet1a(
-                                                User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value,
+            string repMoFilter = Request.Query.FirstOrDefault(p => p.Key == "repMO").Value.ToString();
+            string divFilter = Request.Query.FirstOrDefault(p => p.Key == "KIDdiv").Value.ToString();
+            string spcFilter = Request.Query.FirstOrDefault(p => p.Key == "KIDspc").Value.ToString();
+            string disFilter = Request.Query.FirstOrDefault(p => p.Key == "KIDdis").Value.ToString();
+
+            List<CtVet1a> vet1aList = CtVet1aDAL.GetAll_CtVet1aF(
+                                                idRo,
                                                 reportDtYear,
-                                                reportDtMonth
+                                                reportDtMonth,
+                                                repMoFilter,
+                                                divFilter,
+                                                spcFilter,
+                                                disFilter
                                                 ).ToList();
             ViewBag.Page = "CtVet1a";
             ViewBag.RepList  = spDAL.ReportToToday();
+
+            ViewBag.repMOList = FilterTools.repMOList(  reportDtYear,
+                                                        reportDtMonth,
+                                                        repMoFilter);
+            ViewBag.KIDdivList = FilterTools.KIDdivList(idRo,divFilter);
+            ViewBag.KIDspcList = FilterTools.KIDspcList(spcFilter);
+            ViewBag.KIDdisList = FilterTools.KIDdisList(disFilter);
+
             return View(vet1aList);
         }
         

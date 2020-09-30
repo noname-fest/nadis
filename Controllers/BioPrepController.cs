@@ -45,16 +45,18 @@ namespace nadis.Controllers
                                                 ).ToList();
             ViewBag.Page = "BioPrep";
             ViewBag.RepList  = spDAL.ReportToToday();
-            SelectList l = FilterTools.repMOList(reportDtYear,reportDtMonth);
-            foreach(var i in l)
-                if(i.Value == repMoFilter) {i.Selected = true;break;} 
             
-            ViewBag.repMOList = l;
+            //SelectList l = FilterTools.repMOList(reportDtYear,reportDtMonth);
+            //foreach(var i in l)
+            //    if(i.Value == repMoFilter) {i.Selected = true;break;} 
+            
+            ViewBag.repMOList = FilterTools.repMOList(reportDtYear,reportDtMonth,repMoFilter);
 
-            SelectList vpl = FilterTools.VetPrepList();
-            foreach(var it in vpl)
-                if(it.Value.Trim() == VetPrepFilter.Trim()){it.Selected = true; break;}
-            ViewBag.VetPrepList = vpl;
+            //SelectList vpl = FilterTools.VetPrepList(VetPrepFilter);
+            //foreach(var it in vpl)
+            //    if(it.Value.Trim() == VetPrepFilter.Trim()){it.Selected = true; break;}
+            //ViewBag.VetPrepList = vpl;
+            ViewBag.VetPrepList = FilterTools.VetPrepList(VetPrepFilter);
             return View(BioPrepList);
         }
 
