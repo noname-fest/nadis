@@ -66,22 +66,22 @@
              <th rowspan="2">
                 @Html.DisplayNameFor(model => model.repMO)
                 @Html.DropDownList("repMOfilter",ViewBag.repMOList as SelectList,
-                                    new {@id="_fdt" })
+                                    new {@class="selectpicker form-control",@id="_fdt", @style="width:auto"})
              </th>
              <th rowspan="2">
                  @Html.DisplayNameFor(model => model.KIDdiv)
                 @Html.DropDownList("KIDdivfilter",ViewBag.KIDdivList as SelectList,
-                                    new {@id="_fdiv" })
+                                    new {@class="selectpicker form-control",@id="_fdiv" })
              </th>
              <th rowspan="2">
                  @Html.DisplayNameFor(model => model.KIDspc)
                   @Html.DropDownList("SPCfilter",ViewBag.KIDspcList as SelectList,
-                                    new {@id="_fspc" })
+                                    new {@class="selectpicker form-control",@id="_fspc" })
                   </th>
              <th rowspan="2">
                  @Html.DisplayNameFor(model => model.KIDdis)
                  @Html.DropDownList("DISfilter",ViewBag.KIDdisList as SelectList,
-                                    new {@id="_fdis" })
+                                    new {@class="selectpicker form-control",@id="_fdis"})
                   </th>
              <th colspan="4">@_locale["Za_otch_periud"]</th>
              <th colspan="2">@_locale["Na_kon_periuda"]</th>

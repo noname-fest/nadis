@@ -4,11 +4,56 @@ using nadis.tools;
 using System.Data.SqlClient;
 using nadis.Models;
 using Dapper;
-
+using System.Text;
 namespace nadis.DAL
 {
     public static class CtVet1cDAL
     {
+
+        public static IEnumerable<CtVet1c> GetAll_CtVet1cF(string KIDro, int Y, int M,
+                            string fdt, string fdiv,string fspc, string fdis)
+            {
+                using (SqlConnection _conn = new SqlConnection(spDAL.connStr))
+                {
+                    var q = new StringBuilder();
+                    q.Append("SELECT * FROM ctVet1c WHERE (KIDro=@KIDroP ");
+                    if(fdt.Length!=0)
+                        { 
+                            q.Append(" and month(repMO)="+ fdt.Substring(0,2) + 
+                                    " and year(repMO)=" + fdt.Substring(3,4)+" ");
+                        } else
+                        {
+                            q.Append(" and repMo between @bDt and @eDt ");
+                        }
+                    if(fdiv.Length!=0)
+                            q.Append(" and KIDdiv='"+fdiv+"' ");
+                    //else    q.Append(" ");
+                    if(fspc.Length!=0)
+                            q.Append(" and KIDspc='"+fspc+"' ");
+                    if(fdis.Length!=0)
+                            q.Append(" and KIDspc='"+fdis+"' ");
+                    q.Append(" ) ORDER BY repMO DESC");
+
+                    IEnumerable<CtVet1c> tmpList = 
+                    _conn.Query<CtVet1c>(q.ToString(), 
+                                            new { KIDroP = KIDro, 
+                                                  bDt = new DateTime(Y,M,1),
+                                                  eDt = new DateTime(DateTime.Today.Year, DateTime.Today.Month,1) 
+                                                });
+                    _conn.Close();
+                    
+                    foreach (var tmp in tmpList)
+                    {
+                        tmp.KIDdivDisplay = spDAL.KIDdivName(tmp.KIDdiv);
+                        tmp.KIDspcDisplay = spDAL.KIDspcName(tmp.KIDspc);
+                        tmp.KIDdisDisplay = spDAL.KIDdisName(tmp.KIDdis);
+                        tmp.KIDtrtDisplay = spDAL.KIDtrtName(tmp.KIDtrt);
+                    };
+                    
+                    return tmpList;
+                }
+            }
+
         public static IEnumerable<CtVet1c> GetAll_CtVet1c(string KIDro, int Y, int M)
             {
                 using (SqlConnection _conn = new SqlConnection(spDAL.connStr))

@@ -58,7 +58,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.VetPrepDisplay)
                 @Html.DropDownList("VetPrepFilter",ViewBag.VetPrepList as SelectList,
-                                    new {@id="_fvp" })
+                                    new {@class="selectpicker form-control",@id="_fvp" })
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Bylo)
