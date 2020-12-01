@@ -38,7 +38,9 @@ namespace nadis.DAL
                     _conn.Query<CtVet1c>(q.ToString(), 
                                             new { KIDroP = KIDro, 
                                                   bDt = new DateTime(Y,M,1),
-                                                  eDt = new DateTime(DateTime.Today.Year, DateTime.Today.Month,1) 
+                                                  //eDt = new DateTime(DateTime.Today.Year, DateTime.Today.Month,1) 
+                                                    eDt = new DateTime(DateTime.Today.AddMonths(1).Year,
+                                                        DateTime.Today.AddMonths(1).Month,1)
                                                 });
                     _conn.Close();
                     
