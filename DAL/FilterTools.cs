@@ -17,6 +17,23 @@ namespace nadis.DAL
                     "окт","ноя","дек"
             };
 
+        public static SelectList TrtList(string f)
+        {
+            List<SelectListItem> ls = spDAL.KIDtrtList().AsList();
+            ls.Insert(0,new SelectListItem(){ Value = "", Text = "-все-"});
+            SelectList l = new SelectList(ls,"Value","Text");
+            foreach(var i in l) if(i.Value.Trim()==f.Trim()){i.Selected=true;break;}
+            return l;
+        }
+        public static SelectList PlanYearList(string f)
+        {
+            List<SelectListItem> ls = spDAL.PlanYearList().AsList();
+            ls.Insert(0,new SelectListItem(){ Value = "", Text = "-все-"});
+            SelectList l = new SelectList(ls,"Value","Text");
+            foreach(var i in l) if(i.Value==f){i.Selected=true;break;}
+            return l;
+        }
+
         public static SelectList KIDdivList(string KIDro,string f)
         {
             List<SelectListItem> ls = spDAL.KIDdivList(KIDro).AsList();

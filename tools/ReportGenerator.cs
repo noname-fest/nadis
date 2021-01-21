@@ -85,8 +85,25 @@ namespace nadis
             string _path = System.IO.Directory.GetCurrentDirectory();
             _path = _path +  "\\FastReports\\"+ reportName +".frx";
             
-            int m = Int32.Parse(dt.Substring(0,2));
-            int y = Int32.Parse(dt.Substring(3,4));
+            string m;
+            int y = 0;
+            // check the CtVet2 report 
+            //
+            if(dt.Contains("/")) {
+                //m = Int32.Parse(dt.Substring(5,1));
+                m = dt.Substring(5,1);
+                y = Int32.Parse(dt.Substring(0,4));                
+            } else 
+            if(dt.Contains("-")){
+                m = dt.Substring(5,dt.Length-5);
+                y = Int32.Parse(dt.Substring(0,4));
+            } else
+            {
+                //m = Int32.Parse(dt.Substring(0,2));
+                m = dt.Substring(0,2);
+                y = Int32.Parse(dt.Substring(3,4));
+            }
+        
             webR.report.Report.Load(_path);
             webR.report.Report.SetParameterValue("yyyy",y);
             webR.report.Report.SetParameterValue("mm",m);

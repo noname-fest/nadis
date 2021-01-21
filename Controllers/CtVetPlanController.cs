@@ -17,9 +17,24 @@ namespace nadis.Controllers
             int reportDtMonth = Convert.ToInt32(User.Claims.ToList().FirstOrDefault(x => x.Type == "reportDtMonth").Value);
             string KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value;
 
-            List<CtVetPlan> l = ctVetPlanDAL.GetAll_CtVetPlan(KIDro,reportDtYear).ToList();
+            //string PlanYFilter = Request.Query.FirstOrDefault(p => p.Key == "PlanY").Value.ToString();
+            string divFilter = Request.Query.FirstOrDefault(p => p.Key == "KIDdiv").Value.ToString();
+            string trtFilter = Request.Query.FirstOrDefault(p => p.Key == "KIDtrt").Value.ToString();
+            string spcFilter = Request.Query.FirstOrDefault(p => p.Key == "KIDspc").Value.ToString();
+            string disFilter = Request.Query.FirstOrDefault(p => p.Key == "KIDdis").Value.ToString();
+            
+            List<CtVetPlan> l = ctVetPlanDAL.GetAll_CtVetPlan(KIDro,DateTime.Today.Year.ToString(),
+                                            divFilter,trtFilter,spcFilter,disFilter).ToList();
+            
+            ViewBag.KIDdivList = FilterTools.KIDdivList(User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value, divFilter);
+            //ViewBag.PlanYearList = FilterTools.PlanYearList(PlanYFilter);
+            ViewBag.PlanYearList = spDAL.PlanYearList();
+            ViewBag.KIDtrtList = FilterTools.TrtList(trtFilter);
+            ViewBag.KIDspcList = FilterTools.KIDspcList(spcFilter);
+            ViewBag.KIDdisList = FilterTools.KIDdisList(disFilter);
             ViewBag.Page = "CtVetPlan";
             //ViewBag.RepList  = spDAL.ReportToToday();
+
             return View(l);
         }
 

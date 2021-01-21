@@ -31,8 +31,8 @@ namespace nadis.DAL
         public static SelectList PlanYearList()
         {
             List<sp_values> tmp = new List<sp_values>();
-            tmp.Add(new sp_values(){ID = (DateTime.Today.Year+1).ToString(),
-                                    Text = (DateTime.Today.Year+1).ToString()});
+            //tmp.Add(new sp_values(){ID = (DateTime.Today.Year+1).ToString(),
+            //                        Text = (DateTime.Today.Year+1).ToString()});
             tmp.Add(new sp_values(){ID = (DateTime.Today.Year).ToString(),
                                     Text = (DateTime.Today.Year).ToString()});
             tmp.Add(new sp_values(){ID = (DateTime.Today.Year-1).ToString(),
@@ -64,6 +64,14 @@ namespace nadis.DAL
             tmpList.Add(new sp_values(){ID = "ctvet1c-CA-KR",
                                         Text = "Профилактика по КР"});
 
+            tmpList.Add(new sp_values(){ID = "ctvet2-CA-Raion",
+                                        Text = "Незаразные болезни по районам"});
+            tmpList.Add(new sp_values(){ID = "ctvet2-CA-Obl",
+                                        Text = "Незаразные болезни по области"});
+            tmpList.Add(new sp_values(){ID = "ctvet2-CA-KR",
+                                        Text = "Незаразные болезни по КР"});
+
+
             tmpList.Add(new sp_values(){ID = "BioPrep-CA-Raion",
                                         Text = "Биопрепараты по районам"});
             tmpList.Add(new sp_values(){ID = "BioPrep-CA-Obl",
@@ -76,6 +84,14 @@ namespace nadis.DAL
                                         Text = "Анали ПЭМ по области"});
             tmpList.Add(new sp_values(){ID = "PEM-CA-KR",
                                         Text = "Анализ ПЭМ по КР"});
+
+            tmpList.Add(new sp_values(){ID = "VetPlan-CA-Raion",
+                                        Text = "Вет.план по районам"});
+            tmpList.Add(new sp_values(){ID = "VetPlan-CA-Obl",
+                                        Text = "Вет.план по области"});
+            tmpList.Add(new sp_values(){ID = "VetPlan-CA-KR",
+                                        Text = "Вет.план по КР"});
+
             return new SelectList(tmpList, "ID", "Text",tmpList[0].ID);
         }
 

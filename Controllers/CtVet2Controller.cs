@@ -18,7 +18,7 @@ namespace nadis.Controllers
             string KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value;
             IEnumerable<CtVet2> list = CtVet2DAL.GetAll(KIDro,Y,M);
             ViewBag.Page = "CtVet2";
-            ViewBag.RepList  = spDAL.ReportToToday();
+            ViewBag.RepList  = CtVet2DAL.RepPerListList(Y,M); //spDAL.ReportToToday();
             return View(list);
         }
 
@@ -59,7 +59,7 @@ namespace nadis.Controllers
                 else
                 {
                     TempData["EM"] = "Такая запись уже существует";
-                };
+                };  
                 return RedirectToAction("Index");
             }
             ViewBag.Page = "CtVet2";

@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using nadis.Models;
 using nadis.DAL;
 using Dapper.Contrib.Extensions;
+using System.Text;
 
 namespace nadis.DAL
 {
@@ -31,18 +32,36 @@ namespace nadis.DAL
             }
         } */
         
-        public static  IEnumerable<CtVetPlan> GetAll_CtVetPlan(string IDro, int PlY)
+        public static  IEnumerable<CtVetPlan> GetAll_CtVetPlan(string IDro, string PlY,
+                                                                string fdiv,
+                                                                string trt,
+                                                                string spc,
+                                                                string dis
+                                                                )
         {
             using(SqlConnection _conn = new SqlConnection(spDAL.connStr))
             {
-                string q = "SELECT * FROM ctVetPlan WHERE KIDro=@KIDroP and PlanYr=@PlanYearP";
+                //string q = "SELECT * FROM ctVetPlan WHERE KIDro=@KIDroP and PlanYr=@PlanYearP";
+                
+                var q = new StringBuilder();
+                q.Append("SELECT * FROM ctVetPlan WHERE (KIDro=@KIDroP and PlanYr=@PlanYearP ");
+                if(fdiv.Length!=0)
+                        q.Append(" and KIDdiv='"+fdiv+"' ");
+                if(trt.Length!=0)
+                        q.Append(" and KIDtrt='"+trt+"' " );
+                if(spc.Length!=0)
+                        q.Append(" and KIDspc='"+spc+"'");
+                if(dis.Length!=0)
+                        q.Append(" and KIDdis='"+dis+"'");
+                        q.Append(" )");
+                
                 var param = new 
                     {
                         KIDroP = IDro,
                         PlanYearP = PlY
                     };
                 
-                IEnumerable<CtVetPlan> tmp = _conn.Query<CtVetPlan>(q,param);
+                IEnumerable<CtVetPlan> tmp = _conn.Query<CtVetPlan>(q.ToString(),param);
                 _conn.Close();
                 /*
                 foreach (CtVetPlan item in tmp)

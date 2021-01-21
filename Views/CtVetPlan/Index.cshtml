@@ -14,6 +14,40 @@
 <tbody>
 <tr>
     <td><a asp-action="Create">Создать новый</a></td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="text-align: right;"><form>
+                @Html.DropDownList("dt",ViewBag.PlanYearList as SelectList)
+                <input type="hidden" id="tip" name="tip" value="month">
+                <input type="hidden" id="ReportName" name="ReportName" value="VetPlan">
+                <input type="hidden" id="aa" name="aa" value="-none">
+                <input type="submit" value="по району" asp-controller="Reports"
+                    asp-action="GetReportAA" method="GET"
+                    asp-route-dt="dt" 
+                    asp-route-aa="aa"
+                    asp-route-tip="tip"
+                    asp-route-ReportName="ReportName"
+                    class="btn btn-success"/>
+       </form>
+</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td><form>
+                @Html.DropDownList("dt",ViewBag.PlanYearList as SelectList)
+                @Html.DropDownList("aa",ViewBag.KIDdivList as SelectList)
+                <input type="hidden" ird="tip" name="tip" value="month">
+                <input type="hidden" id="ReportName" name="ReportName" value="VetPlan-AA">
+                <input type="submit" value="по Айыл аймаку" asp-controller="Reports"
+                    asp-action="GetReportAA" method="GET"
+                    asp-route-dt="dt"
+                    asp-route-aa="aa"
+                    asp-route-tip="tip"
+                    asp-route-ReportName="ReportName"
+                    class="btn btn-success"/>
+    </form>
+</td>
+
+
+
+
 </tr>
 </tbody>
 </table>
@@ -29,15 +63,23 @@
             </th>
             <th rowspan="2">
                 @Html.DisplayNameFor(model => model.KIDdiv) 
+                @Html.DropDownList("KIDdivfilter",ViewBag.KIDdivList as SelectList,
+                                    new {@class="selectpicker form-control",@id="_fdiv" })
             </th>
             <th rowspan="2">
                 @Html.DisplayNameFor(model => model.KIDtrt)
+                @Html.DropDownList("KIDtrtFilter",ViewBag.KIDtrtList as SelectList,
+                                    new {@class="selectpicker form-control",@id="_ftrt" })
             </th>
             <th rowspan="2">
                 @Html.DisplayNameFor(model => model.KIDspc)
+                @Html.DropDownList("SPCfilter",ViewBag.KIDspcList as SelectList,
+                                  new {@class="selectpicker form-control",@id="_fspc" })
             </th>
             <th rowspan="2">
                 @Html.DisplayNameFor(model => model.KIDdis)
+                 @Html.DropDownList("DISfilter",ViewBag.KIDdisList as SelectList,
+                                    new {@class="selectpicker form-control",@id="_fdis"})
             </th>
             <th rowspan="2">
                 @Html.DisplayNameFor(model => model.KIDtest)
@@ -104,3 +146,20 @@
         }
     </tbody>
 </table>
+
+@section scripts{
+        <script type="text/javascript">
+            $(function(){
+                $('#_fdiv,#_fspc,#_ftrt,#_fdis').change(function(){
+                        var f_div = $("#_fdiv").val();
+                        var f_spc = $("#_fspc").val();
+                        var f_trt = $("#_ftrt").val();
+                        var f_dis = $("#_fdis").val();
+                        window.location = '/CtVetPlan?KIDdis='+f_dis
+                                            +'&KIDdiv='+f_div
+                                            +'&KIDspc='+f_spc
+                                            +'&KIDtrt='+f_trt;
+                    });
+            })
+        </script>
+    }

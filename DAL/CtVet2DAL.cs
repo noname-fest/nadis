@@ -20,7 +20,9 @@ namespace nadis.DAL
             List<sp_values> tmpList = new List<sp_values>();
             DateTime dtB = new DateTime(YY,MM,1);
             DateTime dtE =  DateTime.Today;
-            while((dtB.Year*12+dtB.Month%6) <= (dtE.Year*12+dtE.Month%6))
+            //if(dtB)
+            //while((dtB.Year*12+dtB.Month%6) <= (dtE.Year*12+dtE.Month%6))
+            while(dtB <= dtE)
             {
                 sp_values tmp_sp = new sp_values();
                 if (dtB.Month > 6) tmp_sp.ID = dtB.Year.ToString() + "/2";

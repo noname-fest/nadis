@@ -31,6 +31,31 @@ namespace nadis.Controllers
 
         [Authorize]
         [HttpGet]
+        public IActionResult GetReportAA(string ReportName, string dt, string aa, string tip) //int m
+        {
+            string KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value;
+            //string l = User.Claims.ToList().FirstOrDefault(x => x.Type == "lang").Value;
+            //string lang = CultureInfo.CurrentCulture.Name;
+            string lang = "ru";
+            switch(tip)
+            {
+                case "inc" : 
+                    return View(ReportGenerator.
+                                GetReport(dt+"-"+aa,
+                                    ReportName+"_inc-"+lang,
+                                    KIDro));
+                case "month" :
+                    return View(ReportGenerator.
+                                GetReport(dt+"-"+aa,
+                                    ReportName+"-" + lang,
+                                    KIDro));
+                default :
+                    return(null);
+            }
+        }
+
+        [Authorize]
+        [HttpGet]
         public IActionResult GetReport(string ReportName, string dt, string tip) //int m
         {
             string KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value;
