@@ -124,5 +124,37 @@ namespace nadis.Controllers
             ViewBag.Page = "CtVetPlan";
             return View(tmp);
         }
+        [Authorize]
+        public IActionResult Delete(Guid id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            CtVetPlan tmp = ctVetPlanDAL.GetById_CtVetPlan(id);
+            if (tmp == null)
+            {
+                return NotFound();
+            }
+            ViewBag.KIDdisDisplay = spDAL.KIDdisName(tmp.KIDdis);
+            ViewBag.KIDdisDisplay = spDAL.KIDdisName(tmp.KIDdis);
+            ViewBag.KIDspcDisplay = spDAL.KIDspcName(tmp.KIDspc);
+            ViewBag.KIDtrtDisplay = spDAL.KIDtrtName(tmp.KIDtrt);
+            ViewBag.Page = "BioPrep";
+            return View(tmp);
+        }
+
+        [Authorize]
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteCtVetPlan(Guid id)
+        {
+            ctVetPlanDAL.Delete_CtVetPlan(id);
+            ViewBag.Page = "CtVetPlan";
+            return RedirectToAction("Index");
+        }
+
+
+
     }
 }
