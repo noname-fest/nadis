@@ -57,6 +57,7 @@ namespace nadis.Controllers
             //    if(it.Value.Trim() == VetPrepFilter.Trim()){it.Selected = true; break;}
             //ViewBag.VetPrepList = vpl;
             ViewBag.VetPrepList = FilterTools.VetPrepList(VetPrepFilter);
+            ViewBag.RepList = spDAL.ReportToToday();
             return View(BioPrepList);
         }
 

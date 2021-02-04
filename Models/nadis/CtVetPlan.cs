@@ -41,15 +41,15 @@ namespace nadis.Models
         public int? tfemage2_IV {get; set;} = 0;
         //pLan po Q
         [Display(Name = "I кв")]
-        public int? nPlan_I   {get{return tfemage1_I+tfemage2_I;}}
+        public int? nPlan_I   {get{return tfemage1_I+tfemage2_I;} set { nPlan_I = value;}}
         [Display(Name = "II кв")]
-        public int? nPlan_II  {get{return tfemage1_II+tfemage2_II;}}
+        public int? nPlan_II  {get{return tfemage1_II+tfemage2_II;} set { nPlan_II = value;}}
         [Display(Name = "III кв")]
-        public int? nPlan_III {get{return tfemage1_III+tfemage2_III;}}
+        public int? nPlan_III {get{return tfemage1_III+tfemage2_III;} set { nPlan_III = value;}}
         [Display(Name = "IV кв")]
-        public int? nPlan_IV  {get{return tfemage1_IV+tfemage2_IV;}}
+        public int? nPlan_IV  {get{return tfemage1_IV+tfemage2_IV;} set { nPlan_IV = value;}}
         [Display(Name = "ИТОГО")]
-        public int? nPlan     {get{return nPlan_I+nPlan_II+nPlan_III+nPlan_IV;}}
+        public int? nPlan     {get{return nPlan_I+nPlan_II+nPlan_III+nPlan_IV;} set { nPlan_I = value;}}
         
         /*
         public int? nPlan_I   {get;set;}

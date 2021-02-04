@@ -42,7 +42,7 @@
                     class="btn btn-success"/>
                     <br>
                 @Html.DropDownList("Rr",ViewBag.RaznarydkaList as SelectList)
-                <input type="submit" value="Разнарядка по биопрепаратам" asp-controller="Reports"
+                <input type="submit" value="Разнарядка" asp-controller="Reports"
                     asp-action="GetReportRaznarydka" method="GET"
                     asp-route-dtR="dtR" 
                     asp-route-RaionID="RaionID" 
@@ -51,6 +51,15 @@
                     asp-route-Tip="Tip"
                     class="btn btn-success"/>
 
+                @Html.DropDownList("Rr2",ViewBag.PererashodList as SelectList)
+                <input type="submit" value="Перерасход" asp-controller="Reports"
+                    asp-action="GetReportPererashod" method="GET"
+                    asp-route-dtR="dtR" 
+                    asp-route-RaionID="RaionID" 
+                    asp-route-OblID="OblID" 
+                    asp-route-Rr2="Rr2"
+                    asp-route-Tip="Tip"
+                    class="btn btn-success"/>
        </form>
 </td>
     }

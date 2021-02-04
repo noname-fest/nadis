@@ -16,9 +16,9 @@
 <td><a asp-action="Create">Создать новый</a></td>
 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 <td style="text-align: right;"><form>
-                @Html.DropDownList("dt",ViewBag.PlanYearList as SelectList)
+                @Html.DropDownList("dt",ViewBag.RepList as SelectList)
                 <input type="hidden" id="tip" name="tip" value="month">
-                <input type="hidden" id="ReportName" name="ReportName" value="CtVetPlan">
+                <input type="hidden" id="ReportName" name="ReportName" value="BioPrep">
                 <input type="submit" value="Отчет" asp-controller="Reports"
                     asp-action="GetReport" method="GET"
                     asp-route-dt="dt" 
@@ -29,9 +29,9 @@
 </td>
 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 <td><form>
-                @Html.DropDownList("dt",ViewBag.KIDdivList as SelectList)
+                @Html.DropDownList("dt",ViewBag.RepList as SelectList)
                 <input type="hidden" id="tip" name="tip" value="inc">
-                <input type="hidden" id="ReportName" name="ReportName" value="CtVetPlan">
+                <input type="hidden" id="ReportName" name="ReportName" value="BioPrep">
                 <input type="submit" value="Отчет нарастающий" asp-controller="Reports"
                     asp-action="GetReport" method="GET"
                     asp-route-dtInc="dt"

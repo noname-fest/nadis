@@ -69,6 +69,7 @@ namespace nadis.Controllers
             if (ModelState.IsValid)
             {
                 //if(BioPrepDAL.IsUniqueRecord(objBioPrep))
+                //tmp.nPlan = tmp.nPlan_I+tmp.nPlan_II+tmp.nPlan_III+tmp.nPlan_IV;
                 ctVetPlanDAL.Update_CtVetPlan(tmp);
                 return RedirectToAction("Index");
             }

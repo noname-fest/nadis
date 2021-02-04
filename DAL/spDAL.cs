@@ -118,7 +118,30 @@ namespace nadis.DAL
             return new SelectList(tmpList, "ID", "Text",tmpList[0].ID);
         }
 
-        public static SelectList OblastList()
+         public static SelectList PererashodReportsList()
+        {
+            List<sp_values> tmpList = new List<sp_values>();
+            tmpList.Add(new sp_values(){ID = "Pererashod BrycellezREV-1",
+                                        Text = "Вакцина РЕВ-1"});
+            tmpList.Add(new sp_values(){ID = "Pererashod BrycellezSHT19",
+                                        Text = "Вакцина Штамм-19"});
+            tmpList.Add(new sp_values(){ID = "Pererashod Chyma",
+                                        Text = "Вакцина против чумы"});
+            tmpList.Add(new sp_values(){ID = "Pererashod Ospa",
+                                        Text = "Вакцина против Оспы"});
+            tmpList.Add(new sp_values(){ID = "Pererashod Sibir",
+                                        Text = "Вакцина против сибирской язвы"});
+            tmpList.Add(new sp_values(){ID = "Pererashod TyberkylinBirds",
+                                        Text = "Туберкулин для птиц"});
+            tmpList.Add(new sp_values(){ID = "Pererashod TyberkylinKRS",
+                                        Text = "Туберкулин для млекопитающих"});
+            tmpList.Add(new sp_values(){ID = "Pererashod Yashyr",
+                                        Text = "Вакцина против ящура"});
+
+            return new SelectList(tmpList, "ID", "Text",tmpList[0].ID);
+        }
+
+       public static SelectList OblastList()
         {
             List<sp_values> tmpList = new List<sp_values>();
             tmpList.Add(new sp_values(){ID = "",Text = "ВСЕ области"});
