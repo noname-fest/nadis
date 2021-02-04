@@ -42,15 +42,17 @@ namespace AuthSample.Controllers
             {
                 var appSettingsJson = AppSettingJSON.GetAppSettings();
                 var connectionString = appSettingsJson["DefaultConnection"];
-
-                using(SqlConnection _conn = new SqlConnection(connectionString))
+                try{
+                using(System.Data.SqlClient.SqlConnection _conn = new System.Data.SqlClient.SqlConnection(connectionString))
                 {
+                    if(_conn.State == System.Data.ConnectionState.Open) _conn.Close();
                     string q = "SELECT * FROM Users WHERE username=@usr_name and userpassword=@usr_pwd";
                     var param = new
                         {
                           usr_name = loginModel.username,
                           usr_pwd  = loginModel.userpassword
                         };
+                    //_conn.Open();
                     var user = _conn.QueryFirstOrDefault<User>(q,param);
                   if (user != null)
                     {
@@ -61,6 +63,11 @@ namespace AuthSample.Controllers
                     {
                      ModelState.AddModelError("", "Некорректные логин или пароль");
                     }
+                }
+                }
+                catch (Exception e)
+                {
+                    ViewBag.ErrorMessage = e.Message;
                 }
             }
             ViewBag.Page = "Home";
