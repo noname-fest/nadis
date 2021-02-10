@@ -97,6 +97,12 @@ namespace nadis.DAL
         {
             using(SqlConnection _conn = new SqlConnection(spDAL.connStr))
             {
+                tmp.nPlan_I = tmp.tfemage1_I + tmp.tfemage2_I;
+                tmp.nPlan_II = tmp.tfemage1_II + tmp.tfemage2_II;
+                tmp.nPlan_III = tmp.tfemage1_III + tmp.tfemage2_III;
+                tmp.nPlan_IV = tmp.tfemage1_IV + tmp.tfemage2_IV;
+
+                tmp.nPlan = tmp.nPlan_I+tmp.nPlan_II+tmp.nPlan_III+tmp.nPlan_IV;
                 _conn.Insert<CtVetPlan>(tmp);
             }
         }
@@ -105,6 +111,12 @@ namespace nadis.DAL
         {
             using(SqlConnection _conn = new SqlConnection(spDAL.connStr))
             {
+                tmp.nPlan_I = tmp.tfemage1_I + tmp.tfemage2_I;
+                tmp.nPlan_II = tmp.tfemage1_II + tmp.tfemage2_II;
+                tmp.nPlan_III = tmp.tfemage1_III + tmp.tfemage2_III;
+                tmp.nPlan_IV = tmp.tfemage1_IV + tmp.tfemage2_IV;
+
+                tmp.nPlan = tmp.nPlan_I+tmp.nPlan_II+tmp.nPlan_III+tmp.nPlan_IV;                
                 _conn.Update<CtVetPlan>(tmp);
             }
         }

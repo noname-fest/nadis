@@ -87,7 +87,20 @@ namespace nadis.Controllers
             CtVetPlan tmp = new CtVetPlan()
             {
                 KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value,
-                PlanYr = DateTime.Today.Year
+                PlanYr = DateTime.Today.Year,
+                tfemage1_I = 0,
+                tfemage2_I = 0,
+                tfemage1_II = 0,
+                tfemage2_II = 0,
+                tfemage1_III = 0,
+                tfemage2_III = 0,
+                tfemage1_IV = 0,
+                tfemage2_IV = 0,
+                nPlan_I = 0,
+                nPlan_II = 0,
+                nPlan_III = 0,
+                nPlan_IV = 0,
+                nPlan = 0
             };
 
             ViewBag.PlanYearList = spDAL.PlanYearList();
@@ -154,8 +167,5 @@ namespace nadis.Controllers
             ViewBag.Page = "CtVetPlan";
             return RedirectToAction("Index");
         }
-
-
-
     }
 }
