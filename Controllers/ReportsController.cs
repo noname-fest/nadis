@@ -11,6 +11,16 @@ namespace nadis.Controllers
     {
         [Authorize]
         [HttpGet]
+        public IActionResult GetReportInExcel(string dtR, string ReportName)
+        {
+            string KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value;
+            return File(ReportGenerator.ExportToExcel(dtR,ReportName,KIDro),"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                            ReportName + ".xlsx");
+
+        }
+
+        [Authorize]
+        [HttpGet]
         public IActionResult GetReportInPdf(string dtR, string ReportName)
         {
             string KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value;
