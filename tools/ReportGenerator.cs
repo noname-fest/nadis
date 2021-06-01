@@ -14,7 +14,7 @@ namespace nadis
         //static extern void Excel2007Export(FastReport.Report rp, MemoryStream ms);
         public static Reports GetReportCA(string dt, string reportName,string Raion, string Oblast)
         {
-            //RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
+            RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
             Reports webR = new Reports();
             webR.report = new WebReport();
             //MsSqlDataConnection _con = new MsSqlDataConnection();
@@ -53,7 +53,7 @@ namespace nadis
         public static Reports GetReportRaznaryadka(string dt, string reportName,string Raion, string Oblast)
         {
             
-            //RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
+            RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
             Reports webR = new Reports();
             webR.report = new WebReport();
             /*
@@ -92,7 +92,7 @@ namespace nadis
 
         public static Reports GetReportPererashod(string dt, string reportName,string Raion, string Oblast)
         {
-            //RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
+            RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
             Reports webR = new Reports();
             webR.report = new WebReport();
             /*
@@ -131,7 +131,7 @@ namespace nadis
 
         public static Reports GetReport(string dt, string reportName,string KIDro)
         {
-            //RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
+            RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
             Reports webR = new Reports();
             webR.report = new WebReport();
             //webR.report.Dictionary.Connections[0].ConnectionString = spDAL.connStr;
