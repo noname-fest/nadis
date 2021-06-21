@@ -28,6 +28,20 @@ namespace nadis.DAL
             connStr = appSettingsJson["DefaultConnection"];
         }
 
+        public static SelectList BolezniList()
+        {
+            using(SqlConnection _conn = new SqlConnection(connStr))
+            {
+                var tmp = _conn.Query<sp_values>("SELECT KID as ID, [Disease] as Text FROM [d2DISEASES]");
+                List<sp_values> tL = new List<sp_values>();
+                foreach (var tt in tmp)
+                {
+                    tL.Add(tt);
+                }
+                return new SelectList(tL, "ID", "Text");
+            }
+        }
+
         public static SelectList PlanYearList()
         {
             List<sp_values> tmp = new List<sp_values>();

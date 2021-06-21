@@ -60,6 +60,15 @@
                     asp-route-Rr2="Rr2"
                     asp-route-Tip="Tip"
                     class="btn btn-success"/>
+                <br>
+                @Html.DropDownList("Bolezni",ViewBag.BolezniList as SelectList)
+                @Html.DropDownList("KIDSpc",ViewBag.Spc as SelectList)
+                <input type="submit" value="Заболеваемость" asp-controller="Reports"
+                    asp-action="GetReportZabolevaemost" method="GET"
+                    asp-route-dtR="dtR" 
+                    asp-route-Bolezni="Bolezni"
+                    asp-route-KIDspc="IDSpc"
+                    class="btn btn-success"/>
        </form>
 </td>
     }

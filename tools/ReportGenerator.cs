@@ -50,7 +50,7 @@ namespace nadis
             return webR;
         }
 
-        public static Reports GetReportRaznaryadka(string dt, string reportName,string Raion, string Oblast)
+        public static Reports GetReportRaznaryadka(string dt, string reportName, string Raion, string Oblast)
         {
             
             RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
@@ -121,6 +121,44 @@ namespace nadis
             if(Oblast is null) Oblast = "";
             webR.report.Report.SetParameterValue("raion", Raion);
             webR.report.Report.SetParameterValue("Oblast", Oblast);
+            //webR.report.Report.Prepare();
+            webR.dt = dt;
+            webR.ReportName = reportName;
+            //TableDataSource table = webR.report.Report.GetDataSource("v1") as TableDataSource;
+            //table.SelectCommand = "";
+            return webR;
+        }
+        public static Reports GetReportZabolevaemost(string dt, string reportName,string Bolezn, string KIDspc)
+        {
+            RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
+            Reports webR = new Reports();
+            webR.report = new WebReport();
+            /*
+            MsSqlDataConnection _con = new MsSqlDataConnection();
+            _con.ConnectionString = spDAL.connStr;
+            _con.CreateAllTables();
+            webR.report.Report.Dictionary.Connections.Add(_con);
+            */
+            string _path = System.IO.Directory.GetCurrentDirectory();
+            _path = _path
+                + System.IO.Path.DirectorySeparatorChar
+                + "FastReports"
+                + System.IO.Path.DirectorySeparatorChar
+                + "CA"
+                + System.IO.Path.DirectorySeparatorChar
+                + reportName
+                + ".frx";
+            
+            int m = Int32.Parse(dt.Substring(0,2));
+            int y = Int32.Parse(dt.Substring(3,4));
+            webR.report.Report.Load(_path);
+            webR.report.Report.Dictionary.Connections[0].ConnectionString = spDAL.connStr;
+            webR.report.Report.SetParameterValue("yyyy",y);
+            webR.report.Report.SetParameterValue("mm",m);
+            //if(Raion is null) Raion = "";
+            //if(Oblast is null) Oblast = "";
+            webR.report.Report.SetParameterValue("Bolezn", Bolezn);
+            webR.report.Report.SetParameterValue("KIDspc", KIDspc);
             //webR.report.Report.Prepare();
             webR.dt = dt;
             webR.ReportName = reportName;

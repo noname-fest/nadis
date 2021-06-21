@@ -185,6 +185,21 @@ namespace nadis.Controllers
             } 
         }
 
+        public IActionResult GetReportZabolevaemost(string dtR, 
+                                        string Bolezni, 
+                                        string KIDspc)
+        {
+            string KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value;
+            string Role  = User.Claims.ToList().
+                                        FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
+            //if (Role!="Admin" || Role!="CA")  return null;
+            //string lang = "ru";
+                return View("GetReportCA",ReportGenerator.
+                                GetReportZabolevaemost(dtR,
+                                    "Zabolevaemost",
+                                    Bolezni,
+                                    KIDspc));
+        }
 
 
         [Authorize]
@@ -203,6 +218,8 @@ namespace nadis.Controllers
                                         FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
             //View("Role") = Role;
             ViewData["Role"] = Role;
+            ViewBag.Bolezni = spDAL.BolezniList();
+            ViewBag.Spc = spDAL.KIDspcList();
             return View();
 
             //string KIDro = User.Claims.ToList().FirstOrDefault(x => x.Type == "KIDro").Value;
